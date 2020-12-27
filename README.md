@@ -7,6 +7,6 @@ A portfolio site for Leslie Meng, built in React and PixiJS
 Creative Lead - Leslie Meng
 
 Developers:
-Marie Crumpton
-Jackie Feit
-Leslie Meng
+- Marie Crumpton
+- Jackie Feit
+- Leslie Meng
