@@ -22,8 +22,8 @@ let samplePlace = 0;
 /* eslint-enabled */
 const app = new PIXI.Application({
 	backgroundColor: 0xd8d5bb,
-	width: window.innerWidth,
-	height: window.innerHeight,
+	width: appWidth,
+	height: appHeight,
 });
 let pixiDiv = document.getElementById('pixi');
 pixiDiv.appendChild(app.view);
@@ -31,35 +31,30 @@ pixiDiv.appendChild(app.view);
 let ceiling = new PIXI.Graphics();
 ceiling
 	.beginFill(0xf4f5e7)
-	.drawRect(0, 0, window.innerWidth * 4, window.innerWidth / 20)
+	.drawRect(0, 0, appWidth * 4, appWidth / 20)
 	.endFill();
 app.stage.addChild(ceiling);
 let trim = new PIXI.Graphics();
 trim
 	.beginFill(0xb39b5f)
-	.drawRect(0, ceiling.height, window.innerWidth * 4, ceiling.height / 3)
+	.drawRect(0, ceiling.height, appWidth * 4, ceiling.height / 3)
 	.endFill();
 app.stage.addChild(trim);
 let floor = new PIXI.Graphics();
 floor
 	.beginFill(0xb39b5f)
-	.drawRect(
-		0,
-		window.innerHeight - window.innerHeight * 0.3,
-		window.innerWidth * 4,
-		window.innerWidth / 2
-	)
+	.drawRect(0, appHeight - appHeight * 0.3, appWidth * 4, appWidth / 2)
 	.endFill();
 
 app.stage.addChild(floor);
 let plantText = PIXI.Texture.from('/siteAssets/monstera-shadow.png');
 let monstera = new PIXI.Sprite(plantText);
 app.stage.addChild(monstera);
-monstera.position.x = window.innerWidth / 2 - 200;
+monstera.position.x = appWidth / 2 - 200;
 let test = PIXI.Texture.from('/siteAssets/desk-color-scheme.png');
 let desk = new PIXI.Sprite(test);
 app.stage.addChild(desk);
-desk.position.x = (window.innerWidth / 2) * 3 - 300;
+desk.position.x = (appWidth / 2) * 3 - 300;
 
 /****** About Me room *******/
 
@@ -68,10 +63,10 @@ let leftShelf = new PIXI.Sprite(shelfTexture);
 let rightShelf = new PIXI.Sprite(shelfTexture);
 app.stage.addChild(leftShelf);
 app.stage.addChild(rightShelf);
-leftShelf.position.x = (window.innerWidth / 4) * 9.25;
-leftShelf.position.y = window.innerHeight / 3;
-rightShelf.position.x = (window.innerWidth / 4) * 10.25;
-rightShelf.position.y = (window.innerHeight / 5) * 2;
+leftShelf.position.x = (appWidth / 4) * 9.25;
+leftShelf.position.y = appHeight / 3;
+rightShelf.position.x = (appWidth / 4) * 10.25;
+rightShelf.position.y = (appHeight / 5) * 2;
 
 /* Things on shelves */
 
@@ -80,55 +75,55 @@ let bfaText = PIXI.Texture.from('/siteAssets/bfa-book.png');
 let bfaBook = new PIXI.Sprite(bfaText);
 // krimson.scale.set(0.5, 0.5);
 app.stage.addChild(bfaBook);
-bfaBook.position.x = (window.innerWidth / 4) * 9.25;
-bfaBook.position.y = window.innerHeight / 3;
+bfaBook.position.x = (appWidth / 4) * 9.25;
+bfaBook.position.y = appHeight / 3;
 
 // let krimTexture = PIXI.Texture.from('/siteAssets/krimson-queen.png');
 // let krimson = new PIXI.Sprite(krimTexture);
 // krimson.scale.set(0.5, 0.5);
 // app.stage.addChild(krimson);
-// krimson.position.x = (window.innerWidth / 4) * 10.45;
-// krimson.position.y = (window.innerHeight / 5) * 1.3;
+// krimson.position.x = (appWidth / 4) * 10.45;
+// krimson.position.y = (appHeight / 5) * 1.3;
 
 // let krimTexture = PIXI.Texture.from('/siteAssets/krimson-queen.png');
 // let krimson = new PIXI.Sprite(krimTexture);
 // krimson.scale.set(0.5, 0.5);
 // app.stage.addChild(krimson);
-// krimson.position.x = (window.innerWidth / 4) * 10.45;
-// krimson.position.y = (window.innerHeight / 5) * 1.3;
+// krimson.position.x = (appWidth / 4) * 10.45;
+// krimson.position.y = (appHeight / 5) * 1.3;
 
 /* Right Shelf */
 // let krimTexture = PIXI.Texture.from('/siteAssets/krimson-queen.png');
 // let krimson = new PIXI.Sprite(krimTexture);
 // krimson.scale.set(0.5, 0.5);
 // app.stage.addChild(krimson);
-// krimson.position.x = (window.innerWidth / 4) * 10.45;
-// krimson.position.y = (window.innerHeight / 5) * 1.3;
+// krimson.position.x = (appWidth / 4) * 10.45;
+// krimson.position.y = (appHeight / 5) * 1.3;
 
 // let krimTexture = PIXI.Texture.from('/siteAssets/krimson-queen.png');
 // let krimson = new PIXI.Sprite(krimTexture);
 // krimson.scale.set(0.5, 0.5);
 // app.stage.addChild(krimson);
-// krimson.position.x = (window.innerWidth / 4) * 10.45;
-// krimson.position.y = (window.innerHeight / 5) * 1.3;
+// krimson.position.x = (appWidth / 4) * 10.45;
+// krimson.position.y = (appHeight / 5) * 1.3;
 
 let krimTexture = PIXI.Texture.from('/siteAssets/krimson-queen.png');
 let krimson = new PIXI.Sprite(krimTexture);
 krimson.scale.set(0.5, 0.5);
 app.stage.addChild(krimson);
-krimson.position.x = (window.innerWidth / 4) * 10.45;
-krimson.position.y = (window.innerHeight / 5) * 1.3;
+krimson.position.x = (appWidth / 4) * 10.45;
+krimson.position.y = (appHeight / 5) * 1.3;
 
 let sideTab = PIXI.Texture.from('/siteAssets/sideboard.png');
 let sideboard = new PIXI.Sprite(sideTab);
 app.stage.addChild(sideboard);
-sideboard.position.x = (window.innerWidth / 2) * 5 - 285;
-sideboard.position.y = window.innerHeight / 2;
+sideboard.position.x = (appWidth / 2) * 5 - 285;
+sideboard.position.y = appHeight / 2;
 
 let socialsText = PIXI.Texture.from('/siteAssets/socials-small-keys.png');
 let chalkboard = new PIXI.Sprite(socialsText);
 app.stage.addChild(chalkboard);
-chalkboard.position.x = (window.innerWidth / 2) * 7 - 300;
+chalkboard.position.x = (appWidth / 2) * 7 - 300;
 
 // function setup() {
 // Map keys to actions
@@ -140,8 +135,8 @@ let left = keyboard('ArrowLeft'),
 
 //Left arrow key `press` method
 left.press = () => {
-	if (app.stage.pivot.x >= window.innerWidth) {
-		app.stage.pivot.x -= window.innerWidth;
+	if (app.stage.pivot.x >= appWidth) {
+		app.stage.pivot.x -= appWidth;
 	}
 };
 
@@ -150,8 +145,8 @@ up.press = () => {};
 
 //Right
 right.press = () => {
-	if (app.stage.pivot.x <= window.innerWidth * 2) {
-		app.stage.pivot.x += window.innerWidth;
+	if (app.stage.pivot.x <= appWidth * 2) {
+		app.stage.pivot.x += appWidth;
 	}
 };
 
