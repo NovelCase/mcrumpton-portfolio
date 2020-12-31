@@ -3,8 +3,8 @@ const PIXI = require('pixi.js');
 const Project = require('../client/ProjectView');
 
 const app = new PIXI.Application({
-	transparent: false,
-	resizeTo: window,
+  transparent: false,
+  resizeTo: window,
 });
 
 app.renderer.backgroundColor = 0xd8d5bb;
@@ -15,10 +15,10 @@ export const appWidth = app.renderer.view.width;
 export const appHeight = app.renderer.view.height;
 
 let left = keyboard('ArrowLeft'),
-	up = keyboard('ArrowUp'),
-	right = keyboard('ArrowRight'),
-	down = keyboard('ArrowDown'),
-	space = keyboard(' ' || 'Spacebar');
+  up = keyboard('ArrowUp'),
+  right = keyboard('ArrowRight'),
+  down = keyboard('ArrowDown'),
+  space = keyboard(' ' || 'Spacebar');
 
 //Left arrow key `press` method
 left.press = () => {
@@ -90,29 +90,30 @@ function keyboard(value) {
 	};
 
 	return key;
+
 }
 
 /****** Background *******/
 
 let ceiling = new PIXI.Graphics();
 ceiling
-	.beginFill(0xf4f5e7)
-	.drawRect(0, 0, appWidth * 4, appHeight / 20)
-	.endFill();
+  .beginFill(0xf4f5e7)
+  .drawRect(0, 0, appWidth * 4, appHeight / 20)
+  .endFill();
 app.stage.addChild(ceiling);
 
 let trim = new PIXI.Graphics();
 trim
-	.beginFill(0xb39b5f)
-	.drawRect(0, ceiling.height, appWidth * 4, ceiling.height / 3)
-	.endFill();
+  .beginFill(0xb39b5f)
+  .drawRect(0, ceiling.height, appWidth * 4, ceiling.height / 3)
+  .endFill();
 app.stage.addChild(trim);
 
 let floor = new PIXI.Graphics();
 floor
-	.beginFill(0xb39b5f)
-	.drawRect(0, appHeight - appHeight * 0.3, appWidth * 4, appHeight / 2)
-	.endFill();
+  .beginFill(0xb39b5f)
+  .drawRect(0, appHeight - appHeight * 0.3, appWidth * 4, appHeight / 2)
+  .endFill();
 app.stage.addChild(floor);
 
 /****** Welcome room *******/
@@ -190,8 +191,6 @@ let leftWindowSprite = createWelcomeSprite(
 
 leftWindowSprite.height = 480;
 
-//app.stage.addChild(leftWindowSprite);
-
 let backWindowSprite = createWelcomeSprite(
 	appWidth / 2.5,
 	appHeight / 3.4,
@@ -202,15 +201,12 @@ let backWindowSprite = createWelcomeSprite(
 backWindowSprite.width = 600;
 backWindowSprite.height = 300;
 
-//app.stage.addChild(backWindowSprite);
-
 let helloCardSprite = createWelcomeSprite(
 	appWidth / 1.5,
 	appHeight / 1.4,
 	helloCard,
 	'card'
 );
-//app.stage.addChild(helloCardSprite);
 
 let snakeTwoSprite = createWelcomeSprite(
 	appWidth / 4.7,
@@ -218,7 +214,6 @@ let snakeTwoSprite = createWelcomeSprite(
 	snake2,
 	'snake2'
 );
-//app.stage.addChild(snakeTwoSprite);
 
 let snakeOneSprite = createWelcomeSprite(
 	appWidth / 3.7,
@@ -226,7 +221,6 @@ let snakeOneSprite = createWelcomeSprite(
 	snake1,
 	'snake1'
 );
-//app.stage.addChild(snakeOneSprite);
 
 let marantaSprite = createWelcomeSprite(
 	appWidth / 1.7,
@@ -234,7 +228,6 @@ let marantaSprite = createWelcomeSprite(
 	maranta,
 	'maranta'
 );
-//app.stage.addChild(marantaSprite);
 
 let monsteraShadowSprite = createWelcomeSprite(
 	appWidth / 6,
@@ -242,7 +235,6 @@ let monsteraShadowSprite = createWelcomeSprite(
 	monstera,
 	'monstera'
 );
-//app.stage.addChild(monsteraShadowSprite);
 
 //Project view helper code
 
@@ -288,40 +280,54 @@ const barkTexture = PIXI.Texture.from('/siteAssets/gobARk.png');
 const promiseTexture = PIXI.Texture.from('siteAssets/promiseHS.png');
 
 let desk = createSprite(
-	(appWidth / 2) * 3,
-	(appHeight / 4) * 2.6,
-	deskTexture,
-	'desk'
+  (appWidth / 2) * 3,
+  (appHeight / 4) * 2.6,
+  deskTexture,
+  'desk'
 );
 
-let chai = createSprite(
-	(appWidth / 5) * 6,
-	appHeight / 3,
-	chaiTexture,
-	'project'
+export let chai = createSprite(
+  (appWidth / 5) * 6,
+  appHeight / 3,
+  chaiTexture,
+  'project'
 );
 chai.on('mouseover', () => (chai.tint = 0x007ec7));
 chai.on('mouseout', () => (chai.tint = 0xffffff));
+chai.on('click', () => {
+  Project.onClick('project', 'chai', 'promiseHS', 'gobARk');
+  gobARk.interactive = false;
+  promiseHS.interactive = false;
+});
 
-let gobARk = createSprite(
-	(appWidth / 4) * 6,
-	appHeight / 4,
-	barkTexture,
-	'project'
+export let gobARk = createSprite(
+  (appWidth / 4) * 6,
+  appHeight / 4,
+  barkTexture,
+  'project'
 );
 gobARk.on('mouseover', () => (gobARk.tint = 0x007ec7));
 gobARk.on('mouseout', () => (gobARk.tint = 0xffffff));
+gobARk.on('click', () => {
+  Project.onClick('project', 'gobARk', 'promiseHS', 'chai');
+  promiseHS.interactive = false;
+  chai.interactive = false;
+});
 
-let promiseHS = createSprite(
-	(appWidth / 4) * 7.2,
-	appHeight / 3,
-	promiseTexture,
-	'project'
+export let promiseHS = createSprite(
+  (appWidth / 4) * 7.2,
+  appHeight / 3,
+  promiseTexture,
+  'project'
 );
 
 promiseHS.on('mouseover', () => (promiseHS.tint = 0x007ec7));
 promiseHS.on('mouseout', () => (promiseHS.tint = 0xffffff));
-promiseHS.on('click', () => Project.onClick('promise'));
+promiseHS.on('click', () => {
+  Project.onClick('project', 'promise', 'gobARk', 'chai');
+  gobARk.interactive = false;
+  chai.interactive = false;
+});
 
 /****** About Me room *******/
 
@@ -351,6 +357,7 @@ let bfa = createSprite(
 );
 bfa.on('mouseover', () => (bfa.tint = 0xaf0000));
 bfa.on('mouseout', () => (bfa.tint = 0xffffff));
+bfaBook.on('click', () => Project.onClick('about', 'bfa'));
 
 let convoText = PIXI.Texture.from('/siteAssets/convowfear.png');
 let convo = createSprite(
@@ -361,6 +368,7 @@ let convo = createSprite(
 );
 convo.on('mouseover', () => (convo.tint = 0x007ec7));
 convo.on('mouseout', () => (convo.tint = 0xffffff));
+convo.on('click', () => Project.onClick('about', 'convo'));
 
 let blueText = PIXI.Texture.from('/siteAssets/blue-book.png');
 let blueOcean = createSprite(
@@ -371,6 +379,7 @@ let blueOcean = createSprite(
 );
 blueOcean.on('mouseover', () => (blueOcean.tint = 0x007ec7));
 blueOcean.on('mouseout', () => (blueOcean.tint = 0xffffff));
+blueOcean.on('click', () => Project.onClick('about', 'blueOcean'));
 
 /* Right Shelf */
 let presText = PIXI.Texture.from('/siteAssets/vertbook.png');
@@ -382,6 +391,7 @@ let presence = createSprite(
 );
 presence.on('mouseover', () => (presence.tint = 0x007ec7));
 presence.on('mouseout', () => (presence.tint = 0xffffff));
+presence.on('click', () => Project.onClick('about', 'presence'));
 
 let krimTexture = PIXI.Texture.from('/siteAssets/krimson-queen.png');
 let krimson = createSprite(
@@ -392,6 +402,7 @@ let krimson = createSprite(
 );
 krimson.on('mouseover', () => (krimson.tint = 0x007ec7));
 krimson.on('mouseout', () => (krimson.tint = 0xffffff));
+krimson.on('click', () => Project.onClick('about', 'plant'));
 
 let sideTab = PIXI.Texture.from('/siteAssets/sideboard.png');
 let sideboard = createSprite(
@@ -410,6 +421,7 @@ let goat = createSprite(
 );
 goat.on('mouseover', () => (goat.tint = 0x007ec7));
 goat.on('mouseout', () => (goat.tint = 0xffffff));
+goat.on('click', () => Project.onClick('about', 'coffee')); 
 let felText = PIXI.Texture.from('/siteAssets/stagg.png');
 let stagg = createSprite(
 	(appWidth / 2) * 5 + scale.projects * 150,
@@ -419,16 +431,16 @@ let stagg = createSprite(
 );
 stagg.on('mouseover', () => (stagg.tint = 0x007ec7));
 stagg.on('mouseout', () => (stagg.tint = 0xffffff));
+stagg.on('click', () => Project.onClick('about', 'coffee'));
 
 let socialsText = PIXI.Texture.from('/siteAssets/socials-board-nk.png');
 let chalkboard = new PIXI.Sprite(socialsText);
 app.stage.addChild(chalkboard);
 chalkboard.position.x = (appWidth / 2) * 7 - 300;
 
+/* Pop Ups */
 export let popUps = new PIXI.Container();
 app.stage.addChild(popUps);
 
-// console.log(Project);
-// console.log(promiseHS.on);
-// console.log(promiseHS);
-// console.log(app);
+export let text = new PIXI.Container();
+app.stage.addChild(text);
