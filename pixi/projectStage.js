@@ -11,8 +11,8 @@ app.renderer.backgroundColor = 0xd8d5bb;
 let pixiDiv = document.getElementById('pixi');
 pixiDiv.appendChild(app.view);
 
-let appWidth = app.renderer.view.width;
-let appHeight = app.renderer.view.height;
+export let appWidth = app.renderer.view.width;
+export let appHeight = app.renderer.view.height;
 
 let left = keyboard('ArrowLeft'),
 	up = keyboard('ArrowUp'),
@@ -110,16 +110,29 @@ app.stage.addChild(windowWeather);
 //welcome view helper code
 
 //welcome view scaling
-let welcomeScale = { windows: 0.65, plants: 0.95, card: 0.85 };
-if (appWidth < 400) {
-	welcomeScale.windows = 0.5;
-	welcomeScale.card = 0.5;
-	welcomeScale.plants = 0.375;
-} else if (appWidth < 500) {
-	welcomeScale.card = 0.525;
-	welcomeScale.windows = 0.525;
-	welcomeScale.plants = 0.525;
-}
+let welcomeScale = {
+	windows: 0.65,
+	snake1: 0.8,
+	snake2: 0.8,
+	monstera: 0.8,
+	maranta: 0.5,
+	card: 0.85,
+};
+// if (appWidth < 400) {
+// 	welcomeScale.windows = 0.5;
+// 	welcomeScale.card = 0.5;
+// 	welcomeScale.snake1 = 0.375;
+// 	welcomeScale.snake2 = 0.375;
+// 	welcomeScale.monstera = 0.375;
+// 	welcomeScale.maranta = 0.375;
+// } else if (appWidth < 500) {
+// 	welcomeScale.windows = 0.5;
+// 	welcomeScale.card = 0.5;
+// 	welcomeScale.snake1 = 0.375;
+// 	welcomeScale.snake2 = 0.375;
+// 	welcomeScale.monstera = 0.375;
+// 	welcomeScale.maranta = 0.375;
+// }
 
 //function to create welcome sprites
 function createWelcomeSprite(x, y, texture, type) {
@@ -130,9 +143,15 @@ function createWelcomeSprite(x, y, texture, type) {
 	sprite.position.y = y;
 	if (type === 'windows') {
 		sprite.scale.set(welcomeScale.windows);
-	} else if (type === 'plants') {
-		sprite.scale.set(welcomeScale.plants);
-	} else {
+	} else if (type === 'snake1') {
+		sprite.scale.set(welcomeScale.snake1);
+	} else if (type === 'snake2') {
+		sprite.scale.set(welcomeScale.snake2);
+	} else if (type === 'monstera') {
+		sprite.scale.set(welcomeScale.monstera);
+	} else if (type === 'maranta') {
+		sprite.scale.set(welcomeScale.maranta);
+	} else if (type === 'card') {
 		sprite.scale.set(welcomeScale.card);
 	}
 	return sprite;
@@ -149,60 +168,67 @@ const monstera = PIXI.Texture.from('/siteAssets/monstera-shadow.png');
 
 //sprites
 let leftWindowSprite = createWelcomeSprite(
-	appWidth / 12,
-	appHeight / 2.5,
+	appWidth / 7.5,
+	appHeight / 2.4,
 	leftWindow,
 	'windows'
 );
-app.stage.addChild(leftWindowSprite);
+
+leftWindowSprite.height = 480;
+
+//app.stage.addChild(leftWindowSprite);
 
 let backWindowSprite = createWelcomeSprite(
-	appWidth / 3.8,
-	appHeight / 3.65,
+	appWidth / 2.5,
+	appHeight / 3.4,
 	backWindow,
 	'windows'
 );
-app.stage.addChild(backWindowSprite);
+
+backWindowSprite.width = 600;
+backWindowSprite.height = 300;
+
+//app.stage.addChild(backWindowSprite);
 
 let helloCardSprite = createWelcomeSprite(
-	appWidth / 2,
-	appHeight / 1.2,
+	appWidth / 1.5,
+	appHeight / 1.4,
 	helloCard,
 	'card'
 );
-app.stage.addChild(helloCardSprite);
+//app.stage.addChild(helloCardSprite);
 
 let snakeTwoSprite = createWelcomeSprite(
-	appWidth / 8,
-	appHeight / 2.55,
+	appWidth / 4.7,
+	appHeight / 2.2,
 	snake2,
-	'plants'
+	'snake2'
 );
-app.stage.addChild(snakeTwoSprite);
+//app.stage.addChild(snakeTwoSprite);
 
 let snakeOneSprite = createWelcomeSprite(
-	appWidth / 3.5,
-	appHeight / 2,
+	appWidth / 3.7,
+	appHeight / 1.8,
 	snake1,
-	'plants'
+	'snake1'
 );
-app.stage.addChild(snakeOneSprite);
+//app.stage.addChild(snakeOneSprite);
 
 let marantaSprite = createWelcomeSprite(
-	appWidth / 2,
-	appHeight / 2.7,
+	appWidth / 1.7,
+	appHeight / 4.2,
 	maranta,
-	'plants'
+	'maranta'
 );
-app.stage.addChild(marantaSprite);
+//app.stage.addChild(marantaSprite);
 
 let monsteraShadowSprite = createWelcomeSprite(
-	appWidth / 7,
-	appHeight / 1.4,
+	appWidth / 6,
+	appHeight / 1.3,
 	monstera,
-	'plants'
+	'monstera'
 );
-app.stage.addChild(monsteraShadowSprite);
+//app.stage.addChild(monsteraShadowSprite);
 
 //Project view helper code
 
@@ -341,7 +367,7 @@ app.stage.addChild(sideboard);
 sideboard.position.x = (window.innerWidth / 2) * 5 - 285;
 sideboard.position.y = window.innerHeight / 2;
 
-let socialsText = PIXI.Texture.from('/siteAssets/socials-small-keys.png');
+let socialsText = PIXI.Texture.from('/siteAssets/socials-board-nk.png');
 let chalkboard = new PIXI.Sprite(socialsText);
 app.stage.addChild(chalkboard);
 chalkboard.position.x = (window.innerWidth / 2) * 7 - 300;
