@@ -78,6 +78,8 @@ function keyboard(value) {
 	return key;
 }
 
+/****** Background *******/
+
 let ceiling = new PIXI.Graphics();
 ceiling
 	.beginFill(0xf4f5e7)
@@ -99,6 +101,108 @@ floor
 	.endFill();
 app.stage.addChild(floor);
 
+/****** Welcome room *******/
+
+//welcome view helper code
+
+//welcome view scaling
+let welcomeScale = { windows: 0.65, plants: 0.95, card: 0.85 };
+if (appWidth < 400) {
+	welcomeScale.windows = 0.5;
+	welcomeScale.card = 0.5;
+	welcomeScale.plants = 0.375;
+} else if (appWidth < 500) {
+	welcomeScale.card = 0.525;
+	welcomeScale.windows = 0.525;
+	welcomeScale.plants = 0.525;
+}
+
+//function to create welcome sprites
+function createWelcomeSprite(x, y, texture, type) {
+	const sprite = new Sprite(texture);
+	app.stage.addChild(sprite);
+	sprite.anchor.set(0.5);
+	sprite.position.x = x;
+	sprite.position.y = y;
+	if (type === 'windows') {
+		sprite.scale.set(welcomeScale.windows);
+	} else if (type === 'plants') {
+		sprite.scale.set(welcomeScale.plants);
+	} else {
+		sprite.scale.set(welcomeScale.card);
+	}
+	return sprite;
+}
+
+//textures
+const leftWindow = PIXI.Texture.from('/siteAssets/windowside.png');
+const backWindow = PIXI.Texture.from('/siteAssets/window.png');
+const helloCard = PIXI.Texture.from('/siteAssets/hello-sticker.png');
+const snake1 = PIXI.Texture.from('/siteAssets/snakeplant-shadow.png');
+const snake2 = PIXI.Texture.from('/siteAssets/snakeplant2-shadow.png');
+const maranta = PIXI.Texture.from('/siteAssets/marantatest.png');
+const monstera = PIXI.Texture.from('/siteAssets/monstera-shadow.png');
+
+//sprites
+let leftWindowSprite = createWelcomeSprite(
+	appWidth / 12,
+	appHeight / 2.5,
+	leftWindow,
+	'windows'
+);
+app.stage.addChild(leftWindowSprite);
+
+let backWindowSprite = createWelcomeSprite(
+	appWidth / 3.8,
+	appHeight / 3.65,
+	backWindow,
+	'windows'
+);
+app.stage.addChild(backWindowSprite);
+
+let helloCardSprite = createWelcomeSprite(
+	appWidth / 2,
+	appHeight / 1.2,
+	helloCard,
+	'card'
+);
+app.stage.addChild(helloCardSprite);
+
+let snakeTwoSprite = createWelcomeSprite(
+	appWidth / 8,
+	appHeight / 2.55,
+	snake2,
+	'plants'
+);
+app.stage.addChild(snakeTwoSprite);
+
+let snakeOneSprite = createWelcomeSprite(
+	appWidth / 3.5,
+	appHeight / 2,
+	snake1,
+	'plants'
+);
+app.stage.addChild(snakeOneSprite);
+
+let marantaSprite = createWelcomeSprite(
+	appWidth / 2,
+	appHeight / 2.7,
+	maranta,
+	'plants'
+);
+app.stage.addChild(marantaSprite);
+
+let monsteraShadowSprite = createWelcomeSprite(
+	appWidth / 7,
+	appHeight / 1.4,
+	monstera,
+	'plants'
+);
+app.stage.addChild(monsteraShadowSprite);
+
+//Project view helper code
+
+//project view scaling
 let scale = { projects: 0.5, desk: 1 };
 if (appWidth < 400) {
 	scale.projects = 0.25;
@@ -109,6 +213,7 @@ if (appWidth < 400) {
 	scale.desk = 0.7;
 }
 
+//function to create project sprites
 function createSprite(x, y, texture, type) {
 	const sprite = new Sprite(texture);
 	app.stage.addChild(sprite);
@@ -124,6 +229,8 @@ function createSprite(x, y, texture, type) {
 	}
 	return sprite;
 }
+
+/****** Project room *******/
 
 const deskTexture = PIXI.Texture.from('/siteAssets/desk-color-scheme.png');
 const chaiTexture = PIXI.Texture.from('/siteAssets/chaiNoon.png');
@@ -237,6 +344,10 @@ chalkboard.position.x = (window.innerWidth / 2) * 7 - 300;
 
 export let popUps = new PIXI.Container();
 app.stage.addChild(popUps);
+
+//for welcome component weather
+// export let windowWeather = new PIXI.Container();
+// app.stage.addChild(windowWeather);
 
 // console.log(Project);
 // console.log(promiseHS.on);
