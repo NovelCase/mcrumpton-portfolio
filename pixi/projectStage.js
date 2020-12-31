@@ -103,6 +103,10 @@ app.stage.addChild(floor);
 
 /****** Welcome room *******/
 
+//for welcome component weather
+export let windowWeather = new PIXI.Container();
+app.stage.addChild(windowWeather);
+
 //welcome view helper code
 
 //welcome view scaling
@@ -344,10 +348,6 @@ chalkboard.position.x = (window.innerWidth / 2) * 7 - 300;
 
 export let popUps = new PIXI.Container();
 app.stage.addChild(popUps);
-
-//for welcome component weather
-// export let windowWeather = new PIXI.Container();
-// app.stage.addChild(windowWeather);
 
 // console.log(Project);
 // console.log(promiseHS.on);

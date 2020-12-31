@@ -10,7 +10,7 @@ require('babel-polyfill');
 ReactDOM.render(
 	<div>
 		<Project />
-		{/* <Welcome /> */}
+		<Welcome />
 	</div>,
 	document.getElementById('app')
 );
