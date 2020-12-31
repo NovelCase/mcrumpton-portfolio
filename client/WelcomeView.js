@@ -2,7 +2,7 @@ import React from 'react';
 import * as PixiApp from '../pixi/projectStage.js';
 import * as PIXI from 'pixi.js';
 
-let weatherWindow;
+let weatherWindow, sideWeatherWindow;
 const api_weather = 'e85282415ad04fe926b501b1b9888316';
 
 export default class Welcome extends React.Component {
@@ -36,14 +36,33 @@ export default class Welcome extends React.Component {
 		weatherWindow
 			.beginFill(this.state.weatherColor)
 			.drawRect(
-				window.innerWidth / 6.8,
-				window.innerHeight / 10,
-				window.innerWidth / 4.3,
-				window.innerHeight / 2.88
+				PixiApp.appWidth / 5,
+				PixiApp.appHeight / 10,
+				PixiApp.appWidth / 2.4,
+				PixiApp.appHeight / 2.6
 			)
 			.endFill();
-		weatherWindow.zIndex = -1;
 		PixiApp.windowWeather.addChild(weatherWindow);
+
+		sideWeatherWindow = new PIXI.Graphics();
+		sideWeatherWindow
+			.beginFill(this.state.weatherColor)
+			.drawPolygon([
+				//top left corner
+				PixiApp.appWidth / 17,
+				PixiApp.appHeight / 2.75,
+				//bottom left
+				PixiApp.appWidth / 17,
+				PixiApp.appHeight - PixiApp.appHeight * 0.3,
+				//bottom right
+				PixiApp.appWidth / 6,
+				PixiApp.appHeight - PixiApp.appHeight * 0.5,
+				//top right corner
+				PixiApp.appWidth / 6,
+				PixiApp.appHeight / 7,
+			])
+			.endFill();
+		PixiApp.windowWeather.addChild(sideWeatherWindow);
 	}
 
 	//component did update
