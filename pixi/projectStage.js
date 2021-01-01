@@ -639,7 +639,12 @@ let guestbook = createSprite(
 );
 guestbook.on('mouseover', () => (guestbook.tint = 0x007ec7));
 guestbook.on('mouseout', () => (guestbook.tint = 0xffffff));
-guestbook.on('click', () => alert('email'));
+guestbook.on(
+	'click',
+	() =>
+		(window.location.href =
+			'mailto:m.leslie.meng@gmail.com?subject=Just visited your website!')
+);
 
 /* Pop Ups */
 export let popUps = new PIXI.Container();
