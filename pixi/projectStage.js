@@ -1,6 +1,7 @@
 const { Sprite } = require('pixi.js');
 const PIXI = require('pixi.js');
 const Project = require('../client/ProjectView');
+var _ = require('lodash');
 // ? for iframe?
 import React from 'react';
 
@@ -79,18 +80,24 @@ function keyboard(value) {
 			event.preventDefault();
 		}
 	};
-	let currCorr = window.pageYOffset;
-	onscroll = (event) => {
-		event.preventDefault();
-		console.log(currCorr, window.pageYOffset);
-		if (window.pageYOffset > currCorr) {
-			left.press();
-		} else if (window.pageYOffset < currCorr) {
-			right.press();
-		}
-		currCorr = window.pageYOffset;
-		console.log(currCorr, window.pageYOffset);
+
+	onwheel = (event) => {
+		if (
+			app.stage.pivot.x < 0 ||
+			app.stage.pivot.x + (event.deltaY * 1.3 || event.deltaX * 1.3) < 0
+		) {
+			app.stage.pivot.x = 0;
+		} else if (
+			app.stage.pivot.x > appWidth * 3 ||
+			app.stage.pivot.x + (event.deltaY * 1.3 || event.deltaX * 1.3) >
+				appWidth * 3
+		) {
+			app.stage.pivot.x = appWidth * 3;
+		} else app.stage.pivot.x += event.deltaY * 1.3 || event.deltaX * 1.3;
 	};
+	function onWindowResize() {
+		app.renderer.setSize(window.innerWidth, window.innerHeight);
+	}
 
 	//Attach event listeners
 	const downListener = key.downHandler.bind(key);
@@ -98,13 +105,13 @@ function keyboard(value) {
 
 	window.addEventListener('keydown', downListener, false);
 	window.addEventListener('keyup', upListener, false);
-	window.addEventListener('onscroll', onscroll, false);
+	window.addEventListener('wheel', _.throttle(onwheel, 1000), false);
 
 	// Detach event listeners
 	key.unsubscribe = () => {
 		window.removeEventListener('keydown', downListener);
 		window.removeEventListener('keyup', upListener);
-		window.removeEventListener('onscroll', onscroll, false);
+		window.removeEventListener('wheel', _.throttle(onwheel, 1000), false);
 	};
 
 	return key;
@@ -440,11 +447,13 @@ chai.on('click', () => {
 	let projects = [promiseHS, gobARk];
 	Project.onClick('project', 'chai', projects);
 	projects.forEach((project) => (project.interactive = false));
+	app.stage.pivot.x = appWidth;
 });
 chai.on('tap', () => {
 	let projects = [promiseHS, gobARk];
 	Project.onClick('project', 'chai', projects);
 	projects.forEach((project) => (project.interactive = false));
+	app.stage.pivot.x = appWidth;
 });
 
 export let gobARk = createSprite(
@@ -459,11 +468,13 @@ gobARk.on('click', () => {
 	let projects = [promiseHS, chai];
 	Project.onClick('project', 'gobARk', projects);
 	projects.forEach((project) => (project.interactive = false));
+	app.stage.pivot.x = appWidth;
 });
 gobARk.on('tap', () => {
 	let projects = [promiseHS, chai];
 	Project.onClick('project', 'gobARk', projects);
 	projects.forEach((project) => (project.interactive = false));
+	app.stage.pivot.x = appWidth;
 });
 
 export let promiseHS = createSprite(
@@ -479,11 +490,13 @@ promiseHS.on('click', () => {
 	let projects = [gobARk, chai];
 	Project.onClick('project', 'promise', projects);
 	projects.forEach((project) => (project.interactive = false));
+	app.stage.pivot.x = appWidth;
 });
 promiseHS.on('tap', () => {
 	let projects = [gobARk, chai];
 	Project.onClick('project', 'promise', projects);
 	projects.forEach((project) => (project.interactive = false));
+	app.stage.pivot.x = appWidth;
 });
 
 /****** About Me room *******/
@@ -518,11 +531,13 @@ bfa.on('click', () => {
 	let items = [convo, blueOcean, krimson, goat, stagg];
 	Project.onClick('about', 'bfa', items);
 	items.forEach((item) => (item.interactive = false));
+	app.stage.pivot.x = 2 * appWidth;
 });
 bfa.on('tap', () => {
 	let items = [convo, blueOcean, presence, krimson, goat, stagg];
 	Project.onClick('about', 'bfa', items);
 	items.forEach((item) => (item.interactive = false));
+	app.stage.pivot.x = 2 * appWidth;
 });
 
 let convoText = PIXI.Texture.from('/siteAssets/convowfear.png');
@@ -538,6 +553,13 @@ convo.on('click', () => {
 	let items = [bfa, blueOcean, presence, krimson, goat, stagg];
 	Project.onClick('about', 'convo', items);
 	items.forEach((item) => (item.interactive = false));
+	app.stage.pivot.x = 2 * appWidth;
+});
+convo.on('tap', () => {
+	let items = [bfa, blueOcean, presence, krimson, goat, stagg];
+	Project.onClick('about', 'convo', items);
+	items.forEach((item) => (item.interactive = false));
+	app.stage.pivot.x = 2 * appWidth;
 });
 
 let blueText = PIXI.Texture.from('/siteAssets/blue-book.png');
@@ -553,11 +575,13 @@ blueOcean.on('click', () => {
 	let items = [bfa, convo, presence, krimson, goat, stagg];
 	Project.onClick('about', 'blueOcean', items);
 	items.forEach((item) => (item.interactive = false));
+	app.stage.pivot.x = 2 * appWidth;
 });
 blueOcean.on('tap', () => {
 	let items = [bfa, convo, presence, krimson, goat, stagg];
 	Project.onClick('about', 'blueOcean', items);
 	items.forEach((item) => (item.interactive = false));
+	app.stage.pivot.x = 2 * appWidth;
 });
 
 /* Right Shelf */
@@ -574,11 +598,13 @@ presence.on('click', () => {
 	let items = [bfa, convo, blueOcean, krimson, goat, stagg];
 	Project.onClick('about', 'presence', items);
 	items.forEach((item) => (item.interactive = false));
+	app.stage.pivot.x = 2 * appWidth;
 });
 presence.on('tap', () => {
 	let items = [bfa, convo, blueOcean, krimson, goat, stagg];
 	Project.onClick('about', 'presence', items);
 	items.forEach((item) => (item.interactive = false));
+	app.stage.pivot.x = 2 * appWidth;
 });
 
 let krimTexture = PIXI.Texture.from('/siteAssets/krimson-queen.png');
@@ -594,11 +620,13 @@ krimson.on('click', () => {
 	let items = [bfa, convo, blueOcean, presence, goat, stagg];
 	Project.onClick('about', 'krimson', items);
 	items.forEach((item) => (item.interactive = false));
+	app.stage.pivot.x = 2 * appWidth;
 });
 krimson.on('tap', () => {
 	let items = [bfa, convo, blueOcean, presence, goat, stagg];
 	Project.onClick('about', 'krimson', items);
 	items.forEach((item) => (item.interactive = false));
+	app.stage.pivot.x = 2 * appWidth;
 });
 
 let sideTab = PIXI.Texture.from('/siteAssets/sideboard.png');
@@ -622,11 +650,13 @@ goat.on('click', () => {
 	let items = [bfa, convo, blueOcean, presence, krimson, stagg];
 	Project.onClick('about', 'goat', items);
 	items.forEach((item) => (item.interactive = false));
+	app.stage.pivot.x = 2 * appWidth;
 });
 goat.on('tap', () => {
 	let items = [bfa, convo, blueOcean, presence, krimson, stagg];
 	Project.onClick('about', 'goat', items);
 	items.forEach((item) => (item.interactive = false));
+	app.stage.pivot.x = 2 * appWidth;
 });
 
 let felText = PIXI.Texture.from('/siteAssets/stagg.png');
@@ -642,11 +672,13 @@ stagg.on('click', () => {
 	let items = [bfa, convo, blueOcean, presence, krimson, goat];
 	Project.onClick('about', 'stagg', items);
 	items.forEach((item) => (item.interactive = false));
+	app.stage.pivot.x = 2 * appWidth;
 });
 stagg.on('tap', () => {
 	let items = [bfa, convo, blueOcean, presence, krimson, goat];
 	Project.onClick('about', 'stagg', items);
 	items.forEach((item) => (item.interactive = false));
+	app.stage.pivot.x = 2 * appWidth;
 });
 
 /**********    Contact Me    *************/
@@ -675,9 +707,10 @@ let github = createSprite(
 );
 github.on('mouseover', () => (github.tint = 0x007ec7));
 github.on('mouseout', () => (github.tint = 0xffffff));
-github.on('click', () =>
-	window.open('https://github.com/leslie-meng', '_blank')
-);
+github.on('click', () => {
+	window.open('https://github.com/leslie-meng', '_blank');
+	app.stage.pivot.x = 3 * appWidth;
+});
 github.on('tap', () => window.open('https://github.com/leslie-meng', '_blank'));
 
 let codeText = PIXI.Texture.from('/siteAssets/codepen-key.png');
@@ -689,12 +722,14 @@ let codepen = createSprite(
 );
 codepen.on('mouseover', () => (codepen.tint = 0x007ec7));
 codepen.on('mouseout', () => (codepen.tint = 0xffffff));
-codepen.on('click', () =>
-	window.open('https://codepen.io/leslie-meng', '_blank')
-);
-codepen.on('tap', () =>
-	window.open('https://codepen.io/leslie-meng', '_blank')
-);
+codepen.on('click', () => {
+	window.open('https://codepen.io/leslie-meng', '_blank');
+	app.stage.pivot.x = 3 * appWidth;
+});
+codepen.on('tap', () => {
+	window.open('https://codepen.io/leslie-meng', '_blank');
+	app.stage.pivot.x = 3 * appWidth;
+});
 
 let linkText = PIXI.Texture.from('/siteAssets/linkedin-key.png');
 let linkedin = createSprite(
@@ -705,12 +740,14 @@ let linkedin = createSprite(
 );
 linkedin.on('mouseover', () => (linkedin.tint = 0x007ec7));
 linkedin.on('mouseout', () => (linkedin.tint = 0xffffff));
-linkedin.on('click', () =>
-	window.open('https://www.linkedin.com/in/leslie-meng/', '_blank')
-);
-linkedin.on('tap', () =>
-	window.open('https://www.linkedin.com/in/leslie-meng/', '_blank')
-);
+linkedin.on('click', () => {
+	window.open('https://www.linkedin.com/in/leslie-meng/', '_blank');
+	app.stage.pivot.x = 3 * appWidth;
+});
+linkedin.on('tap', () => {
+	window.open('https://www.linkedin.com/in/leslie-meng/', '_blank');
+	app.stage.pivot.x = 3 * appWidth;
+});
 
 /* radio and plant */
 let secondMonstera = createSprite(
@@ -728,8 +765,14 @@ let radio = createSprite(
 );
 radio.on('mouseover', () => (radio.tint = 0x007ec7));
 radio.on('mouseout', () => (radio.tint = 0xffffff));
-radio.on('click', () => alert('play musica!'));
-radio.on('tap', () => alert('play musica!'));
+radio.on('click', () => {
+	alert('play musica!');
+	app.stage.pivot.x = 3 * appWidth;
+});
+radio.on('tap', () => {
+	alert('play musica!');
+	app.stage.pivot.x = 3 * appWidth;
+});
 /* table with guest book */
 
 let tableText = PIXI.Texture.from('/siteAssets/table.png');
@@ -748,18 +791,16 @@ let guestbook = createSprite(
 );
 guestbook.on('mouseover', () => (guestbook.tint = 0x007ec7));
 guestbook.on('mouseout', () => (guestbook.tint = 0xffffff));
-guestbook.on(
-	'click',
-	() =>
-		(window.location.href =
-			'mailto:m.leslie.meng@gmail.com?subject=Just visited your website!')
-);
-guestbook.on(
-	'tap',
-	() =>
-		(window.location.href =
-			'mailto:m.leslie.meng@gmail.com?subject=Just visited your website!')
-);
+guestbook.on('click', () => {
+	window.location.href =
+		'mailto:m.leslie.meng@gmail.com?subject=Just visited your  website!';
+	app.stage.pivot.x = 3 * appWidth;
+});
+guestbook.on('tap', () => {
+	window.location.href =
+		'mailto:m.leslie.meng@gmail.com?subject=Just visited your website!';
+	app.stage.pivot.x = 3 * appWidth;
+});
 
 /* Pop Ups */
 export let popUps = new PIXI.Container();
