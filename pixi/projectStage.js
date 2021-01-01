@@ -366,18 +366,23 @@ let scale = {
 	keys: 0.5,
 };
 if (appWidth < 400) {
-	scale.project = scale.plant = scale.coffee = 0.25;
-	scale.desk = scale.board = scale.guestbook = 0.5;
-	scale.book = scale.shelf = scale.decor = 0.6;
+	scale.project = scale.plant = 0.3;
+	scale.desk = 0.65;
+	scale.shelf = scale.board = scale.guestbook = 0.5;
+	scale.book = 0.7;
+	scale.decor = 0.6;
 	scale.table = 0.8;
 	scale.radio = 0.9;
-	scale.keys = 0.4;
+	scale.keys = scale.coffee = 0.4;
 } else if (appWidth < 500) {
-	scale.project = scale.plant = scale.coffee = 0.3;
-	scale.desk = scale.guestbook = 0.7;
-	scale.book = scale.shelf = scale.decor = 0.6;
+	scale.project = 0.35;
+	scale.plant = 0.34;
+	scale.desk = 0.75;
+	scale.guestbook = 0.7;
+	scale.book = 0.8;
+	scale.shelf = scale.decor = 0.6;
 	scale.table = scale.radio = 0.9;
-	scale.keys = 0.4;
+	scale.keys = scale.coffee = 0.4;
 }
 
 //function to create project sprites
@@ -579,7 +584,7 @@ presence.on('tap', () => {
 let krimTexture = PIXI.Texture.from('/siteAssets/krimson-queen.png');
 export let krimson = createSprite(
 	(appWidth / 4) * (11.2 - scale.book / 2),
-	(appHeight / 5) * 2 - 50 * scale.book,
+	(appHeight / 5) * 2 - 100 * scale.plant,
 	krimTexture,
 	'plant'
 );
@@ -729,7 +734,7 @@ radio.on('tap', () => alert('play musica!'));
 
 let tableText = PIXI.Texture.from('/siteAssets/table.png');
 let table = createSprite(
-	(appWidth / 2) * 6.75,
+	(appWidth / 2) * 6.7,
 	(appHeight / 4) * 3,
 	tableText,
 	'table'
