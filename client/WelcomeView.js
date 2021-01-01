@@ -33,15 +33,26 @@ export default class Welcome extends React.Component {
 		// 	console.log(err);
 		// }
 		weatherWindow = new PIXI.Graphics();
+
+		let width = PixiApp.appWidth;
+		let height = PixiApp.appHeight;
+		let scale = 1;
+		if (PixiApp.appWidth < 400) {
+			scale = 0.5;
+		} else if (PixiApp.appWidth < 500) {
+			scale = 0.7;
+		}
+
 		weatherWindow
 			.beginFill(this.state.weatherColor)
 			.drawRect(
-				PixiApp.appWidth / 5,
-				PixiApp.appHeight / 10,
-				PixiApp.appWidth / 2.4,
-				PixiApp.appHeight / 2.6
+				(PixiApp.appWidth / 5) * scale,
+				(PixiApp.appHeight / 9.5) * scale,
+				(PixiApp.appWidth / 2.4) * scale,
+				(PixiApp.appHeight / 2.7) * scale
 			)
 			.endFill();
+
 		PixiApp.windowWeather.addChild(weatherWindow);
 
 		sideWeatherWindow = new PIXI.Graphics();
