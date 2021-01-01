@@ -1,6 +1,8 @@
 const { Sprite } = require('pixi.js');
 const PIXI = require('pixi.js');
 const Project = require('../client/ProjectView');
+// ? for iframe?
+import React from 'react';
 
 const app = new PIXI.Application({
 	transparent: false,
@@ -443,3 +445,6 @@ app.stage.addChild(popUps);
 
 export let text = new PIXI.Container();
 app.stage.addChild(text);
+
+export let spotifyPixi = new PIXI.Container();
+app.stage.addChild(spotifyPixi);
