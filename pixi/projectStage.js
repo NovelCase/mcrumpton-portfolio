@@ -574,7 +574,9 @@ let github = createSprite(
 );
 github.on('mouseover', () => (github.tint = 0x007ec7));
 github.on('mouseout', () => (github.tint = 0xffffff));
-github.on('click', () => alert('boom!'));
+github.on('click', () =>
+	window.open('https://github.com/leslie-meng', '_blank')
+);
 
 let codeText = PIXI.Texture.from('/siteAssets/codepen-key.png');
 let codepen = createSprite(
@@ -585,7 +587,9 @@ let codepen = createSprite(
 );
 codepen.on('mouseover', () => (codepen.tint = 0x007ec7));
 codepen.on('mouseout', () => (codepen.tint = 0xffffff));
-codepen.on('click', () => alert('boom!'));
+codepen.on('click', () =>
+	window.open('https://codepen.io/leslie-meng', '_blank')
+);
 
 let linkText = PIXI.Texture.from('/siteAssets/linkedin-key.png');
 let linkedin = createSprite(
@@ -596,7 +600,9 @@ let linkedin = createSprite(
 );
 linkedin.on('mouseover', () => (linkedin.tint = 0x007ec7));
 linkedin.on('mouseout', () => (linkedin.tint = 0xffffff));
-linkedin.on('click', () => alert('boom!'));
+linkedin.on('click', () =>
+	window.open('https://www.linkedin.com/in/leslie-meng/', '_blank')
+);
 
 /* radio and plant */
 let secondMonstera = createSprite(
