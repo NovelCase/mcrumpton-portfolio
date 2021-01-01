@@ -1,6 +1,24 @@
 const { Sprite } = require('pixi.js');
 const PIXI = require('pixi.js');
 const Project = require('../client/ProjectView');
+// ? for iframe?
+import React from 'react';
+
+window.WebFontConfig = {
+  google: {
+    families: ['Nunito Sans'],
+  },
+};
+(function () {
+  const wf = document.createElement('script');
+  wf.src = `${
+    document.location.protocol === 'https:' ? 'https' : 'http'
+  }://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js`;
+  wf.type = 'text/javascript';
+  wf.async = 'true';
+  const s = document.getElementsByTagName('script')[0];
+  s.parentNode.insertBefore(wf, s);
+})();
 
 const app = new PIXI.Application({
 	transparent: false,
@@ -22,74 +40,74 @@ let left = keyboard('ArrowLeft'),
 
 //Left arrow key `press` method
 left.press = () => {
-	if (app.stage.pivot.x >= appWidth) {
-		app.stage.pivot.x -= appWidth;
-	}
+  if (app.stage.pivot.x >= appWidth) {
+    app.stage.pivot.x -= appWidth;
+  }
 };
 //Up
 up.press = () => {};
 //Right
 right.press = () => {
-	if (app.stage.pivot.x <= appWidth * 2) {
-		app.stage.pivot.x += appWidth;
-	}
+  if (app.stage.pivot.x <= appWidth * 2) {
+    app.stage.pivot.x += appWidth;
+  }
 };
 
 function keyboard(value) {
-	let key = {};
-	key.value = value;
-	key.isDown = false;
-	key.isUp = true;
-	key.press = undefined;
-	key.release = undefined;
-	//The `downHandler`
-	key.downHandler = (event) => {
-		if (event.key === key.value) {
-			if (key.isUp && key.press) key.press();
-			key.isDown = true;
-			key.isUp = false;
-			event.preventDefault();
-		}
-	};
+  let key = {};
+  key.value = value;
+  key.isDown = false;
+  key.isUp = true;
+  key.press = undefined;
+  key.release = undefined;
+  //The `downHandler`
+  key.downHandler = (event) => {
+    if (event.key === key.value) {
+      if (key.isUp && key.press) key.press();
+      key.isDown = true;
+      key.isUp = false;
+      event.preventDefault();
+    }
+  };
 
-	//The `upHandler`
-	key.upHandler = (event) => {
-		if (event.key === key.value) {
-			if (key.isDown && key.release) key.release();
-			key.isDown = false;
-			key.isUp = true;
-			event.preventDefault();
-		}
-	};
-	let currCorr = window.pageXOffset;
-	onwheel = (event) => {
-		event.preventDefault();
-		console.log(currCorr, window.pageXOffset);
-		if (window.pageXOffset > currCorr) {
-			left.press();
-		} else if (window.pageXOffset < currCorr) {
-			right.press();
-		}
-		currCorr = window.pageXOffset;
-		console.log(currCorr, window.pageXOffset);
-	};
+  //The `upHandler`
+  key.upHandler = (event) => {
+    if (event.key === key.value) {
+      if (key.isDown && key.release) key.release();
+      key.isDown = false;
+      key.isUp = true;
+      event.preventDefault();
+    }
+  };
+  let currCorr = window.pageYOffset;
+  onscroll = (event) => {
+    event.preventDefault();
+    console.log(currCorr, window.pageYOffset);
+    if (window.pageYOffset > currCorr) {
+      left.press();
+    } else if (window.pageYOffset < currCorr) {
+      right.press();
+    }
+    currCorr = window.pageYOffset;
+    console.log(currCorr, window.pageYOffset);
+  };
 
-	//Attach event listeners
-	const downListener = key.downHandler.bind(key);
-	const upListener = key.upHandler.bind(key);
+  //Attach event listeners
+  const downListener = key.downHandler.bind(key);
+  const upListener = key.upHandler.bind(key);
 
-	window.addEventListener('keydown', downListener, false);
-	window.addEventListener('keyup', upListener, false);
-	window.addEventListener('onwheel', onwheel, false);
+  window.addEventListener('keydown', downListener, false);
+  window.addEventListener('keyup', upListener, false);
+  window.addEventListener('onscroll', onscroll, false);
 
-	// Detach event listeners
-	key.unsubscribe = () => {
-		window.removeEventListener('keydown', downListener);
-		window.removeEventListener('keyup', upListener);
-		window.removeEventListener('onwheel', onwheel, false);
-	};
+  // Detach event listeners
+  key.unsubscribe = () => {
+    window.removeEventListener('keydown', downListener);
+    window.removeEventListener('keyup', upListener);
+    window.removeEventListener('onscroll', onscroll, false);
+  };
 
-	return key;
+  return key;
 }
 
 /****** Background *******/
@@ -121,7 +139,6 @@ trim
 		appWidth * 4,
 		appHeight / 12,
 	])
-	// .drawRect(0, ceiling.height, appWidth * 4, ceiling.height / 3)
 	.endFill();
 app.stage.addChild(trim);
 
@@ -180,50 +197,50 @@ app.stage.addChild(windowWeather);
 
 //welcome view scaling
 let welcomeScale = {
-	windows: 0.65,
-	snake1: 0.8,
-	snake2: 0.8,
-	monstera: 0.8,
-	maranta: 0.5,
-	card: 0.85,
+  windows: 0.65,
+  snake1: 0.8,
+  snake2: 0.8,
+  monstera: 0.8,
+  maranta: 0.5,
+  card: 0.85,
 };
-// if (appWidth < 400) {
-// 	welcomeScale.windows = 0.5;
-// 	welcomeScale.card = 0.5;
-// 	welcomeScale.snake1 = 0.375;
-// 	welcomeScale.snake2 = 0.375;
-// 	welcomeScale.monstera = 0.375;
-// 	welcomeScale.maranta = 0.375;
-// } else if (appWidth < 500) {
-// 	welcomeScale.windows = 0.5;
-// 	welcomeScale.card = 0.5;
-// 	welcomeScale.snake1 = 0.375;
-// 	welcomeScale.snake2 = 0.375;
-// 	welcomeScale.monstera = 0.375;
-// 	welcomeScale.maranta = 0.375;
-// }
+if (appWidth < 400) {
+	welcomeScale.windows = 0.325;
+	welcomeScale.card = 0.425;
+	welcomeScale.snake1 = 0.4;
+	welcomeScale.snake2 = 0.4;
+	welcomeScale.monstera = 0.4;
+	welcomeScale.maranta = 0.25;
+} else if (appWidth < 500) {
+	welcomeScale.windows = 0.455;
+	welcomeScale.card = 0.595;
+	welcomeScale.snake1 = 0.56;
+	welcomeScale.snake2 = 0.56;
+	welcomeScale.monstera = 0.56;
+	welcomeScale.maranta = 0.35;
+}
 
 //function to create welcome sprites
 function createWelcomeSprite(x, y, texture, type) {
-	const sprite = new Sprite(texture);
-	app.stage.addChild(sprite);
-	sprite.anchor.set(0.5);
-	sprite.position.x = x;
-	sprite.position.y = y;
-	if (type === 'windows') {
-		sprite.scale.set(welcomeScale.windows);
-	} else if (type === 'snake1') {
-		sprite.scale.set(welcomeScale.snake1);
-	} else if (type === 'snake2') {
-		sprite.scale.set(welcomeScale.snake2);
-	} else if (type === 'monstera') {
-		sprite.scale.set(welcomeScale.monstera);
-	} else if (type === 'maranta') {
-		sprite.scale.set(welcomeScale.maranta);
-	} else if (type === 'card') {
-		sprite.scale.set(welcomeScale.card);
-	}
-	return sprite;
+  const sprite = new Sprite(texture);
+  app.stage.addChild(sprite);
+  sprite.anchor.set(0.5);
+  sprite.position.x = x;
+  sprite.position.y = y;
+  if (type === 'windows') {
+    sprite.scale.set(welcomeScale.windows);
+  } else if (type === 'snake1') {
+    sprite.scale.set(welcomeScale.snake1);
+  } else if (type === 'snake2') {
+    sprite.scale.set(welcomeScale.snake2);
+  } else if (type === 'monstera') {
+    sprite.scale.set(welcomeScale.monstera);
+  } else if (type === 'maranta') {
+    sprite.scale.set(welcomeScale.maranta);
+  } else if (type === 'card') {
+    sprite.scale.set(welcomeScale.card);
+  }
+  return sprite;
 }
 
 //textures
@@ -237,50 +254,50 @@ const monstera = PIXI.Texture.from('/siteAssets/monstera-shadow.png');
 
 //sprites
 let leftWindowSprite = createWelcomeSprite(
-	appWidth / 7.5,
-	appHeight / 2.4,
-	leftWindow,
-	'windows'
+  appWidth / 7.5,
+  appHeight / 2.4,
+  leftWindow,
+  'windows'
 );
 
 leftWindowSprite.height = 480;
 
 let backWindowSprite = createWelcomeSprite(
-	appWidth / 2.5,
-	appHeight / 3.4,
-	backWindow,
-	'windows'
+  appWidth / 2.5,
+  appHeight / 3.4,
+  backWindow,
+  'windows'
 );
 
 backWindowSprite.width = 600;
 backWindowSprite.height = 300;
 
 let snakeTwoSprite = createWelcomeSprite(
-	appWidth / 4.7,
-	appHeight / 2.2,
-	snake2,
-	'snake2'
+  appWidth / 4.7,
+  appHeight / 2.2,
+  snake2,
+  'snake2'
 );
 
 let snakeOneSprite = createWelcomeSprite(
-	appWidth / 3.7,
-	appHeight / 1.8,
-	snake1,
-	'snake1'
+  appWidth / 3.7,
+  appHeight / 1.8,
+  snake1,
+  'snake1'
 );
 
 let marantaSprite = createWelcomeSprite(
-	appWidth / 1.7,
-	appHeight / 4.2,
-	maranta,
-	'maranta'
+  appWidth / 1.7,
+  appHeight / 4.2,
+  maranta,
+  'maranta'
 );
 
 let monsteraShadowSprite = createWelcomeSprite(
-	appWidth / 6,
-	appHeight / 1.3,
-	monstera,
-	'monstera'
+  appWidth / 6,
+  appHeight / 1.3,
+  monstera,
+  'monstera'
 );
 
 // lighting test
@@ -411,9 +428,14 @@ export let chai = createSprite(
 chai.on('mouseover', () => (chai.tint = 0x007ec7));
 chai.on('mouseout', () => (chai.tint = 0xffffff));
 chai.on('click', () => {
-	Project.onClick('project', 'chai', 'promiseHS', 'gobARk');
-	gobARk.interactive = false;
-	promiseHS.interactive = false;
+  let projects = [promiseHS, gobARk];
+  Project.onClick('project', 'chai', projects);
+  projects.forEach((project) => (project.interactive = false));
+});
+chai.on('tap', () => {
+  let projects = [promiseHS, gobARk];
+  Project.onClick('project', 'chai', projects);
+  projects.forEach((project) => (project.interactive = false));
 });
 
 export let gobARk = createSprite(
@@ -425,9 +447,14 @@ export let gobARk = createSprite(
 gobARk.on('mouseover', () => (gobARk.tint = 0x007ec7));
 gobARk.on('mouseout', () => (gobARk.tint = 0xffffff));
 gobARk.on('click', () => {
-	Project.onClick('project', 'gobARk', 'promiseHS', 'chai');
-	promiseHS.interactive = false;
-	chai.interactive = false;
+  let projects = [promiseHS, chai];
+  Project.onClick('project', 'gobARk', projects);
+  projects.forEach((project) => (project.interactive = false));
+});
+gobARk.on('tap', () => {
+  let projects = [promiseHS, chai];
+  Project.onClick('project', 'gobARk', projects);
+  projects.forEach((project) => (project.interactive = false));
 });
 
 export let promiseHS = createSprite(
@@ -440,9 +467,14 @@ export let promiseHS = createSprite(
 promiseHS.on('mouseover', () => (promiseHS.tint = 0x007ec7));
 promiseHS.on('mouseout', () => (promiseHS.tint = 0xffffff));
 promiseHS.on('click', () => {
-	Project.onClick('project', 'promise', 'gobARk', 'chai');
-	gobARk.interactive = false;
-	chai.interactive = false;
+  let projects = [gobARk, chai];
+  Project.onClick('project', 'promise', projects);
+  projects.forEach((project) => (project.interactive = false));
+});
+promiseHS.on('tap', () => {
+  let projects = [gobARk, chai];
+  Project.onClick('project', 'promise', projects);
+  projects.forEach((project) => (project.interactive = false));
 });
 
 /****** About Me room *******/
@@ -465,67 +497,107 @@ let rightShelf = createSprite(
 
 /* Left Shelf */
 let bfaText = PIXI.Texture.from('/siteAssets/bfa-book.png');
-let bfa = createSprite(
-	(appWidth / 4) * (9 + scale.book / 2),
-	appHeight / 3,
-	bfaText,
-	'book'
+export let bfa = createSprite(
+  (appWidth / 4) * (9 + scale.book / 2),
+  appHeight / 3,
+  bfaText,
+  'book'
 );
 bfa.on('mouseover', () => (bfa.tint = 0xaf0000));
 bfa.on('mouseout', () => (bfa.tint = 0xffffff));
-bfa.on('click', () => Project.onClick('about', 'bfa'));
+bfa.on('click', () => {
+  let items = [convo, blueOcean, krimson, goat, stagg];
+  Project.onClick('about', 'bfa', items);
+  items.forEach((item) => (item.interactive = false));
+});
+bfa.on('tap', () => {
+  let items = [convo, blueOcean, presence, krimson, goat, stagg];
+  Project.onClick('about', 'bfa', items);
+  items.forEach((item) => (item.interactive = false));
+});
 
 let convoText = PIXI.Texture.from('/siteAssets/convowfear.png');
-let convo = createSprite(
-	(appWidth / 4) * (9.05 + scale.book / 2),
-	appHeight / 3 - 10 * scale.book,
-	convoText,
-	'book'
+export let convo = createSprite(
+  (appWidth / 4) * (9.05 + scale.book / 2),
+  appHeight / 3 - 10 * scale.book,
+  convoText,
+  'book'
 );
 convo.on('mouseover', () => (convo.tint = 0x007ec7));
 convo.on('mouseout', () => (convo.tint = 0xffffff));
-convo.on('click', () => Project.onClick('about', 'convo'));
+convo.on('click', () => {
+  let items = [bfa, blueOcean, presence, krimson, goat, stagg];
+  Project.onClick('about', 'convo', items);
+  items.forEach((item) => (item.interactive = false));
+});
 
 let blueText = PIXI.Texture.from('/siteAssets/blue-book.png');
-let blueOcean = createSprite(
-	(appWidth / 4) * (9.05 + scale.book / 2) + 5,
-	appHeight / 3 - 25 * scale.book,
-	blueText,
-	'book'
+export let blueOcean = createSprite(
+  (appWidth / 4) * (9.05 + scale.book / 2) + 5,
+  appHeight / 3 - 25 * scale.book,
+  blueText,
+  'book'
 );
 blueOcean.on('mouseover', () => (blueOcean.tint = 0x007ec7));
 blueOcean.on('mouseout', () => (blueOcean.tint = 0xffffff));
-blueOcean.on('click', () => Project.onClick('about', 'blueOcean'));
+blueOcean.on('click', () => {
+  let items = [bfa, convo, presence, krimson, goat, stagg];
+  Project.onClick('about', 'blueOcean', items);
+  items.forEach((item) => (item.interactive = false));
+});
+blueOcean.on('tap', () => {
+  let items = [bfa, convo, presence, krimson, goat, stagg];
+  Project.onClick('about', 'blueOcean', items);
+  items.forEach((item) => (item.interactive = false));
+});
 
 /* Right Shelf */
 let presText = PIXI.Texture.from('/siteAssets/vertbook.png');
-let presence = createSprite(
-	(appWidth / 4) * (10.82 - scale.book / 2),
-	(appHeight / 5) * 2 - 40 * scale.book,
-	presText,
-	'book'
+export let presence = createSprite(
+  (appWidth / 4) * (10.7 - scale.book / 2),
+  (appHeight / 5) * 2 - 40 * scale.book,
+  presText,
+  'book'
 );
 presence.on('mouseover', () => (presence.tint = 0x007ec7));
 presence.on('mouseout', () => (presence.tint = 0xffffff));
-presence.on('click', () => Project.onClick('about', 'presence'));
+presence.on('click', () => {
+  let items = [bfa, convo, blueOcean, krimson, goat, stagg];
+  Project.onClick('about', 'presence', items);
+  items.forEach((item) => (item.interactive = false));
+});
+presence.on('tap', () => {
+  let items = [bfa, convo, blueOcean, krimson, goat, stagg];
+  Project.onClick('about', 'presence', items);
+  items.forEach((item) => (item.interactive = false));
+});
 
 let krimTexture = PIXI.Texture.from('/siteAssets/krimson-queen.png');
-let krimson = createSprite(
-	(appWidth / 4) * (11.2 - scale.book / 2),
-	(appHeight / 5) * 2 - 50 * scale.book,
-	krimTexture,
-	'plant'
+export let krimson = createSprite(
+  (appWidth / 4) * (11.2 - scale.book / 2),
+  (appHeight / 5) * 2 - 50 * scale.book,
+  krimTexture,
+  'plant'
 );
 krimson.on('mouseover', () => (krimson.tint = 0x007ec7));
 krimson.on('mouseout', () => (krimson.tint = 0xffffff));
-krimson.on('click', () => Project.onClick('about', 'plant'));
+krimson.on('click', () => {
+  let items = [bfa, convo, blueOcean, presence, goat, stagg];
+  Project.onClick('about', 'krimson', items);
+  items.forEach((item) => (item.interactive = false));
+});
+krimson.on('tap', () => {
+  let items = [bfa, convo, blueOcean, presence, goat, stagg];
+  Project.onClick('about', 'krimson', items);
+  items.forEach((item) => (item.interactive = false));
+});
 
 let sideTab = PIXI.Texture.from('/siteAssets/sideboard.png');
 let sideboard = createSprite(
-	(appWidth / 2) * 5,
-	(appHeight / 4) * 2.6,
-	sideTab,
-	'desk'
+  (appWidth / 2) * 5,
+  (appHeight / 4) * 2.6,
+  sideTab,
+  'desk'
 );
 
 let goatText = PIXI.Texture.from('/siteAssets/goat.png');
@@ -537,7 +609,17 @@ let goat = createSprite(
 );
 goat.on('mouseover', () => (goat.tint = 0x007ec7));
 goat.on('mouseout', () => (goat.tint = 0xffffff));
-goat.on('click', () => Project.onClick('about', 'coffee'));
+goat.on('click', () => {
+  let items = [bfa, convo, blueOcean, presence, krimson, stagg];
+  Project.onClick('about', 'goat', items);
+  items.forEach((item) => (item.interactive = false));
+});
+goat.on('tap', () => {
+  let items = [bfa, convo, blueOcean, presence, krimson, stagg];
+  Project.onClick('about', 'goat', items);
+  items.forEach((item) => (item.interactive = false));
+});
+
 let felText = PIXI.Texture.from('/siteAssets/stagg.png');
 let stagg = createSprite(
 	(appWidth / 2) * 5 + scale.coffee * 150,
@@ -547,7 +629,17 @@ let stagg = createSprite(
 );
 stagg.on('mouseover', () => (stagg.tint = 0x007ec7));
 stagg.on('mouseout', () => (stagg.tint = 0xffffff));
-stagg.on('click', () => Project.onClick('about', 'coffee'));
+stagg.on('click', () => {
+  let items = [bfa, convo, blueOcean, presence, krimson, goat];
+  Project.onClick('about', 'stagg', items);
+  items.forEach((item) => (item.interactive = false));
+});
+stagg.on('tap', () => {
+  let items = [bfa, convo, blueOcean, presence, krimson, goat];
+  Project.onClick('about', 'stagg', items);
+  items.forEach((item) => (item.interactive = false));
+});
+
 /**********    Contact Me    *************/
 
 /* socials links */
@@ -577,6 +669,9 @@ github.on('mouseout', () => (github.tint = 0xffffff));
 github.on('click', () =>
 	window.open('https://github.com/leslie-meng', '_blank')
 );
+github.on('tap', () =>
+	window.open('https://github.com/leslie-meng', '_blank')
+);
 
 let codeText = PIXI.Texture.from('/siteAssets/codepen-key.png');
 let codepen = createSprite(
@@ -590,6 +685,9 @@ codepen.on('mouseout', () => (codepen.tint = 0xffffff));
 codepen.on('click', () =>
 	window.open('https://codepen.io/leslie-meng', '_blank')
 );
+codepen.on('tap', () =>
+	window.open('https://codepen.io/leslie-meng', '_blank')
+);
 
 let linkText = PIXI.Texture.from('/siteAssets/linkedin-key.png');
 let linkedin = createSprite(
@@ -601,6 +699,9 @@ let linkedin = createSprite(
 linkedin.on('mouseover', () => (linkedin.tint = 0x007ec7));
 linkedin.on('mouseout', () => (linkedin.tint = 0xffffff));
 linkedin.on('click', () =>
+	window.open('https://www.linkedin.com/in/leslie-meng/', '_blank')
+);
+linkedin.on('tap', () =>
 	window.open('https://www.linkedin.com/in/leslie-meng/', '_blank')
 );
 
@@ -621,6 +722,7 @@ let radio = createSprite(
 radio.on('mouseover', () => (radio.tint = 0x007ec7));
 radio.on('mouseout', () => (radio.tint = 0xffffff));
 radio.on('click', () => alert('play musica!'));
+radio.on('tap', () => alert('play musica!'));
 /* table with guest book */
 
 let tableText = PIXI.Texture.from('/siteAssets/table.png');
@@ -645,6 +747,12 @@ guestbook.on(
 		(window.location.href =
 			'mailto:m.leslie.meng@gmail.com?subject=Just visited your website!')
 );
+guestbook.on(
+	'tap',
+	() =>
+		(window.location.href =
+			'mailto:m.leslie.meng@gmail.com?subject=Just visited your website!')
+);
 
 /* Pop Ups */
 export let popUps = new PIXI.Container();
@@ -652,3 +760,6 @@ app.stage.addChild(popUps);
 
 export let text = new PIXI.Container();
 app.stage.addChild(text);
+
+export let spotifyPixi = new PIXI.Container();
+app.stage.addChild(spotifyPixi);

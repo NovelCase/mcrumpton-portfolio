@@ -15,6 +15,7 @@ export default class Welcome extends React.Component {
 			city: 'Manhattan',
 			data: {},
 			weatherColor: 0x87ceeb,
+			time: new Date(),
 		};
 		this.calculateTemp = this.calculateTemp.bind(this);
 		this.findMe = this.findMe.bind(this);
@@ -33,15 +34,26 @@ export default class Welcome extends React.Component {
 		// 	console.log(err);
 		// }
 		weatherWindow = new PIXI.Graphics();
+
+		let width = PixiApp.appWidth;
+		let height = PixiApp.appHeight;
+		let scale = 1;
+		if (width < 400) {
+			scale = 0.5;
+		} else if (height < 500) {
+			scale = 0.7;
+		}
+
 		weatherWindow
 			.beginFill(this.state.weatherColor)
 			.drawRect(
-				PixiApp.appWidth / 5,
-				PixiApp.appHeight / 10,
-				PixiApp.appWidth / 2.4,
-				PixiApp.appHeight / 2.6
+				(width / 5) * scale,
+				(height / 9.5) * scale,
+				(width / 2.4) * scale,
+				(height / 2.7) * scale
 			)
 			.endFill();
+
 		PixiApp.windowWeather.addChild(weatherWindow);
 
 		sideWeatherWindow = new PIXI.Graphics();
@@ -49,17 +61,17 @@ export default class Welcome extends React.Component {
 			.beginFill(this.state.weatherColor)
 			.drawPolygon([
 				//top left corner
-				PixiApp.appWidth / 17,
-				PixiApp.appHeight / 2.75,
+				width / 17,
+				height / 2.75,
 				//bottom left
-				PixiApp.appWidth / 17,
-				PixiApp.appHeight - PixiApp.appHeight * 0.3,
+				width / 17,
+				height - height * 0.3,
 				//bottom right
-				PixiApp.appWidth / 6,
-				PixiApp.appHeight - PixiApp.appHeight * 0.5,
+				width / 6,
+				height - height * 0.5,
 				//top right corner
-				PixiApp.appWidth / 6,
-				PixiApp.appHeight / 7,
+				width / 6,
+				height / 7,
 			])
 			.endFill();
 		PixiApp.windowWeather.addChild(sideWeatherWindow);

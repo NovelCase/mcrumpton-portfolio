@@ -1,6 +1,4 @@
-import '../public/style.css';
 import React from 'react';
-import { Link } from 'react-router-dom';
 import * as PixiApp from '../pixi/projectStage.js';
 import * as PIXI from 'pixi.js';
 const { text } = require('../data');
@@ -9,22 +7,25 @@ let roomWidthProject = 2.5;
 let roomWidthAbout = 4.5;
 let turnOnInteractive = [];
 
-export const onClick = (type, text, projectOne, projectTwo) => {
+export const onClick = (type, title, itemArr) => {
   if (type === 'about') {
     popUpAbout.visible = true;
     redXAbout.visible = true;
-    textInfo[text].visible = true;
-    about = text;
+    about = title;
+    if (textInfo[`${title}GoodReads`]) {
+      textInfo[`${title}GoodReads`].visible = true;
+    }
   } else {
     popUpProject.visible = true;
     redXProject.visible = true;
-    textInfo[text].visible = true;
-    textInfo[`${text}Description`].visible = true;
-    textInfo[`${text}Github`].visible = true;
-    textInfo[`${text}Live`].visible = true;
-    project = text;
-    turnOnInteractive.push(PixiApp[projectOne], PixiApp[projectTwo]);
+    textInfo[`${title}Github`].visible = true;
+    textInfo[`${title}Live`].visible = true;
+    project = title;
   }
+  textInfo[title].visible = true;
+  textInfo[`${title}Description`].visible = true;
+  itemArr.forEach((item) => turnOnInteractive.push(item));
+  console.log(turnOnInteractive);
 };
 let about;
 let project;
@@ -34,46 +35,67 @@ let popUpAbout;
 let redXAbout;
 let textInfo = {};
 export default class Project extends React.Component {
+  createPopUpRect(x, y) {
+    const rect = new PIXI.Graphics();
+    rect
+      .beginFill(0xf4f5e7)
+      .drawRoundedRect(x, y, window.innerWidth / 2, window.innerHeight / 2, 20)
+      .endFill();
+    rect.visible = false;
+    PixiApp.popUps.addChild(rect);
+    return rect;
+  }
+  createRedX(x, y) {
+    const redXTexture = PIXI.Texture.from('/siteAssets/x-mark.png');
+    const redX = new PIXI.Sprite(redXTexture);
+    redX.position.x = x;
+    redX.position.y = y;
+    redX.anchor.set(0.5);
+    redX.visible = false;
+    redX.interactive = true;
+    redX.buttonMode = true;
+    PixiApp.popUps.addChild(redX);
+    return redX;
+  }
+  openLink(projectName, linkType) {
+    let link;
+    if (linkType === 'Github' || linkType === 'GoodReads') {
+      link = 'linkOneUrl';
+    } else {
+      link = 'linkTwoUrl';
+    }
+    window.open(`${text[projectName][link]}`);
+  }
+  createText(words, style, x, y, interactive) {
+    const text = new PIXI.Text(words, style);
+    text.visible = false;
+    text.position.x = x;
+    text.position.y = y;
+    if (interactive) {
+      text.interactive = true;
+      text.buttonMode = true;
+    }
+    PixiApp.text.addChild(text);
+    return text;
+  }
   componentDidMount() {
     /* Pop Up for Project View */
-    popUpProject = new PIXI.Graphics();
-    popUpProject
-      .beginFill(0xf4f5e7)
-      .drawRect(
-        (window.innerWidth / 2) * roomWidthProject,
-        (window.innerHeight / 2) * 0.5,
-        window.innerWidth / 2,
-        window.innerHeight / 2
-      )
-      .endFill();
-    popUpProject.visible = false;
-    PixiApp.popUps.addChild(popUpProject);
+    popUpProject = this.createPopUpRect(
+      (window.innerWidth / 2) * roomWidthProject,
+      (window.innerHeight / 2) * 0.5
+    );
 
     /* Pop Up for About view */
-    popUpAbout = new PIXI.Graphics();
-    popUpAbout
-      .beginFill(0xf4f5e7)
-      .drawRect(
-        (window.innerWidth / 2) * roomWidthAbout,
-        (window.innerHeight / 2) * 0.5,
-        window.innerWidth / 2,
-        window.innerHeight / 2
-      )
-      .endFill();
-    popUpAbout.visible = false;
-    PixiApp.popUps.addChild(popUpAbout);
+    popUpAbout = this.createPopUpRect(
+      (window.innerWidth / 2) * roomWidthAbout,
+      (window.innerHeight / 2) * 0.5
+    );
 
-    const redXTexture = PIXI.Texture.from('/siteAssets/x-mark.png');
     /* redX for Project view */
-    redXProject = new PIXI.Sprite(redXTexture);
-    redXProject.position.x =
-      (window.innerWidth / 2) * (roomWidthProject + 0.05);
-    redXProject.position.y = (window.innerHeight / 3) * 0.9;
-    redXProject.anchor.set(0.5);
-    redXProject.visible = false;
-    redXProject.interactive = true;
-    redXProject.buttonMode = true;
-    PixiApp.popUps.addChild(redXProject);
+    redXProject = this.createRedX(
+      (window.innerWidth / 2) * (roomWidthProject + 0.05),
+      (window.innerHeight / 3) * 0.9
+    );
     redXProject.on('click', () => {
       popUpProject.visible = false;
       redXProject.visible = false;
@@ -82,174 +104,341 @@ export default class Project extends React.Component {
       textInfo[`${project}Github`].visible = false;
       textInfo[`${project}Live`].visible = false;
       turnOnInteractive.forEach((project) => (project.interactive = true));
+      turnOnInteractive = [];
     });
+    redXProject.on('tap', () => {
+      popUpProject.visible = false;
+      redXProject.visible = false;
+      textInfo[project].visible = false;
+      textInfo[`${project}Description`].visible = false;
+      textInfo[`${project}Github`].visible = false;
+      textInfo[`${project}Live`].visible = false;
+      turnOnInteractive.forEach((project) => (project.interactive = true));
+      turnOnInteractive = [];
+    });
+
     /* redX for About view */
-    redXAbout = new PIXI.Sprite(redXTexture);
-    redXAbout.position.x = (window.innerWidth / 2) * (roomWidthAbout + 0.05);
-    redXAbout.position.y = (window.innerHeight / 3) * 0.9;
-    redXAbout.anchor.set(0.5);
-    redXAbout.visible = false;
-    redXAbout.interactive = true;
-    redXAbout.buttonMode = true;
-    PixiApp.popUps.addChild(redXAbout);
+    redXAbout = this.createRedX(
+      (window.innerWidth / 2) * (roomWidthAbout + 0.05),
+      (window.innerHeight / 3) * 0.9
+    );
     redXAbout.on('click', () => {
       popUpAbout.visible = false;
       redXAbout.visible = false;
       textInfo[about].visible = false;
+      textInfo[`${about}Description`].visible = false;
+      if (textInfo[`${about}GoodReads`])
+        textInfo[`${about}GoodReads`].visible = false;
+      turnOnInteractive.forEach((about) => (about.interactive = true));
+      turnOnInteractive = [];
+    });
+    redXAbout.on('tap', () => {
+      popUpAbout.visible = false;
+      redXAbout.visible = false;
+      textInfo[about].visible = false;
+      textInfo[`${about}Description`].visible = false;
+      if (textInfo[`${about}GoodReads`])
+        textInfo[`${about}GoodReads`].visible = false;
+      turnOnInteractive.forEach((about) => (about.interactive = true));
+      turnOnInteractive = [];
     });
 
     /* Styling */
     let titleStyle = {
+      fontFamily: 'Nunito Sans',
       fontSize: 30,
       fontWeight: 'bold',
     };
     let descriptionStyle = {
-      fontSize: 20,
+      fontFamily: 'Nunito Sans',
+      fontSize: 18,
       fontWeight: '300',
       lineHeight: popUpProject.height / 12,
       wordWrap: true,
       wordWrapWidth: (popUpProject.width / 2) * 1.5,
     };
     let linkStyle = {
-      fontSize: 19,
+      fontFamily: 'Nunito Sans',
+      fontSize: 18,
       fill: '#007EC7',
     };
 
     /* Promise Project */
-    textInfo.promise = new PIXI.Text(`${text.promiseHS.name} -`, titleStyle);
-    textInfo.promise.position.x =
-      (popUpProject.width / 2) * (roomWidthProject * 2.09);
-    textInfo.promise.position.y = (window.innerHeight / 2) * 0.63;
-    textInfo.promise.visible = false;
-    PixiApp.text.addChild(textInfo.promise);
+    textInfo.promise = this.createText(
+      `${text.promiseHS.name} -`,
+      titleStyle,
+      (popUpProject.width / 2) * (roomWidthProject * 2.09),
+      (window.innerHeight / 2) * 0.63,
+      false
+    );
 
-    textInfo.promiseDescription = new PIXI.Text(
+    textInfo.promiseDescription = this.createText(
       `${text.promiseHS.description}`,
-      descriptionStyle
+      descriptionStyle,
+      (popUpProject.width / 2) * (roomWidthProject * 2.09),
+      (window.innerHeight / 2) * 0.78,
+      false
     );
-    textInfo.promiseDescription.visible = false;
-    textInfo.promiseDescription.position.x =
-      (popUpProject.width / 2) * (roomWidthProject * 2.09);
-    textInfo.promiseDescription.position.y = (window.innerHeight / 2) * 0.78;
-    PixiApp.text.addChild(textInfo.promiseDescription);
 
-    textInfo.promiseGithub = new PIXI.Text('Github', linkStyle);
-    textInfo.promiseGithub.visible = false;
-    textInfo.promiseGithub.position.x =
-      (popUpProject.width / 2) * (roomWidthProject * 2.09);
-    textInfo.promiseGithub.position.y = (window.innerHeight / 4) * 2.7;
-    textInfo.promiseGithub.interactive = true;
-    textInfo.promiseGithub.buttonMode = true;
+    textInfo.promiseGithub = this.createText(
+      'Github',
+      linkStyle,
+      (popUpProject.width / 2) * (roomWidthProject * 2.09),
+      (window.innerHeight / 4) * 2.7,
+      true
+    );
     textInfo.promiseGithub.on('click', () =>
-      console.log(`${text.promiseHS.linkOneUrl}`)
+      this.openLink('promiseHS', 'Github')
     );
-    PixiApp.text.addChild(textInfo.promiseGithub);
+    textInfo.promiseGithub.on('tap', () =>
+      this.openLink('promiseHs', 'Github')
+    );
 
-    textInfo.promiseLive = new PIXI.Text('Live Site', linkStyle);
-    textInfo.promiseLive.visible = false;
-    textInfo.promiseLive.position.x =
-      (popUpProject.width / 2) * (roomWidthProject * 2.2);
-    textInfo.promiseLive.position.y = (window.innerHeight / 4) * 2.7;
-    textInfo.promiseLive.interactive = true;
-    textInfo.promiseLive.buttonMode = true;
-    textInfo.promiseLive.on('click', () =>
-      console.log(`${text.promiseHS.linkTwoUrl}`)
+    textInfo.promiseLive = this.createText(
+      'Live Site',
+      linkStyle,
+      (popUpProject.width / 2) * (roomWidthProject * 2.2),
+      (window.innerHeight / 4) * 2.7,
+      true
     );
-    PixiApp.text.addChild(textInfo.promiseLive);
+    textInfo.promiseLive.on('click', () => this.openLink('promiseHS', 'Live'));
+    textInfo.promiseLive.on('tap', () => this.openLink('promiseHS', 'Live'));
 
     /* gobARk Project */
-    textInfo.gobARk = new PIXI.Text(`${text.gobARk.name} -`, titleStyle);
-    textInfo.gobARk.visible = false;
-    textInfo.gobARk.position.x =
-      (popUpProject.width / 2) * (roomWidthProject * 2.09);
-    textInfo.gobARk.position.y = (window.innerHeight / 2) * 0.63;
-    PixiApp.text.addChild(textInfo.gobARk);
+    textInfo.gobARk = this.createText(
+      `${text.gobARk.name} -`,
+      titleStyle,
+      (popUpProject.width / 2) * (roomWidthProject * 2.09),
+      (window.innerHeight / 2) * 0.63,
+      false
+    );
 
-    textInfo.gobARkDescription = new PIXI.Text(
+    textInfo.gobARkDescription = this.createText(
       `${text.gobARk.description}`,
-      descriptionStyle
+      descriptionStyle,
+      (popUpProject.width / 2) * (roomWidthProject * 2.09),
+      (window.innerHeight / 2) * 0.78,
+      false
     );
-    textInfo.gobARkDescription.visible = false;
-    textInfo.gobARkDescription.position.x =
-      (popUpProject.width / 2) * (roomWidthProject * 2.09);
-    textInfo.gobARkDescription.position.y = (window.innerHeight / 2) * 0.78;
-    PixiApp.text.addChild(textInfo.gobARkDescription);
 
-    textInfo.gobARkGithub = new PIXI.Text('Github', linkStyle);
-    textInfo.gobARkGithub.visible = false;
-    textInfo.gobARkGithub.position.x =
-      (popUpProject.width / 2) * (roomWidthProject * 2.09);
-    textInfo.gobARkGithub.position.y = (window.innerHeight / 4) * 2.7;
-    textInfo.gobARkGithub.interactive = true;
-    textInfo.gobARkGithub.buttonMode = true;
-    textInfo.gobARkGithub.on('click', () =>
-      console.log(`${text.gobARk.linkOneUrl}`)
+    textInfo.gobARkGithub = this.createText(
+      'Github',
+      linkStyle,
+      (popUpProject.width / 2) * (roomWidthProject * 2.09),
+      (window.innerHeight / 4) * 2.7,
+      true
     );
-    PixiApp.text.addChild(textInfo.gobARkGithub);
+    textInfo.gobARkGithub.on('click', () => this.openLink('gobARk', 'Github'));
+    textInfo.gobARkGithub.on('tap', () => this.openLink('gobARk', 'Github'));
 
-    textInfo.gobARkLive = new PIXI.Text('Live Site', linkStyle);
-    textInfo.gobARkLive.visible = false;
-    textInfo.gobARkLive.position.x =
-      (popUpProject.width / 2) * (roomWidthProject * 2.2);
-    textInfo.gobARkLive.position.y = (window.innerHeight / 4) * 2.7;
-    textInfo.gobARkLive.interactive = true;
-    textInfo.gobARkLive.buttonMode = true;
-    textInfo.gobARkLive.on('click', () =>
-      console.log(`${text.gobARk.linkTwoUrl}`)
+    textInfo.gobARkLive = this.createText(
+      'Presentation',
+      linkStyle,
+      (popUpProject.width / 2) * (roomWidthProject * 2.2),
+      (window.innerHeight / 4) * 2.7,
+      true
     );
-    PixiApp.text.addChild(textInfo.gobARkLive);
+    new PIXI.Text('Live Site', linkStyle);
+    textInfo.gobARkLive.on('click', () => this.openLink('gobARk', 'Live'));
+    textInfo.gobARkLive.on('tap', () => this.openLink('gobARk', 'Live'));
 
     /* Chai Noon Project */
-    textInfo.chai = new PIXI.Text(`${text.chai.name} -`, titleStyle);
-    textInfo.chai.visible = false;
-    textInfo.chai.position.x =
-      (popUpProject.width / 2) * (roomWidthProject * 2.09);
-    textInfo.chai.position.y = (window.innerHeight / 2) * 0.63;
-    PixiApp.text.addChild(textInfo.chai);
+    textInfo.chai = this.createText(
+      `${text.chai.name} -`,
+      titleStyle,
+      (popUpProject.width / 2) * (roomWidthProject * 2.09),
+      (window.innerHeight / 2) * 0.63,
+      false
+    );
 
-    textInfo.chaiDescription = new PIXI.Text(
+    textInfo.chaiDescription = this.createText(
       `${text.chai.description}`,
-      descriptionStyle
+      descriptionStyle,
+      (popUpProject.width / 2) * (roomWidthProject * 2.09),
+      (window.innerHeight / 2) * 0.78,
+      false
     );
-    textInfo.chaiDescription.visible = false;
-    textInfo.chaiDescription.position.x =
-      (popUpProject.width / 2) * (roomWidthProject * 2.09);
-    textInfo.chaiDescription.position.y = (window.innerHeight / 2) * 0.78;
-    PixiApp.text.addChild(textInfo.chaiDescription);
 
-    textInfo.chaiGithub = new PIXI.Text('Github', linkStyle);
-    textInfo.chaiGithub.visible = false;
-    textInfo.chaiGithub.position.x =
-      (popUpProject.width / 2) * (roomWidthProject * 2.09);
-    textInfo.chaiGithub.position.y = (window.innerHeight / 4) * 2.7;
-    textInfo.chaiGithub.interactive = true;
-    textInfo.chaiGithub.buttonMode = true;
-    textInfo.chaiGithub.on('click', () =>
-      console.log(`${text.chai.linkOneUrl}`)
+    textInfo.chaiGithub = this.createText(
+      'Github',
+      linkStyle,
+      (popUpProject.width / 2) * (roomWidthProject * 2.09),
+      (window.innerHeight / 4) * 2.7,
+      true
     );
-    PixiApp.text.addChild(textInfo.chaiGithub);
+    textInfo.chaiGithub.on('click', () => this.openLink('chai', 'Github'));
+    textInfo.chaiGithub.on('tap', () => this.openLink('chai', 'Github'));
 
-    textInfo.chaiLive = new PIXI.Text('Live Site', linkStyle);
-    textInfo.chaiLive.visible = false;
-    textInfo.chaiLive.position.x =
-      (popUpProject.width / 2) * (roomWidthProject * 2.2);
-    textInfo.chaiLive.position.y = (window.innerHeight / 4) * 2.7;
-    textInfo.chaiLive.interactive = true;
-    textInfo.chaiLive.buttonMode = true;
-    textInfo.chaiLive.on('click', () => console.log(`${text.chai.linkTwoUrl}`));
-    PixiApp.text.addChild(textInfo.chaiLive);
+    textInfo.chaiLive = this.createText(
+      'Live Site',
+      linkStyle,
+      (popUpProject.width / 2) * (roomWidthProject * 2.2),
+      (window.innerHeight / 4) * 2.7,
+      true
+    );
+    textInfo.chaiLive.on('click', () => this.openLink('chai', 'Live'));
+    textInfo.chaiLive.on('tap', () => this.openLink('chai', 'Live'));
 
     /* About Setion */
-    textInfo.bfa = new PIXI.Text('thingy mcThingy');
-    textInfo.bfa.visible = false;
-    textInfo.bfa.position.x = (window.innerWidth / 2) * (roomWidthAbout + 0.05);
-    textInfo.bfa.position.y = (window.innerHeight / 3) * 0.9;
-    PixiApp.text.addChild(textInfo.bfa);
+    /* bfa book */
+    textInfo.bfa = this.createText(
+      `${text.bfa.name}`,
+      titleStyle,
+      (window.innerWidth / 2) * (roomWidthAbout + 0.1),
+      (window.innerHeight / 3) * 0.98,
+      false
+    );
+    textInfo.bfaDescription = this.createText(
+      `${text.bfa.description}`,
+      descriptionStyle,
+      (window.innerWidth / 2) * (roomWidthAbout + 0.1),
+      (window.innerHeight / 3) * 1.15,
+      false
+    );
+    textInfo.bfaGoodReads = this.createText(
+      'Good Reads',
+      linkStyle,
+      (window.innerWidth / 2) * (roomWidthAbout + 0.1),
+      (window.innerHeight / 3) * 2,
+      true
+    );
+    textInfo.bfaGoodReads.on('click', () => this.openLink('bfa', 'GoodReads'));
+    textInfo.bfaGoodReads.on('tap', () => this.openLink('bfa', 'GoodReads'));
+
+    /* Convo Book */
+    textInfo.convo = this.createText(
+      `${text.convo.name}`,
+      titleStyle,
+      (window.innerWidth / 2) * (roomWidthAbout + 0.1),
+      (window.innerHeight / 3) * 0.98,
+      false
+    );
+    textInfo.convoDescription = this.createText(
+      `${text.convo.description}`,
+      descriptionStyle,
+      (window.innerWidth / 2) * (roomWidthAbout + 0.1),
+      (window.innerHeight / 3) * 1.15,
+      false
+    );
+    textInfo.convoGoodReads = this.createText(
+      'Good Reads',
+      linkStyle,
+      (window.innerWidth / 2) * (roomWidthAbout + 0.1),
+      (window.innerHeight / 3) * 2,
+      true
+    );
+    textInfo.convoGoodReads.on('click', () =>
+      this.openLink('convo', 'GoodReads')
+    );
+    textInfo.convoGoodReads.on('tap', () =>
+      this.openLink('convo', 'GoodReads')
+    );
+
+    /* Blue Ocean Book */
+    textInfo.blueOcean = this.createText(
+      `${text.blueOcean.name}`,
+      titleStyle,
+      (window.innerWidth / 2) * (roomWidthAbout + 0.1),
+      (window.innerHeight / 3) * 0.98,
+      false
+    );
+    textInfo.blueOceanDescription = this.createText(
+      `${text.blueOcean.description}`,
+      descriptionStyle,
+      (window.innerWidth / 2) * (roomWidthAbout + 0.1),
+      (window.innerHeight / 3) * 1.15,
+      false
+    );
+    textInfo.blueOceanGoodReads = this.createText(
+      'Good Reads',
+      linkStyle,
+      (window.innerWidth / 2) * (roomWidthAbout + 0.1),
+      (window.innerHeight / 3) * 2,
+      true
+    );
+    textInfo.blueOceanGoodReads.on('click', () =>
+      this.openLink('blueOcean', 'GoodReads')
+    );
+    textInfo.blueOceanGoodReads.on('tap', () =>
+      this.openLink('blueOcean', 'GoodReads')
+    );
+
+    /* presence book */
+    textInfo.presence = this.createText(
+      `${text.presence.name}`,
+      titleStyle,
+      (window.innerWidth / 2) * (roomWidthAbout + 0.1),
+      (window.innerHeight / 3) * 0.98,
+      false
+    );
+    textInfo.presenceDescription = this.createText(
+      `${text.presence.description}`,
+      descriptionStyle,
+      (window.innerWidth / 2) * (roomWidthAbout + 0.1),
+      (window.innerHeight / 3) * 1.15,
+      false
+    );
+    textInfo.presenceGoodReads = textInfo.blueOceanGoodReads = this.createText(
+      'Good Reads',
+      linkStyle,
+      (window.innerWidth / 2) * (roomWidthAbout + 0.1),
+      (window.innerHeight / 3) * 2,
+      true
+    );
+    textInfo.presenceGoodReads.on('click', () =>
+      this.openLink('presence', 'GoodReads')
+    );
+    textInfo.presenceGoodReads.on('tap', () =>
+      this.openLink('presence', 'GoodReads')
+    );
+
+    textInfo.krimson = this.createText(
+      `${text.plants.name}`,
+      titleStyle,
+      (window.innerWidth / 2) * (roomWidthAbout + 0.1),
+      (window.innerHeight / 3) * 0.98,
+      false
+    );
+    textInfo.krimsonDescription = this.createText(
+      `${text.plants.description}`,
+      descriptionStyle,
+      (window.innerWidth / 2) * (roomWidthAbout + 0.1),
+      (window.innerHeight / 3) * 1.15,
+      false
+    );
+
+    textInfo.goat = this.createText(
+      `${text.coffee.name}`,
+      titleStyle,
+      (window.innerWidth / 2) * (roomWidthAbout + 0.1),
+      (window.innerHeight / 3) * 0.98,
+      false
+    );
+    textInfo.goatDescription = this.createText(
+      `${text.coffee.description}`,
+      descriptionStyle,
+      (window.innerWidth / 2) * (roomWidthAbout + 0.1),
+      (window.innerHeight / 3) * 1.15,
+      false
+    );
+
+    textInfo.stagg = this.createText(
+      `${text.coffee.name}`,
+      titleStyle,
+      (window.innerWidth / 2) * (roomWidthAbout + 0.1),
+      (window.innerHeight / 3) * 0.98,
+      false
+    );
+    textInfo.staggDescription = this.createText(
+      `${text.coffee.description}`,
+      descriptionStyle,
+      (window.innerWidth / 2) * (roomWidthAbout + 0.1),
+      (window.innerHeight / 3) * 1.15,
+      false
+    );
   }
 
   render() {
-    // console.log(data.text);
-    // console.log(textInfo);
     return <div></div>;
   }
 }
