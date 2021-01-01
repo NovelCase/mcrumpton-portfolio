@@ -42,7 +42,8 @@ let left = keyboard('ArrowLeft'),
 //Left arrow key `press` method
 left.press = () => {
 	if (app.stage.pivot.x >= appWidth) {
-		app.stage.pivot.x -= appWidth;
+		app.stage.pivot.x =
+			Math.floor(app.stage.pivot.x / appWidth) * appWidth - appWidth;
 	} else app.stage.pivot.x = 0;
 };
 //Up
@@ -50,7 +51,8 @@ up.press = () => {};
 //Right
 right.press = () => {
 	if (app.stage.pivot.x <= appWidth * 2) {
-		app.stage.pivot.x += appWidth;
+		app.stage.pivot.x =
+			Math.floor(app.stage.pivot.x / appWidth) * appWidth + appWidth;
 	} else app.stage.pivot.x = 3 * appWidth;
 };
 
