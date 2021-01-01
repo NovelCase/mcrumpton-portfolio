@@ -43,7 +43,7 @@ let left = keyboard('ArrowLeft'),
 left.press = () => {
 	if (app.stage.pivot.x >= appWidth) {
 		app.stage.pivot.x -= appWidth;
-	}
+	} else app.stage.pivot.x = 0;
 };
 //Up
 up.press = () => {};
@@ -51,7 +51,7 @@ up.press = () => {};
 right.press = () => {
 	if (app.stage.pivot.x <= appWidth * 2) {
 		app.stage.pivot.x += appWidth;
-	}
+	} else app.stage.pivot.x = 3 * appWidth;
 };
 
 function keyboard(value) {
