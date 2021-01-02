@@ -195,10 +195,10 @@ app.stage.addChild(windowWeather);
 
 //welcome view helper code
 
-//welcome view scaling
-let backWindowWidth = 600;
-let backWindowHeight = 300;
-let leftWindowHeight = 480;
+//welcome view scaling with set height and width for windows
+export let backWindowWidth = 600;
+export let backWindowHeight = 300;
+export let leftWindowHeight = 480;
 let welcomeScale = {
 	windows: 0.65,
 	snake1: 0.8,
@@ -262,50 +262,62 @@ const maranta = PIXI.Texture.from('/siteAssets/marantatest.png');
 const monstera = PIXI.Texture.from('/siteAssets/monstera-shadow.png');
 
 //sprites
-let leftWindowSprite = createWelcomeSprite(
+export let leftWindowSprite = createWelcomeSprite(
 	appWidth / 7.9,
-	// appHeight / 2.75 + appHeight / 24,
-	(appHeight / 12) * 5.5,
+	// trim.position.y + appHeight * 0.5,
+	trim.height,
 	leftWindow,
 	'windows'
 );
 
 leftWindowSprite.height = leftWindowHeight;
 
-let backWindowSprite = createWelcomeSprite(
+leftWindowSprite.position.y += leftWindowSprite.height / 4;
+
+export let backWindowSprite = createWelcomeSprite(
 	leftWindowSprite.position.x + leftWindowSprite.width * 575,
 	leftWindowSprite.position.y - leftWindowSprite.height * 0.2,
 	backWindow,
 	'windows'
 );
 
+//changing to scale
 backWindowSprite.width = backWindowWidth;
 backWindowSprite.height = backWindowHeight;
 
+//left
 let snakeTwoSprite = createWelcomeSprite(
-	appWidth / 4.7,
-	appHeight / 2.2,
+	appWidth / 5.5,
+	appHeight - appHeight * 0.3,
 	snake2,
 	'snake2'
 );
 
+snakeTwoSprite.position.y -= snakeTwoSprite.height * 200;
+snakeTwoSprite.position.x += snakeTwoSprite.width * 40;
+
+//right
 let snakeOneSprite = createWelcomeSprite(
-	appWidth / 3.7,
-	appHeight / 1.8,
+	appWidth / 6,
+	appHeight - appHeight * 0.3,
 	snake1,
 	'snake1'
 );
+snakeOneSprite.position.y -= snakeOneSprite.height * 120;
+snakeOneSprite.position.x += snakeOneSprite.width * 160;
 
 let marantaSprite = createWelcomeSprite(
-	appWidth / 1.7,
-	appHeight / 4.2,
+	// appWidth / 1.7,
+	// appHeight / 4.2,
+	backWindowSprite.position.x + backWindowSprite.width / 3,
+	trim.position.y + ceiling.height / 1.4,
 	maranta,
 	'maranta'
 );
 
 let monsteraShadowSprite = createWelcomeSprite(
-	appWidth / 6,
-	appHeight / 1.3,
+	appWidth / 5,
+	appHeight / 1.27,
 	monstera,
 	'monstera'
 );
@@ -352,7 +364,7 @@ lightTwo
 app.stage.addChild(lightTwo);
 
 let helloCardSprite = createWelcomeSprite(
-	appWidth / 1.5,
+	appWidth / 1.4,
 	appHeight / 1.4,
 	helloCard,
 	'card'

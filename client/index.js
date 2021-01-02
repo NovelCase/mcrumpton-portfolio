@@ -11,7 +11,7 @@ require('babel-polyfill');
 ReactDOM.render(
 	<div>
 		<Project />
-		{/* <Welcome /> */}
+		<Welcome />
 		{/* <Contact /> */}
 	</div>,
 	document.getElementById('app')

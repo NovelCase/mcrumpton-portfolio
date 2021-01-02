@@ -37,20 +37,29 @@ export default class Welcome extends React.Component {
 
 		let width = PixiApp.appWidth;
 		let height = PixiApp.appHeight;
-		let scale = 1;
-		if (width < 400) {
-			scale = 0.5;
-		} else if (height < 500) {
-			scale = 0.7;
-		}
+		let backWindowWidth = PixiApp.backWindowWidth;
+		let backWindowHeight = PixiApp.backWindowWidth;
+		let leftWindowHeight = PixiApp.leftWindowHeight;
+		let backWindowX = PixiApp.backWindowSprite.position.x;
+		let backWindowY = PixiApp.backWindowSprite.position.y;
+		// let scale = 1;
+		// if (width < 400) {
+		// 	scale = 0.5;
+		// } else if (height < 500) {
+		// 	scale = 0.7;
+		// }
 
 		weatherWindow
 			.beginFill(this.state.weatherColor)
 			.drawRect(
-				(width / 5) * scale,
-				(height / 9.5) * scale,
-				(width / 2.4) * scale,
-				(height / 2.7) * scale
+				// (width / 5) * scale,
+				backWindowX / 2,
+				// (height / 9.5) * scale,
+				backWindowY / 2,
+				// (width / 2.4) * scale,
+				// (height / 2.7) * scale
+				backWindowWidth,
+				backWindowHeight
 			)
 			.endFill();
 
