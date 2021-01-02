@@ -42,45 +42,38 @@ export default class Welcome extends React.Component {
 		let leftWindowHeight = PixiApp.leftWindowHeight;
 		let backWindowX = PixiApp.backWindowSprite.position.x;
 		let backWindowY = PixiApp.backWindowSprite.position.y;
-		// let scale = 1;
-		// if (width < 400) {
-		// 	scale = 0.5;
-		// } else if (height < 500) {
-		// 	scale = 0.7;
-		// }
+		let leftWindowSprite = PixiApp.leftWindowSprite;
 
 		weatherWindow
 			.beginFill(this.state.weatherColor)
 			.drawRect(
-				// (width / 5) * scale,
-				backWindowX / 2,
-				// (height / 9.5) * scale,
-				backWindowY / 2,
-				// (width / 2.4) * scale,
-				// (height / 2.7) * scale
-				backWindowWidth,
-				backWindowHeight
+				//based on left window position and back window dimensions
+				leftWindowSprite.position.x + backWindowWidth / 7,
+				leftWindowSprite.position.y - backWindowHeight * 0.39,
+				backWindowWidth * 0.95,
+				backWindowHeight * 0.45
 			)
 			.endFill();
 
 		PixiApp.windowWeather.addChild(weatherWindow);
 
 		sideWeatherWindow = new PIXI.Graphics();
+
 		sideWeatherWindow
 			.beginFill(this.state.weatherColor)
 			.drawPolygon([
 				//top left corner
-				width / 17,
-				height / 2.75,
+				leftWindowSprite.position.x - backWindowWidth / 6,
+				leftWindowSprite.position.y - backWindowHeight * 0.1,
 				//bottom left
-				width / 17,
-				height - height * 0.3,
+				leftWindowSprite.position.x - backWindowWidth / 6,
+				leftWindowSprite.position.y + backWindowHeight * 0.35,
 				//bottom right
-				width / 6,
-				height - height * 0.5,
+				leftWindowSprite.position.x + backWindowWidth / 12,
+				leftWindowSprite.position.y + backWindowHeight * 0.07,
 				//top right corner
-				width / 6,
-				height / 7,
+				leftWindowSprite.position.x + backWindowWidth / 12,
+				leftWindowSprite.position.y - backWindowHeight * 0.37,
 			])
 			.endFill();
 		PixiApp.windowWeather.addChild(sideWeatherWindow);

@@ -3,6 +3,7 @@ const PIXI = require('pixi.js');
 const Project = require('../client/ProjectView');
 // ? for iframe?
 import React from 'react';
+import { weatherWindow } from '../client/WelcomeView';
 
 window.WebFontConfig = {
 	google: {
@@ -119,7 +120,7 @@ ceiling
 	.endFill();
 app.stage.addChild(ceiling);
 
-let trim = new PIXI.Graphics();
+export let trim = new PIXI.Graphics();
 trim
 	.beginFill(0xb39b5f)
 	.drawPolygon([
@@ -190,15 +191,16 @@ app.stage.addChild(floor);
 /****** Welcome room *******/
 
 //for welcome component weather
+
 export let windowWeather = new PIXI.Container();
 app.stage.addChild(windowWeather);
 
 //welcome view helper code
 
 //welcome view scaling with set height and width for windows
-export let backWindowWidth = 600;
-export let backWindowHeight = 300;
-export let leftWindowHeight = 480;
+let backWindowWidth = 600;
+let backWindowHeight = 300;
+let leftWindowHeight = 480;
 let welcomeScale = {
 	windows: 0.65,
 	snake1: 0.8,
@@ -274,7 +276,7 @@ leftWindowSprite.height = leftWindowHeight;
 
 leftWindowSprite.position.y += leftWindowSprite.height / 4;
 
-export let backWindowSprite = createWelcomeSprite(
+let backWindowSprite = createWelcomeSprite(
 	leftWindowSprite.position.x + leftWindowSprite.width * 575,
 	leftWindowSprite.position.y - leftWindowSprite.height * 0.2,
 	backWindow,
@@ -783,3 +785,10 @@ app.stage.addChild(text);
 
 export let spotifyPixi = new PIXI.Container();
 app.stage.addChild(spotifyPixi);
+
+export {
+	backWindowHeight,
+	backWindowWidth,
+	leftWindowHeight,
+	backWindowSprite,
+};
