@@ -741,10 +741,31 @@ let radio = createSprite(
 	radioText,
 	'radio'
 );
+
+// https://open.spotify.com/playlist/4pIW1SD0OMJOYqp30KjvGI?si=IZHmW7wFSu-DaMmBF1NtHQ
 radio.on('mouseover', () => (radio.tint = 0x007ec7));
 radio.on('mouseout', () => (radio.tint = 0xffffff));
-radio.on('click', () => alert('play musica!'));
-radio.on('tap', () => alert('play musica!'));
+//simply links to a spotify playlist
+radio.on('click', () =>
+	window.open(
+		'https://open.spotify.com/playlist/4pIW1SD0OMJOYqp30KjvGI?si=IZHmW7wFSu-DaMmBF1NtHQ',
+		'_blank'
+	)
+);
+radio.on('tap', () =>
+	window.open(
+		'https://open.spotify.com/playlist/4pIW1SD0OMJOYqp30KjvGI?si=IZHmW7wFSu-DaMmBF1NtHQ',
+		'_blank'
+	)
+);
+
+//trying to conditionally render spotify playlist
+// export let visible = false;
+// radio.on('click', () => {
+// 	visible = true;
+// 	console.log('hi');
+// });
+// radio.on('tap', () => (visible = true));
 /* table with guest book */
 
 let tableText = PIXI.Texture.from('/siteAssets/table.png');
