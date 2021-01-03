@@ -9,7 +9,7 @@ export default class Welcome extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			//SF data
+			//SF data for testing purposes
 			// lat: 37.77,
 			// lng: -122.42,
 			//NY data
@@ -41,23 +41,23 @@ export default class Welcome extends React.Component {
 				this.state.data.weather[0].description,
 				this.state.time
 			);
-			console.log('color inside component did mount', this.state.weatherColor);
 		} catch (err) {
 			console.log(err);
 		}
 		//creating window colors
 		weatherWindow = new PIXI.Graphics();
+		//available if needed for addt'l responsive design / scaling
 		let width = PixiApp.appWidth;
 		let height = PixiApp.appHeight;
 		let backWindowWidth = PixiApp.backWindowWidth;
 		let backWindowHeight = PixiApp.backWindowWidth;
+		//available if needed for addt'l responsive design / scaling
 		let leftWindowHeight = PixiApp.leftWindowHeight;
 		let backWindowX = PixiApp.backWindowSprite.position.x;
 		let backWindowY = PixiApp.backWindowSprite.position.y;
 		let leftWindowSprite = PixiApp.leftWindowSprite;
 
 		//back window
-		console.log('color before draw: ', this.state.weatherColor);
 		weatherWindow
 			.beginFill(this.state.weatherColor)
 			.drawRect(
@@ -120,58 +120,52 @@ export default class Welcome extends React.Component {
 		return degrees;
 	}
 
+	//convert an indivudal r b g component to hex
 	componentToHex(c) {
-		var hex = c.toString(16);
+		const hex = c.toString(16);
 		return hex.length == 1 ? '0' + hex : hex;
 	}
 
+	//convert rbg string to hex
 	rgbToHex(r, g, b) {
-		// let hexVal = parseInt(
-		// 	'0x' +
-		// 		this.componentToHex(r) +
-		// 		this.componentToHex(g) +
-		// 		this.componentToHex(b),
-		// 	16
-		// );
-		// 		hex_int = int(hex_str, 16)
-		// new_int = hex_int + 0x200
-		// print hex(new_int)
-		let hexVal =
+		const hexVal =
 			'#' +
 			this.componentToHex(r) +
 			this.componentToHex(g) +
 			this.componentToHex(b);
-		let num = parseInt(hexVal.substring(1), 16);
+		const num = parseInt(hexVal.substring(1), 16);
 		return num;
 	}
 
+	//choose weather color on time and weather
 	chooseWeatherColor(temp, clouds, time) {
-		let r = 0;
-		let g = 255;
-		let b = 255;
+		let r, g, b;
 		// deal with clouds
 		let cloudy = false;
 		if (clouds.includes('cloud') || clouds.includes('Cloud')) {
 			cloudy = true;
 		}
+		//get current time of day
 		let dayTime = time.getHours();
 		r = Math.floor(((temp / 100) * 255) / 2);
-		b = Math.floor((1 - dayTime / 24) * 255);
+		//blue should be higher when lighter
+		b = Math.floor((1 - dayTime / 36) * 255);
+		//if there are clouds, rgh should be very close together for grey effect
 		if (cloudy) {
-			g = Math.floor(b * 0.75);
+			g = Math.floor(b * 0.95);
+			r = Math.floor(g * 0.95);
 		} else {
+			//green should generally be half of blue for a blue sky
 			g = Math.floor(b / 2);
 		}
-		g = Math.floor(b / 2);
-
+		//translate rbg elements into hex
 		r = this.componentToHex(r);
 		g = this.componentToHex(g);
 		b = this.componentToHex(b);
-
+		//translate rgb string to hex
 		let rgbHex = this.rgbToHex(r, g, b);
-
+		//set weather on state
 		this.setState({ weatherColor: rgbHex });
-		console.log(this.state.weatherColor);
 	}
 
 	render() {
