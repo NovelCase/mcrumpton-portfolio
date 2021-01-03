@@ -9,9 +9,12 @@ export default class Welcome extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
+			//SF data
+			// lat: 37.77,
+			// lng: -122.42,
 			//NY data
-			lat: 37.77,
-			lng: -122.42,
+			lat: 40.75,
+			lng: -73.98,
 			city: 'Manhattan',
 			data: {},
 			weatherColor: 0x87ceeb,
@@ -38,6 +41,7 @@ export default class Welcome extends React.Component {
 				this.state.data.weather[0].description,
 				this.state.time
 			);
+			console.log('color inside component did mount', this.state.weatherColor);
 		} catch (err) {
 			console.log(err);
 		}
@@ -52,6 +56,8 @@ export default class Welcome extends React.Component {
 		let backWindowY = PixiApp.backWindowSprite.position.y;
 		let leftWindowSprite = PixiApp.leftWindowSprite;
 
+		//back window
+		console.log('color before draw: ', this.state.weatherColor);
 		weatherWindow
 			.beginFill(this.state.weatherColor)
 			.drawRect(
@@ -67,6 +73,7 @@ export default class Welcome extends React.Component {
 
 		sideWeatherWindow = new PIXI.Graphics();
 
+		//dependent on left window position and back window dimensions
 		sideWeatherWindow
 			.beginFill(this.state.weatherColor)
 			.drawPolygon([
@@ -126,14 +133,16 @@ export default class Welcome extends React.Component {
 		// 		this.componentToHex(b),
 		// 	16
 		// );
+		// 		hex_int = int(hex_str, 16)
+		// new_int = hex_int + 0x200
+		// print hex(new_int)
 		let hexVal =
-			'0x' +
+			'#' +
 			this.componentToHex(r) +
 			this.componentToHex(g) +
 			this.componentToHex(b);
-		//not coming out with 0x
-		console.log(Number(hexVal));
-		return hexVal;
+		let num = parseInt(hexVal.substring(1), 16);
+		return num;
 	}
 
 	chooseWeatherColor(temp, clouds, time) {
@@ -142,12 +151,17 @@ export default class Welcome extends React.Component {
 		let b = 255;
 		// deal with clouds
 		let cloudy = false;
-		if (clouds.includes('cloud')) {
+		if (clouds.includes('cloud') || clouds.includes('Cloud')) {
 			cloudy = true;
 		}
 		let dayTime = time.getHours();
-		r = Math.floor(temp / 100);
+		r = Math.floor(((temp / 100) * 255) / 2);
 		b = Math.floor((1 - dayTime / 24) * 255);
+		if (cloudy) {
+			g = Math.floor(b * 0.75);
+		} else {
+			g = Math.floor(b / 2);
+		}
 		g = Math.floor(b / 2);
 
 		r = this.componentToHex(r);
