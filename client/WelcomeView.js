@@ -10,8 +10,8 @@ export default class Welcome extends React.Component {
 		super(props);
 		this.state = {
 			//NY data
-			lat: 40.7484,
-			lng: -73.9857,
+			lat: 37.77,
+			lng: -122.42,
 			city: 'Manhattan',
 			data: {},
 			weatherColor: 0x87ceeb,
@@ -20,21 +20,29 @@ export default class Welcome extends React.Component {
 		this.calculateTemp = this.calculateTemp.bind(this);
 		this.findMe = this.findMe.bind(this);
 		this.chooseWeatherColor = this.chooseWeatherColor.bind(this);
+		this.rgbToHex = this.rgbToHex.bind(this);
+		this.componentToHex = this.componentToHex.bind(this);
 	}
 
 	async componentDidMount() {
-		// try {
-		// 	const api_call = await fetch(
-		// 		`https://api.openweathermap.org/data/2.5/weather?lat=${this.state.lat}&lon=${this.state.lng}&APPID=${api_weather}`
-		// 	);
-		// 	const data = await api_call.json();
-		// 	this.setState({ data });
-		// 	console.log('weather data: ', this.state.data);
-		// } catch (err) {
-		// 	console.log(err);
-		// }
+		try {
+			this.setState({ time: new Date() });
+			const api_call = await fetch(
+				`https://api.openweathermap.org/data/2.5/weather?lat=${this.state.lat}&lon=${this.state.lng}&APPID=${api_weather}`
+			);
+			const data = await api_call.json();
+			this.setState({ data });
+			console.log('weather data: ', this.state.data);
+			this.chooseWeatherColor(
+				this.calculateTemp(this.state.data.main.temp),
+				this.state.data.weather[0].description,
+				this.state.time
+			);
+		} catch (err) {
+			console.log(err);
+		}
+		//creating window colors
 		weatherWindow = new PIXI.Graphics();
-
 		let width = PixiApp.appWidth;
 		let height = PixiApp.appHeight;
 		let backWindowWidth = PixiApp.backWindowWidth;
@@ -79,32 +87,6 @@ export default class Welcome extends React.Component {
 		PixiApp.windowWeather.addChild(sideWeatherWindow);
 	}
 
-	//component did update
-	// async componentDidUpdate(prevState) {
-	// 	try {
-	// 		//if the user clicks find me
-	// 		if (prevState.city !== this.state.city) {
-	// 			const api_call = await fetch(
-	// 				`https://api.openweathermap.org/data/2.5/weather?q=${this.state.city}&APPID=${api_weather}`
-	// 			);
-	// 			const data = await api_call.json();
-	// 			this.setState({ data });
-	// 		} else if (prevState.lat !== this.state.lat) {
-	// 			//get their current weather based on lat/lng
-	// 			const api_call = await fetch(
-	// 				`https://api.openweathermap.org/data/2.5/weather?lat=${this.state.lat}&lon=${this.state.lng}&APPID=${api_weather}`
-	// 			);
-	// 			const data = await api_call.json();
-	// 			this.setState({ data });
-	// 			this.chooseWeatherColor;
-	// 		}
-	// 		console.log('weather data: ', this.state.data);
-	// 	} catch (err) {
-	// 		//need better error handling if the api key fails
-	// 		console.log(err);
-	// 	}
-	// }
-
 	async findMe() {
 		try {
 			navigator.geolocation.getCurrentPosition(async (position) => {
@@ -131,12 +113,54 @@ export default class Welcome extends React.Component {
 		return degrees;
 	}
 
-	chooseWeatherColor(temp, clouds) {
-		this.setState({ weatherColor: 0x00bfff });
+	componentToHex(c) {
+		var hex = c.toString(16);
+		return hex.length == 1 ? '0' + hex : hex;
+	}
+
+	rgbToHex(r, g, b) {
+		// let hexVal = parseInt(
+		// 	'0x' +
+		// 		this.componentToHex(r) +
+		// 		this.componentToHex(g) +
+		// 		this.componentToHex(b),
+		// 	16
+		// );
+		let hexVal =
+			'0x' +
+			this.componentToHex(r) +
+			this.componentToHex(g) +
+			this.componentToHex(b);
+		//not coming out with 0x
+		console.log(Number(hexVal));
+		return hexVal;
+	}
+
+	chooseWeatherColor(temp, clouds, time) {
+		let r = 0;
+		let g = 255;
+		let b = 255;
+		// deal with clouds
+		let cloudy = false;
+		if (clouds.includes('cloud')) {
+			cloudy = true;
+		}
+		let dayTime = time.getHours();
+		r = Math.floor(temp / 100);
+		b = Math.floor((1 - dayTime / 24) * 255);
+		g = Math.floor(b / 2);
+
+		r = this.componentToHex(r);
+		g = this.componentToHex(g);
+		b = this.componentToHex(b);
+
+		let rgbHex = this.rgbToHex(r, g, b);
+
+		this.setState({ weatherColor: rgbHex });
+		console.log(this.state.weatherColor);
 	}
 
 	render() {
-		// console.log(PixiApp.popUps);
 		return <div></div>;
 	}
 }
