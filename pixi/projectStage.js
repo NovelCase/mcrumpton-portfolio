@@ -4,21 +4,22 @@ const Project = require('../client/ProjectView');
 var _ = require('lodash');
 // ? for iframe?
 import React from 'react';
+import { weatherWindow } from '../client/WelcomeView';
 
 window.WebFontConfig = {
-  google: {
-    families: ['Nunito Sans'],
-  },
+	google: {
+		families: ['Nunito Sans'],
+	},
 };
 (function () {
-  const wf = document.createElement('script');
-  wf.src = `${
-    document.location.protocol === 'https:' ? 'https' : 'http'
-  }://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js`;
-  wf.type = 'text/javascript';
-  wf.async = 'true';
-  const s = document.getElementsByTagName('script')[0];
-  s.parentNode.insertBefore(wf, s);
+	const wf = document.createElement('script');
+	wf.src = `${
+		document.location.protocol === 'https:' ? 'https' : 'http'
+	}://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js`;
+	wf.type = 'text/javascript';
+	wf.async = 'true';
+	const s = document.getElementsByTagName('script')[0];
+	s.parentNode.insertBefore(wf, s);
 })();
 
 const app = new PIXI.Application({
@@ -128,7 +129,7 @@ ceiling
   .endFill();
 app.stage.addChild(ceiling);
 
-let trim = new PIXI.Graphics();
+export let trim = new PIXI.Graphics();
 trim
   .beginFill(0xb39b5f)
   .drawPolygon([
@@ -199,57 +200,67 @@ app.stage.addChild(floor);
 /****** Welcome room *******/
 
 //for welcome component weather
+
 export let windowWeather = new PIXI.Container();
 app.stage.addChild(windowWeather);
 
 //welcome view helper code
 
-//welcome view scaling
+//welcome view scaling with set height and width for windows
+let backWindowWidth = 600;
+let backWindowHeight = 300;
+let leftWindowHeight = 480;
 let welcomeScale = {
-  windows: 0.65,
-  snake1: 0.8,
-  snake2: 0.8,
-  monstera: 0.8,
-  maranta: 0.5,
-  card: 0.85,
+	windows: 0.65,
+	snake1: 0.8,
+	snake2: 0.8,
+	monstera: 0.8,
+	maranta: 0.5,
+	card: 0.85,
 };
 if (appWidth < 400) {
-  welcomeScale.windows = 0.325;
-  welcomeScale.card = 0.425;
-  welcomeScale.snake1 = 0.4;
-  welcomeScale.snake2 = 0.4;
-  welcomeScale.monstera = 0.4;
-  welcomeScale.maranta = 0.25;
+	welcomeScale.windows = 0.325;
+	welcomeScale.card = 0.425;
+	welcomeScale.snake1 = 0.4;
+	welcomeScale.snake2 = 0.4;
+	welcomeScale.monstera = 0.4;
+	welcomeScale.maranta = 0.25;
+	backWindowWidth = 300;
+	backWindowHeight = 150;
+	leftWindowHeight = 240;
 } else if (appWidth < 500) {
-  welcomeScale.windows = 0.455;
-  welcomeScale.card = 0.595;
-  welcomeScale.snake1 = 0.56;
-  welcomeScale.snake2 = 0.56;
-  welcomeScale.monstera = 0.56;
-  welcomeScale.maranta = 0.35;
+	welcomeScale.windows = 0.455;
+	welcomeScale.card = 0.595;
+	welcomeScale.snake1 = 0.56;
+	welcomeScale.snake2 = 0.56;
+	welcomeScale.monstera = 0.56;
+	welcomeScale.maranta = 0.35;
+	backWindowWidth = 420;
+	backWindowHeight = 210;
+	leftWindowHeight = 336;
 }
 
 //function to create welcome sprites
 function createWelcomeSprite(x, y, texture, type) {
-  const sprite = new Sprite(texture);
-  app.stage.addChild(sprite);
-  sprite.anchor.set(0.5);
-  sprite.position.x = x;
-  sprite.position.y = y;
-  if (type === 'windows') {
-    sprite.scale.set(welcomeScale.windows);
-  } else if (type === 'snake1') {
-    sprite.scale.set(welcomeScale.snake1);
-  } else if (type === 'snake2') {
-    sprite.scale.set(welcomeScale.snake2);
-  } else if (type === 'monstera') {
-    sprite.scale.set(welcomeScale.monstera);
-  } else if (type === 'maranta') {
-    sprite.scale.set(welcomeScale.maranta);
-  } else if (type === 'card') {
-    sprite.scale.set(welcomeScale.card);
-  }
-  return sprite;
+	const sprite = new Sprite(texture);
+	app.stage.addChild(sprite);
+	sprite.anchor.set(0.5);
+	sprite.position.x = x;
+	sprite.position.y = y;
+	if (type === 'windows') {
+		sprite.scale.set(welcomeScale.windows);
+	} else if (type === 'snake1') {
+		sprite.scale.set(welcomeScale.snake1);
+	} else if (type === 'snake2') {
+		sprite.scale.set(welcomeScale.snake2);
+	} else if (type === 'monstera') {
+		sprite.scale.set(welcomeScale.monstera);
+	} else if (type === 'maranta') {
+		sprite.scale.set(welcomeScale.maranta);
+	} else if (type === 'card') {
+		sprite.scale.set(welcomeScale.card);
+	}
+	return sprite;
 }
 
 //textures
@@ -262,51 +273,64 @@ const maranta = PIXI.Texture.from('/siteAssets/marantatest.png');
 const monstera = PIXI.Texture.from('/siteAssets/monstera-shadow.png');
 
 //sprites
-let leftWindowSprite = createWelcomeSprite(
-  appWidth / 7.5,
-  appHeight / 2.4,
-  leftWindow,
-  'windows'
+export let leftWindowSprite = createWelcomeSprite(
+	appWidth / 7.9,
+	// trim.position.y + appHeight * 0.5,
+	trim.height,
+	leftWindow,
+	'windows'
 );
 
-leftWindowSprite.height = 480;
+leftWindowSprite.height = leftWindowHeight;
+
+leftWindowSprite.position.y += leftWindowSprite.height / 4;
 
 let backWindowSprite = createWelcomeSprite(
-  appWidth / 2.5,
-  appHeight / 3.4,
-  backWindow,
-  'windows'
+	leftWindowSprite.position.x + leftWindowSprite.width * 575,
+	leftWindowSprite.position.y - leftWindowSprite.height * 0.2,
+	backWindow,
+	'windows'
 );
 
-backWindowSprite.width = 600;
-backWindowSprite.height = 300;
+//changing to scale
+backWindowSprite.width = backWindowWidth;
+backWindowSprite.height = backWindowHeight;
 
+//left
 let snakeTwoSprite = createWelcomeSprite(
-  appWidth / 4.7,
-  appHeight / 2.2,
-  snake2,
-  'snake2'
+	appWidth / 5.5,
+	appHeight - appHeight * 0.3,
+	snake2,
+	'snake2'
 );
 
+snakeTwoSprite.position.y -= snakeTwoSprite.height * 200;
+snakeTwoSprite.position.x += snakeTwoSprite.width * 40;
+
+//right
 let snakeOneSprite = createWelcomeSprite(
-  appWidth / 3.7,
-  appHeight / 1.8,
-  snake1,
-  'snake1'
+	appWidth / 6,
+	appHeight - appHeight * 0.3,
+	snake1,
+	'snake1'
 );
+snakeOneSprite.position.y -= snakeOneSprite.height * 120;
+snakeOneSprite.position.x += snakeOneSprite.width * 160;
 
 let marantaSprite = createWelcomeSprite(
-  appWidth / 1.7,
-  appHeight / 4.2,
-  maranta,
-  'maranta'
+	// appWidth / 1.7,
+	// appHeight / 4.2,
+	backWindowSprite.position.x + backWindowSprite.width / 3,
+	trim.position.y + ceiling.height / 1.4,
+	maranta,
+	'maranta'
 );
 
 let monsteraShadowSprite = createWelcomeSprite(
-  appWidth / 6,
-  appHeight / 1.3,
-  monstera,
-  'monstera'
+	appWidth / 5,
+	appHeight / 1.27,
+	monstera,
+	'monstera'
 );
 
 // lighting test
@@ -351,10 +375,10 @@ lightTwo
 app.stage.addChild(lightTwo);
 
 let helloCardSprite = createWelcomeSprite(
-  appWidth / 1.5,
-  appHeight / 1.4,
-  helloCard,
-  'card'
+	appWidth / 1.4,
+	appHeight / 1.4,
+	helloCard,
+	'card'
 );
 
 //Project view helper code
@@ -522,10 +546,10 @@ let rightShelf = createSprite(
 /* Left Shelf */
 let bfaText = PIXI.Texture.from('/siteAssets/bfa-book.png');
 export let bfa = createSprite(
-  (appWidth / 4) * (9 + scale.book / 2),
-  appHeight / 3,
-  bfaText,
-  'book'
+	(appWidth / 4) * (9 + scale.book / 2),
+	appHeight / 3,
+	bfaText,
+	'book'
 );
 bfa.on('mouseover', () => (bfa.tint = 0xaf0000));
 bfa.on('mouseout', () => (bfa.tint = 0xffffff));
@@ -544,10 +568,10 @@ bfa.on('tap', () => {
 
 let convoText = PIXI.Texture.from('/siteAssets/convowfear.png');
 export let convo = createSprite(
-  (appWidth / 4) * (9.05 + scale.book / 2),
-  appHeight / 3 - 10 * scale.book,
-  convoText,
-  'book'
+	(appWidth / 4) * (9.05 + scale.book / 2),
+	appHeight / 3 - 10 * scale.book,
+	convoText,
+	'book'
 );
 convo.on('mouseover', () => (convo.tint = 0x007ec7));
 convo.on('mouseout', () => (convo.tint = 0xffffff));
@@ -566,10 +590,10 @@ convo.on('tap', () => {
 
 let blueText = PIXI.Texture.from('/siteAssets/blue-book.png');
 export let blueOcean = createSprite(
-  (appWidth / 4) * (9.05 + scale.book / 2) + 5,
-  appHeight / 3 - 25 * scale.book,
-  blueText,
-  'book'
+	(appWidth / 4) * (9.05 + scale.book / 2) + 5,
+	appHeight / 3 - 25 * scale.book,
+	blueText,
+	'book'
 );
 blueOcean.on('mouseover', () => (blueOcean.tint = 0x007ec7));
 blueOcean.on('mouseout', () => (blueOcean.tint = 0xffffff));
@@ -633,10 +657,10 @@ krimson.on('tap', () => {
 
 let sideTab = PIXI.Texture.from('/siteAssets/sideboard.png');
 let sideboard = createSprite(
-  (appWidth / 2) * 5,
-  (appHeight / 4) * 2.6,
-  sideTab,
-  'desk'
+	(appWidth / 2) * 5,
+	(appHeight / 4) * 2.6,
+	sideTab,
+	'desk'
 );
 
 let goatText = PIXI.Texture.from('/siteAssets/goat.png');
@@ -765,16 +789,35 @@ let radio = createSprite(
   radioText,
   'radio'
 );
+
+// https://open.spotify.com/playlist/4pIW1SD0OMJOYqp30KjvGI?si=IZHmW7wFSu-DaMmBF1NtHQ
 radio.on('mouseover', () => (radio.tint = 0x007ec7));
 radio.on('mouseout', () => (radio.tint = 0xffffff));
+
+//simply links to a spotify playlist
 radio.on('click', () => {
-	alert('play musica!');
-	app.stage.pivot.x = 3 * appWidth;
+	window.open(
+		'https://open.spotify.com/playlist/4pIW1SD0OMJOYqp30KjvGI?si=IZHmW7wFSu-DaMmBF1NtHQ',
+		'_blank'
+	);
+  app.stage.pivot.x = 3 * appWidth;
 });
 radio.on('tap', () => {
-	alert('play musica!');
-	app.stage.pivot.x = 3 * appWidth;
+	window.open(
+		'https://open.spotify.com/playlist/4pIW1SD0OMJOYqp30KjvGI?si=IZHmW7wFSu-DaMmBF1NtHQ',
+		'_blank'
+	)
+  app.stage.pivot.x = 3 * appWidth;
 });
+
+//trying to conditionally render spotify playlist
+// export let visible = false;
+// radio.on('click', () => {
+// 	visible = true;
+// 	console.log('hi');
+// });
+// radio.on('tap', () => (visible = true));
+
 /* table with guest book */
 
 let tableText = PIXI.Texture.from('/siteAssets/table.png');
@@ -813,3 +856,10 @@ app.stage.addChild(text);
 
 export let spotifyPixi = new PIXI.Container();
 app.stage.addChild(spotifyPixi);
+
+export {
+	backWindowHeight,
+	backWindowWidth,
+	leftWindowHeight,
+	backWindowSprite,
+};
