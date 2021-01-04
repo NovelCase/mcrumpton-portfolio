@@ -25,7 +25,6 @@ export const onClick = (type, title, itemArr) => {
   textInfo[title].visible = true;
   textInfo[`${title}Description`].visible = true;
   itemArr.forEach((item) => turnOnInteractive.push(item));
-  console.log(turnOnInteractive);
 };
 let about;
 let project;
@@ -35,17 +34,34 @@ let popUpAbout;
 let redXAbout;
 let textInfo = {};
 export default class Project extends React.Component {
-  createPopUpRect(x, y) {
+  createPopUpRect(x, y, type) {
+    let width = window.innerWidth / 2;
+    let height = window.innerHeight / 2;
+    if (window.innerWidth < 400 && type === 'project') {
+      width = window.innerWidth;
+      height = (window.innerHeight / 4) * 3;
+      x = window.innerWidth;
+      y = (window.innerHeight / 2) * 0.2;
+    } else if (window.innerWidth < 400) {
+      width = window.innerWidth;
+      height = (window.innerHeight / 4) * 3;
+      x = window.innerWidth * 2;
+      y = (window.innerHeight / 2) * 0.2;
+    }
     const rect = new PIXI.Graphics();
-    rect
-      .beginFill(0xf4f5e7)
-      .drawRoundedRect(x, y, window.innerWidth / 2, window.innerHeight / 2, 20)
-      .endFill();
+    rect.beginFill(0xf4f5e7).drawRoundedRect(x, y, width, height, 20).endFill();
     rect.visible = false;
     PixiApp.popUps.addChild(rect);
     return rect;
   }
-  createRedX(x, y) {
+  createRedX(x, y, type) {
+    if (window.innerWidth < 400 && type === 'project') {
+      x = (window.innerWidth / 2) * 2.2;
+      y = (window.innerHeight / 4) * 0.6;
+    } else if (window.innerWidth < 400) {
+      x = (window.innerWidth / 2) * 4.2;
+      y = (window.innerHeight / 4) * 0.6;
+    }
     const redXTexture = PIXI.Texture.from('/siteAssets/x-mark.png');
     const redX = new PIXI.Sprite(redXTexture);
     redX.position.x = x;
@@ -66,8 +82,49 @@ export default class Project extends React.Component {
     }
     window.open(`${text[projectName][link]}`);
   }
-  createText(words, style, x, y, interactive) {
-    const text = new PIXI.Text(words, style);
+  createText(words, style, x, y, interactive, type) {
+    const smallProject = {
+      projectTitle: {
+        y: (window.innerHeight / 2) * 0.4,
+      },
+      projectDescription: {
+        y: (window.innerHeight / 2) * 0.55,
+      },
+      projectGithub: {
+        x: (window.innerWidth / 2) * 2.2,
+      },
+      projectLive: {
+        x: (window.innerWidth / 2) * 2.7,
+      },
+      aboutTitle: {
+        y: (window.innerHeight / 2) * 0.4,
+      },
+      aboutDescription: {
+        y: (window.innerHeight / 2) * 0.65,
+      },
+      aboutGoodReads: {
+        x: (window.innerWidth / 2) * 4.2,
+      },
+    };
+    const styleTwo = { ...style };
+    if (window.innerWidth < 400 && type.includes('project')) {
+      smallProject[type].x
+        ? (x = smallProject[type].x)
+        : (x = (window.innerWidth / 2) * 2.2);
+      smallProject[type].y
+        ? (y = smallProject[type].y)
+        : (y = (window.innerHeight / 4) * 2.95);
+      styleTwo.fontSize = styleTwo.fontSize - 5;
+    } else if (window.innerWidth < 400) {
+      smallProject[type].x
+        ? (x = smallProject[type].x)
+        : (x = (window.innerWidth / 2) * 4.2);
+      smallProject[type].y
+        ? (y = smallProject[type].y)
+        : (y = (window.innerHeight / 4) * 2.95);
+      styleTwo.fontSize = styleTwo.fontSize - 5;
+    }
+    const text = new PIXI.Text(words, styleTwo);
     text.visible = false;
     text.position.x = x;
     text.position.y = y;
@@ -82,19 +139,22 @@ export default class Project extends React.Component {
     /* Pop Up for Project View */
     popUpProject = this.createPopUpRect(
       (window.innerWidth / 2) * roomWidthProject,
-      (window.innerHeight / 2) * 0.5
+      (window.innerHeight / 2) * 0.5,
+      'project'
     );
 
     /* Pop Up for About view */
     popUpAbout = this.createPopUpRect(
       (window.innerWidth / 2) * roomWidthAbout,
-      (window.innerHeight / 2) * 0.5
+      (window.innerHeight / 2) * 0.5,
+      'about'
     );
 
     /* redX for Project view */
     redXProject = this.createRedX(
       (window.innerWidth / 2) * (roomWidthProject + 0.05),
-      (window.innerHeight / 3) * 0.9
+      (window.innerHeight / 3) * 0.9,
+      'project'
     );
     redXProject.on('click', () => {
       popUpProject.visible = false;
@@ -120,7 +180,8 @@ export default class Project extends React.Component {
     /* redX for About view */
     redXAbout = this.createRedX(
       (window.innerWidth / 2) * (roomWidthAbout + 0.05),
-      (window.innerHeight / 3) * 0.9
+      (window.innerHeight / 3) * 0.9,
+      'about'
     );
     redXAbout.on('click', () => {
       popUpAbout.visible = false;
@@ -146,20 +207,22 @@ export default class Project extends React.Component {
     /* Styling */
     let titleStyle = {
       fontFamily: 'Nunito Sans',
-      fontSize: 30,
+      fontSize: 35,
       fontWeight: 'bold',
+      wordWrap: true,
+      wordWrapWidth: (popUpProject.width / 4) * 3,
     };
     let descriptionStyle = {
       fontFamily: 'Nunito Sans',
-      fontSize: 18,
+      fontSize: 23,
       fontWeight: '300',
-      lineHeight: popUpProject.height / 12,
+      lineHeight: popUpProject.height / 16,
       wordWrap: true,
-      wordWrapWidth: (popUpProject.width / 2) * 1.5,
+      wordWrapWidth: (popUpProject.width / 4) * 3,
     };
     let linkStyle = {
       fontFamily: 'Nunito Sans',
-      fontSize: 18,
+      fontSize: 23,
       fill: '#007EC7',
     };
 
@@ -169,7 +232,8 @@ export default class Project extends React.Component {
       titleStyle,
       (popUpProject.width / 2) * (roomWidthProject * 2.09),
       (window.innerHeight / 2) * 0.63,
-      false
+      false,
+      'projectTitle'
     );
 
     textInfo.promiseDescription = this.createText(
@@ -177,7 +241,8 @@ export default class Project extends React.Component {
       descriptionStyle,
       (popUpProject.width / 2) * (roomWidthProject * 2.09),
       (window.innerHeight / 2) * 0.78,
-      false
+      false,
+      'projectDescription'
     );
 
     textInfo.promiseGithub = this.createText(
@@ -185,7 +250,8 @@ export default class Project extends React.Component {
       linkStyle,
       (popUpProject.width / 2) * (roomWidthProject * 2.09),
       (window.innerHeight / 4) * 2.7,
-      true
+      true,
+      'projectGithub'
     );
     textInfo.promiseGithub.on('click', () =>
       this.openLink('promiseHS', 'Github')
@@ -199,7 +265,8 @@ export default class Project extends React.Component {
       linkStyle,
       (popUpProject.width / 2) * (roomWidthProject * 2.2),
       (window.innerHeight / 4) * 2.7,
-      true
+      true,
+      'projectLive'
     );
     textInfo.promiseLive.on('click', () => this.openLink('promiseHS', 'Live'));
     textInfo.promiseLive.on('tap', () => this.openLink('promiseHS', 'Live'));
@@ -210,7 +277,8 @@ export default class Project extends React.Component {
       titleStyle,
       (popUpProject.width / 2) * (roomWidthProject * 2.09),
       (window.innerHeight / 2) * 0.63,
-      false
+      false,
+      'projectTitle'
     );
 
     textInfo.gobARkDescription = this.createText(
@@ -218,7 +286,8 @@ export default class Project extends React.Component {
       descriptionStyle,
       (popUpProject.width / 2) * (roomWidthProject * 2.09),
       (window.innerHeight / 2) * 0.78,
-      false
+      false,
+      'projectDescription'
     );
 
     textInfo.gobARkGithub = this.createText(
@@ -226,7 +295,8 @@ export default class Project extends React.Component {
       linkStyle,
       (popUpProject.width / 2) * (roomWidthProject * 2.09),
       (window.innerHeight / 4) * 2.7,
-      true
+      true,
+      'projectGithub'
     );
     textInfo.gobARkGithub.on('click', () => this.openLink('gobARk', 'Github'));
     textInfo.gobARkGithub.on('tap', () => this.openLink('gobARk', 'Github'));
@@ -236,7 +306,8 @@ export default class Project extends React.Component {
       linkStyle,
       (popUpProject.width / 2) * (roomWidthProject * 2.2),
       (window.innerHeight / 4) * 2.7,
-      true
+      true,
+      'projectLive'
     );
     new PIXI.Text('Live Site', linkStyle);
     textInfo.gobARkLive.on('click', () => this.openLink('gobARk', 'Live'));
@@ -248,7 +319,8 @@ export default class Project extends React.Component {
       titleStyle,
       (popUpProject.width / 2) * (roomWidthProject * 2.09),
       (window.innerHeight / 2) * 0.63,
-      false
+      false,
+      'projectTitle'
     );
 
     textInfo.chaiDescription = this.createText(
@@ -256,7 +328,8 @@ export default class Project extends React.Component {
       descriptionStyle,
       (popUpProject.width / 2) * (roomWidthProject * 2.09),
       (window.innerHeight / 2) * 0.78,
-      false
+      false,
+      'projectDescription'
     );
 
     textInfo.chaiGithub = this.createText(
@@ -264,7 +337,8 @@ export default class Project extends React.Component {
       linkStyle,
       (popUpProject.width / 2) * (roomWidthProject * 2.09),
       (window.innerHeight / 4) * 2.7,
-      true
+      true,
+      'projectGithub'
     );
     textInfo.chaiGithub.on('click', () => this.openLink('chai', 'Github'));
     textInfo.chaiGithub.on('tap', () => this.openLink('chai', 'Github'));
@@ -274,7 +348,8 @@ export default class Project extends React.Component {
       linkStyle,
       (popUpProject.width / 2) * (roomWidthProject * 2.2),
       (window.innerHeight / 4) * 2.7,
-      true
+      true,
+      'projectLive'
     );
     textInfo.chaiLive.on('click', () => this.openLink('chai', 'Live'));
     textInfo.chaiLive.on('tap', () => this.openLink('chai', 'Live'));
@@ -286,21 +361,24 @@ export default class Project extends React.Component {
       titleStyle,
       (window.innerWidth / 2) * (roomWidthAbout + 0.1),
       (window.innerHeight / 3) * 0.98,
-      false
+      false,
+      'aboutTitle'
     );
     textInfo.bfaDescription = this.createText(
       `${text.bfa.description}`,
       descriptionStyle,
       (window.innerWidth / 2) * (roomWidthAbout + 0.1),
-      (window.innerHeight / 3) * 1.15,
-      false
+      (window.innerHeight / 3) * 1.25,
+      false,
+      'aboutDescription'
     );
     textInfo.bfaGoodReads = this.createText(
       'Good Reads',
       linkStyle,
       (window.innerWidth / 2) * (roomWidthAbout + 0.1),
       (window.innerHeight / 3) * 2,
-      true
+      true,
+      'aboutGoodReads'
     );
     textInfo.bfaGoodReads.on('click', () => this.openLink('bfa', 'GoodReads'));
     textInfo.bfaGoodReads.on('tap', () => this.openLink('bfa', 'GoodReads'));
@@ -311,21 +389,24 @@ export default class Project extends React.Component {
       titleStyle,
       (window.innerWidth / 2) * (roomWidthAbout + 0.1),
       (window.innerHeight / 3) * 0.98,
-      false
+      false,
+      'aboutTitle'
     );
     textInfo.convoDescription = this.createText(
       `${text.convo.description}`,
       descriptionStyle,
       (window.innerWidth / 2) * (roomWidthAbout + 0.1),
-      (window.innerHeight / 3) * 1.15,
-      false
+      (window.innerHeight / 3) * 1.25,
+      false,
+      'aboutDescription'
     );
     textInfo.convoGoodReads = this.createText(
       'Good Reads',
       linkStyle,
       (window.innerWidth / 2) * (roomWidthAbout + 0.1),
       (window.innerHeight / 3) * 2,
-      true
+      true,
+      'aboutGoodReads'
     );
     textInfo.convoGoodReads.on('click', () =>
       this.openLink('convo', 'GoodReads')
@@ -340,21 +421,24 @@ export default class Project extends React.Component {
       titleStyle,
       (window.innerWidth / 2) * (roomWidthAbout + 0.1),
       (window.innerHeight / 3) * 0.98,
-      false
+      false,
+      'aboutTitle'
     );
     textInfo.blueOceanDescription = this.createText(
       `${text.blueOcean.description}`,
       descriptionStyle,
       (window.innerWidth / 2) * (roomWidthAbout + 0.1),
-      (window.innerHeight / 3) * 1.15,
-      false
+      (window.innerHeight / 3) * 1.25,
+      false,
+      'aboutDescription'
     );
     textInfo.blueOceanGoodReads = this.createText(
       'Good Reads',
       linkStyle,
       (window.innerWidth / 2) * (roomWidthAbout + 0.1),
       (window.innerHeight / 3) * 2,
-      true
+      true,
+      'aboutGoodReads'
     );
     textInfo.blueOceanGoodReads.on('click', () =>
       this.openLink('blueOcean', 'GoodReads')
@@ -369,21 +453,24 @@ export default class Project extends React.Component {
       titleStyle,
       (window.innerWidth / 2) * (roomWidthAbout + 0.1),
       (window.innerHeight / 3) * 0.98,
-      false
+      false,
+      'aboutTitle'
     );
     textInfo.presenceDescription = this.createText(
       `${text.presence.description}`,
       descriptionStyle,
       (window.innerWidth / 2) * (roomWidthAbout + 0.1),
-      (window.innerHeight / 3) * 1.15,
-      false
+      (window.innerHeight / 3) * 1.25,
+      false,
+      'aboutDescription'
     );
-    textInfo.presenceGoodReads = textInfo.blueOceanGoodReads = this.createText(
+    textInfo.presenceGoodReads = this.createText(
       'Good Reads',
       linkStyle,
       (window.innerWidth / 2) * (roomWidthAbout + 0.1),
       (window.innerHeight / 3) * 2,
-      true
+      true,
+      'aboutGoodReads'
     );
     textInfo.presenceGoodReads.on('click', () =>
       this.openLink('presence', 'GoodReads')
@@ -397,14 +484,16 @@ export default class Project extends React.Component {
       titleStyle,
       (window.innerWidth / 2) * (roomWidthAbout + 0.1),
       (window.innerHeight / 3) * 0.98,
-      false
+      false,
+      'aboutTitle'
     );
     textInfo.krimsonDescription = this.createText(
       `${text.plants.description}`,
       descriptionStyle,
       (window.innerWidth / 2) * (roomWidthAbout + 0.1),
-      (window.innerHeight / 3) * 1.15,
-      false
+      (window.innerHeight / 3) * 1.25,
+      false,
+      'aboutDescription'
     );
 
     textInfo.goat = this.createText(
@@ -412,14 +501,16 @@ export default class Project extends React.Component {
       titleStyle,
       (window.innerWidth / 2) * (roomWidthAbout + 0.1),
       (window.innerHeight / 3) * 0.98,
-      false
+      false,
+      'aboutTitle'
     );
     textInfo.goatDescription = this.createText(
       `${text.coffee.description}`,
       descriptionStyle,
       (window.innerWidth / 2) * (roomWidthAbout + 0.1),
-      (window.innerHeight / 3) * 1.15,
-      false
+      (window.innerHeight / 3) * 1.25,
+      false,
+      'aboutDescription'
     );
 
     textInfo.stagg = this.createText(
@@ -427,14 +518,16 @@ export default class Project extends React.Component {
       titleStyle,
       (window.innerWidth / 2) * (roomWidthAbout + 0.1),
       (window.innerHeight / 3) * 0.98,
-      false
+      false,
+      'aboutTitle'
     );
     textInfo.staggDescription = this.createText(
       `${text.coffee.description}`,
       descriptionStyle,
       (window.innerWidth / 2) * (roomWidthAbout + 0.1),
-      (window.innerHeight / 3) * 1.15,
-      false
+      (window.innerHeight / 3) * 1.25,
+      false,
+      'aboutDescription'
     );
   }
 
