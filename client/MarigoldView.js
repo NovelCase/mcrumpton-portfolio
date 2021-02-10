@@ -72,7 +72,6 @@ export default class MarigoldView extends React.Component {
     //   'bridge'
     // );
 
-
     const UPPER_LIMIT_Y = 10;
     const UPPER_LIMIT_X = 2;
     const LOWER_LIMIT_X = -2;
@@ -95,8 +94,8 @@ export default class MarigoldView extends React.Component {
     const reset = (p) => {
       p.x = floored(PixiApp.app.renderer.width);
       p.y =
-        PixiApp.app.renderer.view.height /
-        2 /* -(p.size + floored(PixiApp.app.renderer.height)) */;
+        (PixiApp.app.renderer.view.height / 2) *
+        1.6 /* -(p.size + floored(PixiApp.app.renderer.height)) */;
       p.vy = floored(UPPER_LIMIT_Y) + 2;
     };
     // Generate a particle set based on a given texture
@@ -112,7 +111,7 @@ export default class MarigoldView extends React.Component {
         p.y = p.startY =
           // SIZE +
           (PixiApp.app.renderer.view.height / 2) *
-          1.3 /* -(SIZE + floored(PixiApp.app.renderer.height)) */;
+          1.6 /* -(SIZE + floored(PixiApp.app.renderer.height)) */;
         p.width = p.height = SIZE;
         // p.scale.x = 5
         p.tint = getRandomColor();
@@ -163,7 +162,7 @@ export default class MarigoldView extends React.Component {
     const bridge = this.createSprite(
       PixiApp.app.renderer.view.width / 2,
       (PixiApp.app.renderer.view.height / 2) *
-        1.2 /* (PixiApp.app.renderer.view.height / 2) * 1.6 */,
+        1.3 /* (PixiApp.app.renderer.view.height / 2) * 1.6 */,
       moveBridgeTextureArr[0],
       'bridge'
     );

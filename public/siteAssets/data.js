@@ -35,8 +35,23 @@ export let data = {
   resume: {
     linkOneUrl: 'https://mkcrumpton.github.io/Resume/',
   },
-  ipad: {},
-  nintendoSwitch: {},
-  teapot: {},
-  book: {},
+  spotify: {
+    embedLink: 'https://open.spotify.com/embed/playlist/1ieXH939lQPONeIlh1ILDo',
+  },
+  ipad: {
+    description:
+      'One of my favorite creative outlets is drawing. I especially enjoy drawing on my iPad using the Procreate app. Most of the assets for this site were drawn by me using my iPad.',
+  },
+  nintendoSwitch: {
+    description:
+      "When my eyes aren't glued to VSCode or documentation, you can usually find me mapping out a new geographic feature for my island or developing my battle strategy to defeat a dragon. That's to say I really enjoy playing games like Animal Crossing, Paper Mario, and Fire Emblem on my Nintendo Switch.",
+  },
+  teapot: {
+    description:
+      'Keyboards are useful, styluses are great, but a warm cup of tea is the perfect accompaniment to solving bugs in my code or getting the right shapes for a drawing. My most reached for teas are chamomile, jasmine, and english breakfast.',
+  },
+  book: {
+    description:
+      'When I find myself strained from staring at a screen or solving a difficult problem, I find reading books eases the tension and resets my brain. Some of my favorite reads include the Harry Potter series, The Invisible Life of Addie Larue, and Calvin & Hobbes.',
+  },
 };

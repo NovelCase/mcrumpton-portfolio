@@ -1,6 +1,6 @@
 ## Marie Crumpton's Portfolio
 
-A portfolio site for Leslie Meng, built in React and PixiJS
+A portfolio site for Marie Crumpton, built in React and PixiJS
 
 ## Team
 
