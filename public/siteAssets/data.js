@@ -52,6 +52,6 @@ export let data = {
   },
   book: {
     description:
-      'When I find myself strained from staring at a screen or solving a difficult problem, I find reading books eases the tension and resets my brain. Some of my favorite reads include the Harry Potter series, The Invisible Life of Addie Larue, and Calvin & Hobbes. ',
+      'When I find myself strained from staring at a screen or solving a difficult problem, I find reading books eases the tension and resets my brain. Some of my favorite reads include the Harry Potter series, The Invisible Life of Addie Larue, and Calvin & Hobbes.',
   },
 };

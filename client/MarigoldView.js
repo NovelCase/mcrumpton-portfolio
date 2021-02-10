@@ -158,7 +158,7 @@ export default class MarigoldView extends React.Component {
       }
       PixiApp.app.renderer.render(drops);
     });
-
+    //bridge
     const bridge = this.createSprite(
       PixiApp.app.renderer.view.width / 2,
       (PixiApp.app.renderer.view.height / 2) *
