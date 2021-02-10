@@ -1,4 +1,4 @@
-export let text = {
+export let data = {
   gobARk: {
     name: 'go.bARk',
     description:
@@ -8,63 +8,50 @@ export let text = {
     linkTwo: 'Presentation',
     linkTwoUrl: 'https://www.youtube.com/watch?v=tJig6T0Ccoc',
   },
-  promiseHS: {
-    name: 'PromiseHS',
+  brosApothecary: {
+    name: "Bro's Apothecary",
     description:
-      'A 4-day hackathon-style sliding-ice-puzzle game built using React, Express.js, and Pixi.JS.',
+      'Ecommerce site focused on delivering products, such as facial cleansers and candles, to meet the apothecary needs of everyone.',
     linkOne: 'Github',
-    linkOneUrl: 'https://github.com/leslie-meng/promiseHS',
-    linkTwo: 'Live Site',
-    linkTwoUrl: 'https://promise-hs.herokuapp.com/',
+    linkOneUrl: 'https://bit.ly/3l4m22J',
+    linkTwo: 'Deployed',
+    linkTwoUrl: 'https://bros-apothecary.herokuapp.com/',
   },
-  chai: {
-    name: 'Chai Noon',
+  seeTurtleExplortation: {
+    name: 'See Turtle Exploration',
     description:
-      'A mock e-commerce site selling tea products built with the PERN (PostgreSQL, Express, React, Node) Stack, Mocha, Redux, and Chai.',
+      'Through the eyes of a sea turtle discover the geological and ecological wonders of the ocean.',
     linkOne: 'Github',
-    linkOneUrl: 'https://github.com/grace-shopper-orgs/chai-noon',
-    linkTwo: 'Live Site',
-    linkTwoUrl: 'https://chai-noon.herokuapp.com/',
+    linkOneUrl: 'https://github.com/mkcrumpton/SeeTurtleExploration',
+    linkTwo: 'Presentation',
+    linkTwoUrl: 'https://www.youtube.com/watch?v=dUDTRJXvqfY',
   },
-  plants: {
-    name: 'Plants',
-    description:
-      'Currently curating my own personal oasis. A healthy environment encourages inspiration!',
+  linkedIn: {
+    linkOneUrl: 'https://www.linkedin.com/in/mariecrumpton/',
   },
-  coffee: {
-    name: 'Coffee',
-    description:
-      'Cold brew or pour-over are my go-to prep styles! Depth first approach, because knowing the process means a better understanding and appreciation of what it takes.',
+  github: {
+    linkOneUrl: 'https://github.com/mkcrumpton',
   },
-  blueOcean: {
-    name: 'Blue Ocean Strategy',
-    description:
-      'An interesting read about integrative approaches! Good concepts, and definitely something to aspire towards.',
-    linkOne: 'Good Reads',
-    linkOneUrl: 'https://www.goodreads.com/book/show/4898.Blue_Ocean_Strategy?',
+  resume: {
+    linkOneUrl: 'https://mkcrumpton.github.io/Resume/',
   },
-  bfa: {
-    name: 'Bargaining for Advantage',
-    description:
-      'A personal favorite - this book was the first negotiation book I ever read. My favorite anecdote on integrative solutions is in this book!',
-    linkOne: 'Good Reads',
-    linkOneUrl:
-      'https://www.goodreads.com/book/show/23801.Bargaining_for_Advantage?',
+  spotify: {
+    embedLink: 'https://open.spotify.com/embed/playlist/1ieXH939lQPONeIlh1ILDo',
   },
-  convo: {
-    name: 'A Conversation with Fear',
+  ipad: {
     description:
-      'My sister introduced this one to me. Good approaches to handling the YIKES zone and putting thought to what bothers you.',
-    linkOne: 'Good Reads',
-    linkOneUrl:
-      'https://www.goodreads.com/book/show/10858506-a-conversation-with-fear?',
+      'One of my favorite creative outlets is drawing. I especially enjoy drawing on my iPad using the Procreate app. Most of the assets for this site were drawn by me using my iPad.',
   },
-  presence: {
-    name: 'Presence',
+  nintendoSwitch: {
     description:
-      "Currently reading- I appreciated the author's TED Talk and I am enjoying the anecdotes in this book as well.",
-    linkOne: 'Good Reads',
-    linkOneUrl:
-      'https://www.goodreads.com/bookhttps://www.goodreads.com/book/show/25066556-presence?',
+      "When my eyes aren't glued to VSCode or documentation, you can usually find me mapping out a new geographic feature for my island or developing my battle strategy to defeat a dragon. That's to say I really enjoy playing games like Animal Crossing, Paper Mario, and Fire Emblem on my Nintendo Switch.",
+  },
+  teapot: {
+    description:
+      'Keyboards are useful, styluses are great, but a warm cup of tea is the perfect accompaniment to solving bugs in my code or getting the right shapes for a drawing. My most reached for teas are chamomile, jasmine, and english breakfast.',
+  },
+  book: {
+    description:
+      'When I find myself strained from staring at a screen or solving a difficult problem, I find reading books eases the tension and resets my brain. Some of my favorite reads include the Harry Potter series, The Invisible Life of Addie Larue, and Calvin & Hobbes.',
   },
 };
