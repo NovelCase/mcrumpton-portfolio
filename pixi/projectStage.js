@@ -27,11 +27,13 @@ app.renderer.backgroundColor = 0x1b1c2b;
 let pixiDiv = document.getElementById('pixi');
 pixiDiv.appendChild(app.view);
 
-console.log(app.stage.pivot.y);
-let firstView = app.stage.pivot.y;
-const secondView = app.renderer.view.height;
-const thirdView = secondView * 2;
-const fourthView = secondView * 3;
+export let firstView = app.stage.pivot.y;
+let firsTransition;
+export const secondView = app.renderer.view.height;
+let secondTransition;
+export const thirdView = secondView * 2;
+let thirdTransition;
+export const fourthView = secondView * 3;
 
 let left = keyboard('ArrowLeft'),
   up = keyboard('ArrowUp'),
@@ -46,7 +48,7 @@ up.press = () => {
       Math.floor(app.stage.pivot.y / app.renderer.view.height) *
         app.renderer.view.height -
       app.renderer.view.height;
-    console.log(app.stage.pivot.y);
+    console.log(app.stage.pivot.y, app.renderer.view.height);
     if (app.stage.pivot.y === firstView) {
       app.renderer.backgroundColor = 0x1b1c2b;
     } else if (app.stage.pivot.y === secondView) {
@@ -66,7 +68,7 @@ down.press = () => {
       Math.floor(app.stage.pivot.y / app.renderer.view.height) *
         app.renderer.view.height +
       app.renderer.view.height;
-    console.log(app.stage.pivot.y);
+    console.log(app.stage.pivot.y, app.renderer.view.height);
     if (app.stage.pivot.y === secondView) {
       app.renderer.backgroundColor = 0x15112d;
     } else if (app.stage.pivot.y === thirdView) {
@@ -105,51 +107,52 @@ function keyboard(value) {
   };
 
   onwheel = (event) => {
+    // console.log(event);
     if (
       app.stage.pivot.y < 0 ||
       app.stage.pivot.y + (event.deltaY * 1.3 || event.deltaX * 1.3) < 0
     ) {
       app.stage.pivot.y = 0;
-      // if (app.stage.pivot.y === firstView) {
-      //   app.renderer.backgroundColor = 0x1b1c2b;
-      // } else if (app.stage.pivot.y === secondView) {
-      //   app.renderer.backgroundColor = 0x15112d;
-      // } else if (app.stage.pivot.y === thirdView) {
-      //   app.renderer.backgroundColor = 0xac9caa /* 0xeca83f */; //make this color something from lanterns
-      // } else if (app.stage.pivot.y === fourthView) {
-      //   app.renderer.backgroundColor = 0xe1b058 /* 0xffdd68 */; //make this color something from lanterns
-      // }
+      if (app.stage.pivot.y === firstView) {
+        app.renderer.backgroundColor = 0x1b1c2b;
+      } else if (app.stage.pivot.y === secondView) {
+        app.renderer.backgroundColor = 0x15112d;
+      } else if (app.stage.pivot.y === thirdView) {
+        app.renderer.backgroundColor = 0x7598aa /* 0xac9caa */ /* 0xeca83f */; //make this color something from lanterns
+      } else if (app.stage.pivot.y === fourthView) {
+        app.renderer.backgroundColor = 0xe1b058 /* 0xffdd68 */; //make this color something from lanterns
+      }
     } else if (
       app.stage.pivot.y > app.renderer.view.height * 3 ||
       app.stage.pivot.y + (event.deltaY * 1.3 || event.deltaX * 1.3) >
         app.renderer.view.height * 3
     ) {
       app.stage.pivot.y = app.renderer.view.height * 3;
-      // if (app.stage.pivot.y === secondView) {
-      //   app.renderer.backgroundColor = 0x15112d;
-      // } else if (app.stage.pivot.y === thirdView) {
-      //   app.renderer.backgroundColor = 0xac9caa /* 0xeca83f */; //make this color something from lanterns
-      // } else if (app.stage.pivot.y === fourthView) {
-      //   app.renderer.backgroundColor = 0xe1b058 /* 0xffdd68 */; //make this color something from lanterns
-      // }
+      if (app.stage.pivot.y === secondView) {
+        app.renderer.backgroundColor = 0x15112d;
+      } else if (app.stage.pivot.y === thirdView) {
+        app.renderer.backgroundColor = 0x7598aa /* 0xac9caa */ /* 0xeca83f */; //make this color something from lanterns
+      } else if (app.stage.pivot.y === fourthView) {
+        app.renderer.backgroundColor = 0xe1b058 /* 0xffdd68 */; //make this color something from lanterns
+      }
     } else {
       app.stage.pivot.y += event.deltaY * 1.3 || event.deltaX * 1.3;
-      // if (app.stage.pivot.y === firstView) {
-      //   app.renderer.backgroundColor = 0x1b1c2b;
-      // } else if (app.stage.pivot.y === secondView) {
-      //   app.renderer.backgroundColor = 0x15112d;
-      // } else if (app.stage.pivot.y === thirdView) {
-      //   app.renderer.backgroundColor = 0xac9caa /* 0xeca83f */; //make this color something from lanterns
-      // } else if (app.stage.pivot.y === fourthView) {
-      //   app.renderer.backgroundColor = 0xe1b058 /* 0xffdd68 */; //make this color something from lanterns
-      // }
+      if (app.stage.pivot.y === firstView) {
+        app.renderer.backgroundColor = 0x1b1c2b;
+      } else if (app.stage.pivot.y === secondView) {
+        app.renderer.backgroundColor = 0x15112d;
+      } else if (app.stage.pivot.y === thirdView) {
+        app.renderer.backgroundColor = 0x7598aa /* 0xac9caa */ /* 0xeca83f */; //make this color something from lanterns
+      } else if (app.stage.pivot.y === fourthView) {
+        app.renderer.backgroundColor = 0xe1b058 /* 0xffdd68 */; //make this color something from lanterns
+      }
     }
   };
-  function onWindowResize() {
-    app.renderer.setSize(window.innerWidth, window.innerHeight);
-  }
+  // function onWindowResize() {
+  //   app.renderer.setSize(window.innerWidth, window.innerHeight);
+  // }
 
-  //Attach event listeners
+  // Attach event listeners
   const downListener = key.downHandler.bind(key);
   const upListener = key.upHandler.bind(key);
 

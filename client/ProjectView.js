@@ -8,7 +8,7 @@ let scales = {
   medallionR: 1.3,
   bluePlant: 0.65,
   floor: 0.6,
-  deskH: 1.18,
+  deskH: 1.16,
   deskW: 1.29,
   gobARk: 0.85,
   seeTurtle: 0.85,
@@ -41,10 +41,10 @@ export default class ProjectView extends React.Component {
     const floorTexture = PIXI.Texture.from('siteAssets/projectView/floor.png');
     const deskTexture = PIXI.Texture.from('siteAssets/projectView/desk.png');
     const plantsRTexture = PIXI.Texture.from(
-      'siteAssets/projectView/plantsRight.png'
+      'siteAssets/projectView/plantsRightEdit.png'
     );
     const plantsLTexture = PIXI.Texture.from(
-      'siteAssets/projectView/plantsLeft.png'
+      'siteAssets/projectView/plantsLeftEdit.png'
     );
     const barkTexture = PIXI.Texture.from('siteAssets/projectView/gobARk.png');
     const broTexture = PIXI.Texture.from(
@@ -93,14 +93,14 @@ export default class ProjectView extends React.Component {
     );
 
     const plantsR = this.createSprite(
-      (PixiApp.app.renderer.view.width / 2) * 1.6289,
+      (PixiApp.app.renderer.view.width / 2) * 1.629,
       (PixiApp.app.renderer.view.height / 2) * 4.8497,
       plantsRTexture,
       'plantsR'
     );
 
     const plantsL = this.createSprite(
-      (PixiApp.app.renderer.view.width / 2) * 0.179,
+      (PixiApp.app.renderer.view.width / 2) * 0.16,
       (PixiApp.app.renderer.view.height / 2) * 4.8501,
       plantsLTexture,
       'plantsL'
