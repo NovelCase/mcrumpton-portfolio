@@ -54,9 +54,9 @@ up.press = () => {
     } else if (app.stage.pivot.y === secondView) {
       app.renderer.backgroundColor = 0x15112d;
     } else if (app.stage.pivot.y === thirdView) {
-      app.renderer.backgroundColor = 0x7598aa /* 0xac9caa */ /* 0xeca83f */; //make this color something from lanterns
+      app.renderer.backgroundColor = 0x7598aa;
     } else if (app.stage.pivot.y === fourthView) {
-      app.renderer.backgroundColor = 0xe1b058 /* 0xffdd68 */; //make this color something from lanterns
+      app.renderer.backgroundColor = 0xe1b058;
     }
   } else app.stage.pivot.y = 0;
 };
@@ -68,13 +68,12 @@ down.press = () => {
       Math.floor(app.stage.pivot.y / app.renderer.view.height) *
         app.renderer.view.height +
       app.renderer.view.height;
-    console.log(app.stage.pivot.y, app.renderer.view.height);
     if (app.stage.pivot.y === secondView) {
       app.renderer.backgroundColor = 0x15112d;
     } else if (app.stage.pivot.y === thirdView) {
-      app.renderer.backgroundColor = 0x7598aa /* 0xac9caa */ /* 0xeca83f */; //make this color something from lanterns
+      app.renderer.backgroundColor = 0x7598aa;
     } else if (app.stage.pivot.y === fourthView) {
-      app.renderer.backgroundColor = 0xe1b058 /* 0xffdd68 */; //make this color something from lanterns
+      app.renderer.backgroundColor = 0xe1b058;
     }
   } else app.stage.pivot.y = 3 * app.renderer.view.height;
 };
@@ -109,42 +108,55 @@ function keyboard(value) {
   onwheel = (event) => {
     // console.log(event);
     if (
+      //don't scroll any further (top of page)
       app.stage.pivot.y < 0 ||
       app.stage.pivot.y + (event.deltaY * 1.3 || event.deltaX * 1.3) < 0
     ) {
       app.stage.pivot.y = 0;
-      if (app.stage.pivot.y === firstView) {
-        app.renderer.backgroundColor = 0x1b1c2b;
-      } else if (app.stage.pivot.y === secondView) {
-        app.renderer.backgroundColor = 0x15112d;
-      } else if (app.stage.pivot.y === thirdView) {
-        app.renderer.backgroundColor = 0x7598aa /* 0xac9caa */ /* 0xeca83f */; //make this color something from lanterns
-      } else if (app.stage.pivot.y === fourthView) {
-        app.renderer.backgroundColor = 0xe1b058 /* 0xffdd68 */; //make this color something from lanterns
-      }
+      // if (app.stage.pivot.y === firstView) {
+      //   app.renderer.backgroundColor = 0x1b1c2b;
+      // } else if (app.stage.pivot.y === secondView) {
+      //   app.renderer.backgroundColor = 0x15112d;
+      // } else if (app.stage.pivot.y === thirdView) {
+      //   app.renderer.backgroundColor = 0x7598aa;
+      // } else if (app.stage.pivot.y === fourthView) {
+      //   app.renderer.backgroundColor = 0xe1b058;
+      // }
     } else if (
+      //don't scroll any further (bottom of page)
       app.stage.pivot.y > app.renderer.view.height * 3 ||
       app.stage.pivot.y + (event.deltaY * 1.3 || event.deltaX * 1.3) >
         app.renderer.view.height * 3
     ) {
       app.stage.pivot.y = app.renderer.view.height * 3;
-      if (app.stage.pivot.y === secondView) {
-        app.renderer.backgroundColor = 0x15112d;
-      } else if (app.stage.pivot.y === thirdView) {
-        app.renderer.backgroundColor = 0x7598aa /* 0xac9caa */ /* 0xeca83f */; //make this color something from lanterns
-      } else if (app.stage.pivot.y === fourthView) {
-        app.renderer.backgroundColor = 0xe1b058 /* 0xffdd68 */; //make this color something from lanterns
-      }
+      // if (app.stage.pivot.y === secondView) {
+      //   app.renderer.backgroundColor = 0x15112d;
+      // } else if (app.stage.pivot.y === thirdView) {
+      //   app.renderer.backgroundColor = 0x7598aa;
+      // } else if (app.stage.pivot.y === fourthView) {
+      //   app.renderer.backgroundColor = 0xe1b058;
+      // }
     } else {
+      //keep scrolling
       app.stage.pivot.y += event.deltaY * 1.3 || event.deltaX * 1.3;
-      if (app.stage.pivot.y === firstView) {
+      if (app.stage.pivot.y >= 0 && app.stage.pivot.y < secondView / 2) {
+        // console.log('first background', app.stage.pivot.y);
         app.renderer.backgroundColor = 0x1b1c2b;
-      } else if (app.stage.pivot.y === secondView) {
+      } else if (
+        app.stage.pivot.y > secondView / 2 &&
+        app.stage.pivot.y < thirdView * 0.94
+      ) {
+        // console.log('second background', app.stage.pivot.y);
         app.renderer.backgroundColor = 0x15112d;
-      } else if (app.stage.pivot.y === thirdView) {
-        app.renderer.backgroundColor = 0x7598aa /* 0xac9caa */ /* 0xeca83f */; //make this color something from lanterns
-      } else if (app.stage.pivot.y === fourthView) {
-        app.renderer.backgroundColor = 0xe1b058 /* 0xffdd68 */; //make this color something from lanterns
+      } else if (
+        app.stage.pivot.y > thirdView * 0.94 &&
+        app.stage.pivot.y < thirdView
+      ) {
+        // console.log('third background', app.stage.pivot.y);
+        app.renderer.backgroundColor = 0x7598aa;
+      } else if (app.stage.pivot.y > thirdView) {
+        // console.log('fourth view', app.stage.pivot.y);
+        app.renderer.backgroundColor = 0xe1b058;
       }
     }
   };
@@ -185,3 +197,29 @@ megaContainer.addChild(projectView);
 
 export const finalView = new PIXI.Container();
 megaContainer.addChild(finalView);
+
+/* resize - web resposive */
+window.addEventListener('resize', resize);
+
+/* for scaling adjustment not on refresh */
+function resize() {
+  //has an issue adjusting for height differece
+  let widthDiff = window.innerWidth - app.renderer.view.width;
+  let heightDiff = window.innerHeight - app.renderer.view.height;
+  let method = 'add';
+  if (window.innerWidth < app.renderer.view.width) {
+    method = 'subtract';
+    widthDiff = app.renderer.view.width - window.innerWidth;
+    heightDiff = app.renderer.view.height - window.innerHeight;
+  }
+  app.renderer.resize(window.innerWidth, window.innerHeight);
+  app.stage.children.forEach((child, idx) => {
+    if (method === 'add') {
+      child.width += widthDiff;
+      child.height += heightDiff;
+    } else {
+      child.width -= widthDiff;
+      child.height -= heightDiff;
+    }
+  });
+}

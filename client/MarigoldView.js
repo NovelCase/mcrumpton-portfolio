@@ -1,35 +1,71 @@
 import React from 'react';
 import * as PixiApp from '../pixi/projectStage.js';
 import * as PIXI from 'pixi.js';
-import { resourceUsage } from 'process';
 
 export const onClick = () => {};
 
 let scales = {
-  bridge: 1.1,
-  stayName: 0.47,
+  bridge: [1.27, 1.17],
+  stayName: [0.47, 0.49],
   aboutMe: 0.25,
+};
+
+let mobileScales500 = {
+  bridge: [0.7, 0.7],
+  stayName: [0.28, 0.4],
+  stayNameY: (PixiApp.app.renderer.view.height / 4) * 1.1,
+  aboutMe: 0.19,
+  aboutMeY: (PixiApp.app.renderer.view.height / 4) * 1.49,
+};
+
+let mobileScales350 = {
+  bridge: [0.4, 0.7],
+  bridgeY: (PixiApp.app.renderer.view.height / 4) * 3.5,
+  stayName: [0.22, 0.28],
+  stayNameY: (PixiApp.app.renderer.view.height / 4) * 0.8,
+  aboutMe: 0.16,
+  aboutMeY: (PixiApp.app.renderer.view.height / 4) * 1.2,
 };
 
 export default class MarigoldView extends React.Component {
   createSprite(x, y, texture, type) {
+    let scaleType = scales;
+    if (PixiApp.app.renderer.view.width < 380) {
+      scaleType = mobileScales350;
+      x = PixiApp.app.renderer.view.width / 2;
+      y = scaleType[`${type}Y`];
+    } else if (PixiApp.app.renderer.view.width < 500) {
+      scaleType = mobileScales500;
+      x = PixiApp.app.renderer.view.width / 2;
+      scaleType[`${type}Y`] ? (y = scaleType[`${type}Y`]) : (y = y);
+    }
     const sprite = new PIXI.Sprite(texture);
     PixiApp.marigoldView.addChild(sprite);
     sprite.anchor.set(0.5);
     sprite.position.x = x;
     sprite.position.y = y;
-    sprite.scale.set(scales[type]);
-    if (type === 'bridge') {
-      // sprite.width = PixiApp.app.renderer.view.width;
-      sprite.scale.x = scales[type] + 0.17;
-    }
+    console.log(scaleType);
+    sprite.scale.x = scaleType[type][0];
+    sprite.scale.y = scaleType[type][1];
+    console.log(texture, sprite.scale);
     return sprite;
   }
   createAnimatedSprtie(x, y, textureArr, type, speed, notVisible) {
+    let scaleType = scales;
+    if (PixiApp.app.renderer.view.width < 380) {
+      scaleType = mobileScales350;
+      x = PixiApp.app.renderer.view.width / 2;
+      y = scaleType[`${type}Y`];
+    } else if (PixiApp.app.renderer.view.width < 500) {
+      scaleType = mobileScales500;
+      x = PixiApp.app.renderer.view.width / 2;
+      y = scaleType[`${type}Y`];
+    }
     const animSprite = new PIXI.AnimatedSprite(textureArr);
     PixiApp.marigoldView.addChild(animSprite);
     animSprite.animationSpeed = speed;
-    animSprite.scale.set(scales[type]);
+    animSprite.scale.set(scaleType[type]);
+    animSprite.anchor.set(0.5);
     animSprite.x = x;
     animSprite.y = y;
     // animSprite.play();
@@ -62,7 +98,7 @@ export default class MarigoldView extends React.Component {
 
     let aboutMe = this.createAnimatedSprtie(
       (PixiApp.app.renderer.view.width / 2) * 0.75,
-      (PixiApp.app.renderer.view.height / 4) * 0.8,
+      (PixiApp.app.renderer.view.height / 4) * 0.7,
       aboutMeArrTextures,
       'aboutMe',
       0.6,
