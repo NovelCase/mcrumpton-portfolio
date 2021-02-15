@@ -35,17 +35,17 @@ export default class LanternView extends React.Component {
 	createPopUpRect(x, y, type) {
 		let width = window.innerWidth / 2;
 		let height = window.innerHeight / 2;
-		if (window.innerWidth < 400 && type === 'marigold') {
-			width = window.innerWidth;
-			height = window.innerHeight / 4;
-			x = window.innerWidth;
-			y = (window.innerHeight / 2) * 0.2;
-		} else if (window.innerWidth < 400) {
-			width = window.innerWidth;
-			height = window.innerHeight / 4;
-			x = window.innerWidth * 2;
-			y = (window.innerHeight / 2) * 0.2;
-		}
+		// if (window.innerWidth < 400 && type === 'marigold') {
+		// 	width = window.innerWidth;
+		// 	height = window.innerHeight / 4;
+		// 	x = window.innerWidth;
+		// 	y = (window.innerHeight / 2) * 0.2;
+		// } else if (window.innerWidth < 400) {
+		// 	width = window.innerWidth;
+		// 	height = window.innerHeight / 4;
+		// 	x = window.innerWidth * 2;
+		// 	y = (window.innerHeight / 2) * 0.2;
+		// }
 		const rect = new PIXI.Graphics();
 		rect.beginFill(0xf4f5e7).drawRoundedRect(x, y, width, height, 20).endFill();
 		rect.visible = false;
@@ -132,8 +132,8 @@ export default class LanternView extends React.Component {
 			nintendoSwitch.interactive = false;
 			nintendoSwitch.buttonMode = false;
 			ipad.interactive = false;
-      ipad.buttonMode = false;
-      teapot.interactive = false;
+			ipad.buttonMode = false;
+			teapot.interactive = false;
 			teapot.buttonMode = false;
 			blackCircleTeapot.visible = true;
 		});

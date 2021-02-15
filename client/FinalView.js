@@ -159,6 +159,12 @@ export default class FinalView extends React.Component {
 			true
 		);
 
+		guestbook.on('pointertap', () => {
+			window.location.href =
+				'mailto:marie.k.cr@gmail.com?subject=Just visited your website!';
+			app.stage.pivot.y = 4 * window.innerHeight;
+		});
+
 		const hobbes = this.createSprite(
 			(PixiApp.app.renderer.view.width / 4) * 1.4,
 			(PixiApp.app.renderer.view.height / 2) * 7.275,
