@@ -115,6 +115,7 @@ export default class LanternView extends React.Component {
 			book.interactive = false;
 			book.buttonMode = false;
 			blackCircleBook.visible = true;
+			PixiApp.app.stage.pivot.y = PixiApp.secondView;
 		});
 
 		const teapot = this.createSprite(
@@ -136,6 +137,7 @@ export default class LanternView extends React.Component {
 			teapot.interactive = false;
 			teapot.buttonMode = false;
 			blackCircleTeapot.visible = true;
+			PixiApp.app.stage.pivot.y = PixiApp.secondView;
 		});
 
 		const nintendoSwitch = this.createSprite(
@@ -157,6 +159,7 @@ export default class LanternView extends React.Component {
 			nintendoSwitch.interactive = false;
 			nintendoSwitch.buttonMode = false;
 			blackCircleNintendo.visible = true;
+			PixiApp.app.stage.pivot.y = PixiApp.secondView;
 		});
 
 		const ipad = this.createSprite(
@@ -178,6 +181,7 @@ export default class LanternView extends React.Component {
 			ipad.interactive = false;
 			ipad.interactive = false;
 			blackCircleIpad.visible = true;
+			PixiApp.app.stage.pivot.y = PixiApp.secondView;
 		});
 
 		const souls = this.createSprite(
@@ -216,6 +220,7 @@ export default class LanternView extends React.Component {
 			book.buttonMode = true;
 			ipad.interactive = true;
 			ipad.buttonMode = true;
+			PixiApp.app.stage.pivot.y = PixiApp.secondView;
 		});
 
 		const popUpTeapot = this.createPopUpRect(
@@ -239,6 +244,7 @@ export default class LanternView extends React.Component {
 			book.buttonMode = true;
 			ipad.interactive = true;
 			ipad.buttonMode = true;
+			PixiApp.app.stage.pivot.y = PixiApp.secondView;
 		});
 
 		const popUpNintendo = this.createPopUpRect(
@@ -262,6 +268,7 @@ export default class LanternView extends React.Component {
 			book.buttonMode = true;
 			ipad.interactive = true;
 			ipad.buttonMode = true;
+			PixiApp.app.stage.pivot.y = PixiApp.secondView;
 		});
 
 		const popUpIpad = this.createPopUpRect(
@@ -285,6 +292,7 @@ export default class LanternView extends React.Component {
 			book.buttonMode = true;
 			ipad.interactive = true;
 			ipad.buttonMode = true;
+			PixiApp.app.stage.pivot.y = PixiApp.secondView;
 		});
 	}
 	render() {

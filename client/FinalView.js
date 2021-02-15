@@ -99,6 +99,7 @@ export default class FinalView extends React.Component {
 
 		spotify.on('pointertap', () => {
 			this.onClickTap();
+			PixiApp.app.stage.pivot.y = PixiApp.fourthView;
 		});
 
 		const bookCase = this.createSprite(
@@ -118,6 +119,7 @@ export default class FinalView extends React.Component {
 
 		github.on('pointertap', () => {
 			window.open(data.github, '_blank');
+			PixiApp.app.stage.pivot.y = PixiApp.fourthView;
 		});
 
 		const linkedIn = this.createSprite(
@@ -130,6 +132,7 @@ export default class FinalView extends React.Component {
 
 		linkedIn.on('pointertap', () => {
 			window.open(data.linkedIn, '_blank');
+			PixiApp.app.stage.pivot.y = PixiApp.fourthView;
 		});
 
 		const resume = this.createSprite(
@@ -142,6 +145,7 @@ export default class FinalView extends React.Component {
 
 		resume.on('pointertap', () => {
 			window.open(data.resume, '_blank');
+			PixiApp.app.stage.pivot.y = PixiApp.fourthView;
 		});
 
 		const table = this.createSprite(
@@ -162,7 +166,7 @@ export default class FinalView extends React.Component {
 		guestbook.on('pointertap', () => {
 			window.location.href =
 				'mailto:marie.k.cr@gmail.com?subject=Just visited your website!';
-			app.stage.pivot.y = 4 * window.innerHeight;
+			PixiApp.app.stage.pivot.y = PixiApp.fourthView;
 		});
 
 		const hobbes = this.createSprite(

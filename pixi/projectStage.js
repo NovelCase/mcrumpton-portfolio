@@ -28,10 +28,10 @@ let pixiDiv = document.getElementById('pixi');
 pixiDiv.appendChild(app.view);
 
 console.log(app.stage.pivot.y);
-let firstView = app.stage.pivot.y;
-const secondView = app.renderer.view.height;
-const thirdView = secondView * 2;
-const fourthView = secondView * 3;
+export let firstView = app.stage.pivot.y;
+export const secondView = app.renderer.view.height;
+export const thirdView = secondView * 2;
+export const fourthView = secondView * 3;
 
 let left = keyboard('ArrowLeft'),
 	up = keyboard('ArrowUp'),
