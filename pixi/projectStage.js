@@ -46,7 +46,6 @@ up.press = () => {
 			Math.floor(app.stage.pivot.y / app.renderer.view.height) *
 				app.renderer.view.height -
 			app.renderer.view.height;
-		console.log(app.stage.pivot.y);
 		if (app.stage.pivot.y === firstView) {
 			app.renderer.backgroundColor = 0x1b1c2b;
 		} else if (app.stage.pivot.y === secondView) {
@@ -57,6 +56,7 @@ up.press = () => {
 			app.renderer.backgroundColor = 0xe1b058 /* 0xffdd68 */; //make this color something from lanterns
 		}
 	} else app.stage.pivot.y = 0;
+	menuContainer.position.y = app.stage.pivot.y + 10;
 };
 
 //Right
@@ -75,6 +75,7 @@ down.press = () => {
 			app.renderer.backgroundColor = 0xe1b058 /* 0xffdd68 */; //make this color something from lanterns
 		}
 	} else app.stage.pivot.y = 3 * app.renderer.view.height;
+	menuContainer.position.y = app.stage.pivot.y + 10;
 };
 
 function keyboard(value) {
@@ -144,6 +145,7 @@ function keyboard(value) {
 			//   app.renderer.backgroundColor = 0xe1b058 /* 0xffdd68 */; //make this color something from lanterns
 			// }
 		}
+		menuContainer.position.y = app.stage.pivot.y + 10;
 	};
 	function onWindowResize() {
 		app.renderer.setSize(window.innerWidth, window.innerHeight);
@@ -155,13 +157,13 @@ function keyboard(value) {
 
 	window.addEventListener('keydown', downListener, false);
 	window.addEventListener('keyup', upListener, false);
-	window.addEventListener('wheel', _.throttle(onwheel, 1000), false);
+	window.addEventListener('wheel', _.throttle(onwheel, 0), false);
 
 	// Detach event listeners
 	key.unsubscribe = () => {
 		window.removeEventListener('keydown', downListener);
 		window.removeEventListener('keyup', upListener);
-		window.removeEventListener('wheel', _.throttle(onwheel, 1000), false);
+		window.removeEventListener('wheel', _.throttle(onwheel, 0), false);
 	};
 
 	return key;
@@ -182,3 +184,9 @@ megaContainer.addChild(projectView);
 
 export const finalView = new PIXI.Container();
 megaContainer.addChild(finalView);
+
+export const menuContainer = new PIXI.Container();
+megaContainer.addChild(menuContainer);
+
+menuContainer.position.x = 10;
+menuContainer.position.y = 10;

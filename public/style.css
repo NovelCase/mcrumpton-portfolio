@@ -7,6 +7,18 @@
 }
 body {
 }
+.menu {
+	position: absolute;
+	top: 0;
+	align-items: center;
+	display: flex;
+	flex-direction: row;
+	color: white;
+	padding: 25px;
+}
+.menu > h1 {
+	margin: 10px;
+}
 #app {
 	/* max-width: 20%;
 	padding: 1rem 3rem;

@@ -17,7 +17,7 @@ export let data = {
 		linkTwo: 'Deployed',
 		linkTwoUrl: 'https://bros-apothecary.herokuapp.com/',
 	},
-	seeTurtleExplortation: {
+	seeTurtleExploration: {
 		name: 'See Turtle Exploration',
 		description:
 			'Through the eyes of a sea turtle discover the geological and ecological wonders of the ocean.',
@@ -33,7 +33,6 @@ export let data = {
 	resume: 'https://mkcrumpton.github.io/Resume/',
 
 	spotify: 'https://open.spotify.com/embed/playlist/1ieXH939lQPONeIlh1ILDo',
-
 	ipad: {
 		description:
 			'One of my favorite creative outlets is drawing. I especially enjoy drawing on my iPad using the Procreate app. Most of the assets for this site were drawn by me using my iPad.',
