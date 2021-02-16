@@ -86,23 +86,23 @@ export default class LanternView extends React.Component {
 
 	createText(words, style, x, y) {
 		const styleTwo = { ...style };
-		// if (window.innerWidth < 400 && type.includes('project')) {
-		//   smallProject[type].x
-		//     ? (x = smallProject[type].x)
-		//     : (x = (window.innerWidth / 2) * 2.2);
-		//   smallProject[type].y
-		//     ? (y = smallProject[type].y)
-		//     : (y = (window.innerHeight / 4) * 2.95);
-		//   styleTwo.fontSize = styleTwo.fontSize - 5;
-		// } else if (window.innerWidth < 400) {
-		//   smallProject[type].x
-		//     ? (x = smallProject[type].x)
-		//     : (x = (window.innerWidth / 2) * 4.2);
-		//   smallProject[type].y
-		//     ? (y = smallProject[type].y)
-		//     : (y = (window.innerHeight / 4) * 2.95);
-		//   styleTwo.fontSize = styleTwo.fontSize - 5;
-		// }
+		if (window.innerWidth < 400) {
+			//   smallProject[type].x
+			//     ? (x = smallProject[type].x)
+			//     : (x = (window.innerWidth / 2) * 2.2);
+			//   smallProject[type].y
+			//     ? (y = smallProject[type].y)
+			//     : (y = (window.innerHeight / 4) * 2.95);
+			//   styleTwo.fontSize = styleTwo.fontSize - 5;
+			// } else if (window.innerWidth < 400) {
+			//   smallProject[type].x
+			//     ? (x = smallProject[type].x)
+			//     : (x = (window.innerWidth / 2) * 4.2);
+			//   smallProject[type].y
+			//     ? (y = smallProject[type].y)
+			//     : (y = (window.innerHeight / 4) * 2.95);
+			styleTwo.fontSize = styleTwo.fontSize - 10;
+		}
 		const text = new PIXI.Text(words, styleTwo);
 		text.visible = false;
 		text.position.x = x;
