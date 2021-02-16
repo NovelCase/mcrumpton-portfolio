@@ -144,17 +144,17 @@ let scrollbox;
 let popUpProject = new PIXI.Container();
 let textInfo = {};
 let scales = {
-	medallionR: 1.3,
-	bluePlant: 0.65,
-	floor: 0.6,
-	deskH: 1.18,
-	deskW: 1.29,
-	gobARk: 0.85,
-	seeTurtleExploration: 0.85,
-	brosApothecary: 0.83,
-	plantsR: 1.2,
-	plantsL: 1.2,
-};
+  medallionR: 1.3,
+  bluePlant: 0.65,
+  floor: 0.6,
+  deskH: 1.16,
+  deskW: 1.29,
+  gobARk: 0.85,
+  seeTurtleExploration: 0.85,
+  brosApothecary: 0.83,
+  plantsR: 1.2,
+  plantsL: 1.2,
+
 /* Styling */
 let titleStyle = {
 	fontFamily: 'Montserrat',
@@ -204,12 +204,12 @@ export default class ProjectView extends React.Component {
 
 		const floorTexture = PIXI.Texture.from('siteAssets/projectView/floor.png');
 		const deskTexture = PIXI.Texture.from('siteAssets/projectView/desk.png');
-		const plantsRTexture = PIXI.Texture.from(
-			'siteAssets/projectView/plantsRight.png'
-		);
-		const plantsLTexture = PIXI.Texture.from(
-			'siteAssets/projectView/plantsLeft.png'
-		);
+   const plantsRTexture = PIXI.Texture.from(
+      'siteAssets/projectView/plantsRightEdit.png'
+    );
+    const plantsLTexture = PIXI.Texture.from(
+      'siteAssets/projectView/plantsLeftEdit.png'
+    );
 		const barkTexture = PIXI.Texture.from('siteAssets/projectView/gobARk.png');
 		const broTexture = PIXI.Texture.from(
 			'siteAssets/projectView/brosApothecary.png'

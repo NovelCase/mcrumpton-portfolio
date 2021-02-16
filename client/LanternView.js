@@ -117,9 +117,9 @@ export default class LanternView extends React.Component {
 
 	componentDidMount() {
 		/* textures */
-		const lanternsTexture = PIXI.Texture.from(
-			'siteAssets/marigoldView/lanternsLittleGlowEdit.png'
-		);
+		 const lanternsTexture = PIXI.Texture.from(
+      'siteAssets/lanternView/lanternsLittleGlowTwo.png'
+    );
 		const grassTexture = PIXI.Texture.from('siteAssets/lanternView/grass.png');
 		const soulTexture = PIXI.Texture.from('siteAssets/lanternView/souls.png');
 		const bookTexture = PIXI.Texture.from('siteAssets/lanternView/book.png');

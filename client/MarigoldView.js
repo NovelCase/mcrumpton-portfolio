@@ -5,79 +5,130 @@ import * as PIXI from 'pixi.js';
 export const onClick = () => {};
 
 let scales = {
-  bridge: 0.9,
-  lantern: 0.9,
-  lanterns: 1.2,
+  bridge: [1.27, 1.17],
+  stayName: [0.47, 0.49],
+  aboutMe: 0.25,
+};
+
+let mobileScales500 = {
+  bridge: [0.7, 0.7],
+  stayName: [0.28, 0.4],
+  stayNameY: (PixiApp.app.renderer.view.height / 4) * 1.1,
+  aboutMe: 0.19,
+  aboutMeY: (PixiApp.app.renderer.view.height / 4) * 1.49,
+};
+
+let mobileScales350 = {
+  bridge: [0.4, 0.7],
+  bridgeY: (PixiApp.app.renderer.view.height / 4) * 3.5,
+  stayName: [0.22, 0.28],
+  stayNameY: (PixiApp.app.renderer.view.height / 4) * 0.8,
+  aboutMe: 0.16,
+  aboutMeY: (PixiApp.app.renderer.view.height / 4) * 1.2,
 };
 
 export default class MarigoldView extends React.Component {
   createSprite(x, y, texture, type) {
+    let scaleType = scales;
+    if (PixiApp.app.renderer.view.width < 380) {
+      scaleType = mobileScales350;
+      x = PixiApp.app.renderer.view.width / 2;
+      y = scaleType[`${type}Y`];
+    } else if (PixiApp.app.renderer.view.width < 500) {
+      scaleType = mobileScales500;
+      x = PixiApp.app.renderer.view.width / 2;
+      scaleType[`${type}Y`] ? (y = scaleType[`${type}Y`]) : (y = y);
+    }
     const sprite = new PIXI.Sprite(texture);
     PixiApp.marigoldView.addChild(sprite);
     sprite.anchor.set(0.5);
     sprite.position.x = x;
     sprite.position.y = y;
-    sprite.scale.set(scales[type]);
-    if (type === 'bridge') {
-      // sprite.width = PixiApp.app.renderer.view.width;
-      sprite.scale.x = scales[type] + 0.3;
-    } else if (type === 'lanterns') {
-      sprite.width = PixiApp.app.renderer.view.width;
-    }
+    console.log(scaleType);
+    sprite.scale.x = scaleType[type][0];
+    sprite.scale.y = scaleType[type][1];
+    console.log(texture, sprite.scale);
     return sprite;
+  }
+  createAnimatedSprtie(x, y, textureArr, type, speed, notVisible) {
+    let scaleType = scales;
+    if (PixiApp.app.renderer.view.width < 380) {
+      scaleType = mobileScales350;
+      x = PixiApp.app.renderer.view.width / 2;
+      y = scaleType[`${type}Y`];
+    } else if (PixiApp.app.renderer.view.width < 500) {
+      scaleType = mobileScales500;
+      x = PixiApp.app.renderer.view.width / 2;
+      y = scaleType[`${type}Y`];
+    }
+    const animSprite = new PIXI.AnimatedSprite(textureArr);
+    PixiApp.marigoldView.addChild(animSprite);
+    animSprite.animationSpeed = speed;
+    animSprite.scale.set(scaleType[type]);
+    animSprite.anchor.set(0.5);
+    animSprite.x = x;
+    animSprite.y = y;
+    // animSprite.play();
+    if (notVisible) animSprite.visible = false;
+    return animSprite;
   }
   componentDidMount() {
     /* textures */
     const bridgeTexture = PIXI.Texture.from(
-      'siteAssets/marigoldView/thebridge.png'
-    );
-    const moveBridgeTextureArr = [
-      'siteAssets/marigoldView/bridgeM1.png',
-      'siteAssets/marigoldView/bridgeM2.png',
-      'siteAssets/marigoldView/bridgeM3.png',
-      'siteAssets/marigoldView/bridgeM4.png',
-      'siteAssets/marigoldView/bridgeM5.png',
-      'siteAssets/marigoldView/bridgeM6.png',
-      'siteAssets/marigoldView/bridgeM7.png',
-      'siteAssets/marigoldView/bridgeM8.png',
-    ].map((image) => PIXI.Texture.from(image));
-
-    const lanternTexture = PIXI.Texture.from(
-      'siteAssets/marigoldView/lanterns.png'
+      'siteAssets/marigoldView/bridgeFixedLight.png'
     );
 
-    const lanternsTexture = PIXI.Texture.from(
-      'siteAssets/marigoldView/lanternsLittleGlowEdit.png'
+    const nameTexture = PIXI.Texture.from('siteAssets/marigoldView/name13.png');
+
+    const aboutMeArrTextures = [];
+    for (let i = -5; i < 30; i++) {
+      aboutMeArrTextures.push(
+        PIXI.Texture.from(
+          `siteAssets/marigoldView/aboutMeAnimation/aboutMe${i}.png`
+        )
+      );
+    }
+
+    let stayName = this.createSprite(
+      (PixiApp.app.renderer.view.width / 2) * 0.95,
+      (PixiApp.app.renderer.view.height / 4) * 0.4,
+      nameTexture,
+      'stayName'
     );
 
-    // const lanterns = this.createSprite(
-    //   PixiApp.app.renderer.view.width / 2,
-    //   (PixiApp.app.renderer.view.height / 2) * 2.8,
-    //   lanternsTexture,
-    //   'lanterns'
-    // );
+    let aboutMe = this.createAnimatedSprtie(
+      (PixiApp.app.renderer.view.width / 2) * 0.75,
+      (PixiApp.app.renderer.view.height / 4) * 0.7,
+      aboutMeArrTextures,
+      'aboutMe',
+      0.6,
+      true
+    );
 
-    // const lantern = this.createSprite(
-    //   (PixiApp.app.renderer.view.width / 2) * 1.28,
-    //   (PixiApp.app.renderer.view.height / 2) * 1.99,
-    //   lanternTexture,
-    //   'lantern'
-    // );
-    //thingy
-    // const bridge = this.createSprite(
-    //   PixiApp.app.renderer.view.width / 2,
-    //   (PixiApp.app.renderer.view.height / 2) *
-    //     1.2 /* (PixiApp.app.renderer.view.height / 2) * 1.6 */,
-    //   moveBridgeTextureArr[0],
-    //   'bridge'
-    // );
+    const nameBlur = new PIXI.filters.BlurFilter();
+    nameBlur.blur = 100;
+    stayName.filters = [nameBlur];
 
-    const UPPER_LIMIT_Y = 10;
+    let nameBlurTicker = PIXI.Ticker.shared;
+    nameBlurTicker.speed = 0.1;
+    nameBlurTicker.elapsedMS = 10000;
+    nameBlurTicker.add(() => {
+      if (nameBlur.blur > 0) {
+        nameBlur.blur -= 5;
+      } else if (nameBlur.blur === 0) {
+        setTimeout(() => {
+          aboutMe.visible = true;
+          aboutMe.play();
+        }, 500);
+      }
+    });
+
+    const UPPER_LIMIT_Y = 3;
     const UPPER_LIMIT_X = 2;
     const LOWER_LIMIT_X = -2;
     const MAX_SIZE = 6;
     const MIN_SIZE = 2;
-    const AMOUNT = 300;
+    const AMOUNT = 230;
     const COLOR = 0xffffff;
 
     const getRandomColor = () =>
@@ -108,12 +159,8 @@ export default class MarigoldView extends React.Component {
         p.vy = floored(UPPER_LIMIT_Y) + 4;
         p.alpha = Math.random();
         p.x = p.startX = floored(PixiApp.app.renderer.width);
-        p.y = p.startY =
-          // SIZE +
-          (PixiApp.app.renderer.view.height / 2) *
-          1.6 /* -(SIZE + floored(PixiApp.app.renderer.height)) */;
+        p.y = p.startY = (PixiApp.app.renderer.view.height / 2) * 1.4;
         p.width = p.height = SIZE;
-        // p.scale.x = 5
         p.tint = getRandomColor();
         drops.addChild(p);
         return p;
@@ -124,12 +171,15 @@ export default class MarigoldView extends React.Component {
       rotation: true,
       alpha: true,
     });
+    drops.visible = false;
     PixiApp.marigoldView.addChild(drops);
-    // Create a base graphic for our sprites
+
+    // Create a base graphic for sprites
     const p = new PIXI.Graphics();
     p.beginFill(COLOR);
     p.drawCircle(0, 0, 100);
     p.endFill();
+
     // Generate a base texture from the base graphic
     const baseTexture = PixiApp.app.renderer.generateTexture(p);
     let particles = genParticles(baseTexture);
@@ -152,20 +202,21 @@ export default class MarigoldView extends React.Component {
         if (
           particle.x > PixiApp.app.renderer.width ||
           particle.x < 0 ||
-          particle.y > PixiApp.app.renderer.height
+          particle.y > PixiApp.app.renderer.height * 1.3 //determines how far down particles fall before reset
         )
           reset(particle);
       }
       PixiApp.app.renderer.render(drops);
     });
+
     //bridge
     const bridge = this.createSprite(
       PixiApp.app.renderer.view.width / 2,
-      (PixiApp.app.renderer.view.height / 2) *
-        1.3 /* (PixiApp.app.renderer.view.height / 2) * 1.6 */,
-      moveBridgeTextureArr[0],
+      (PixiApp.app.renderer.view.height / 2) * 1.6,
+      bridgeTexture,
       'bridge'
     );
+    setTimeout(() => (drops.visible = true), 500);
   }
   render() {
     return <div></div>;
