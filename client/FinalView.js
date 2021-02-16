@@ -34,11 +34,10 @@ export default class FinalView extends React.Component {
 	onClickTap() {
 		if (this.state.visible) {
 			this.setState({ visible: false });
-			//PixiApp.app.stage.pivot.x = width * 3;
 			PixiApp.app.renderer.view.width += width / 4;
 		} else {
 			this.setState({ visible: true });
-			PixiApp.app.renderer.view.width += width / 4;
+			PixiApp.app.renderer.view.width -= width / 4;
 		}
 	}
 	createSprite(x, y, texture, type, interactive) {
