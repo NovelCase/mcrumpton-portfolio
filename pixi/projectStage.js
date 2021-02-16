@@ -3,24 +3,24 @@ const PIXI = require('pixi.js');
 var _ = require('lodash');
 
 window.WebFontConfig = {
-  google: {
-    families: ['Nunito Sans'],
-  },
+	google: {
+		families: ['Nunito Sans'],
+	},
 };
 (function () {
-  const wf = document.createElement('script');
-  wf.src = `${
-    document.location.protocol === 'https:' ? 'https' : 'http'
-  }://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js`;
-  wf.type = 'text/javascript';
-  wf.async = 'true';
-  const s = document.getElementsByTagName('script')[0];
-  s.parentNode.insertBefore(wf, s);
+	const wf = document.createElement('script');
+	wf.src = `${
+		document.location.protocol === 'https:' ? 'https' : 'http'
+	}://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js`;
+	wf.type = 'text/javascript';
+	wf.async = 'true';
+	const s = document.getElementsByTagName('script')[0];
+	s.parentNode.insertBefore(wf, s);
 })();
 
 export const app = new PIXI.Application({
-  transparent: false,
-  resizeTo: window,
+	transparent: false,
+	resizeTo: window,
 });
 
 app.renderer.backgroundColor = 0x1b1c2b;
@@ -36,29 +36,29 @@ let thirdTransition;
 export const fourthView = secondView * 3;
 
 let left = keyboard('ArrowLeft'),
-  up = keyboard('ArrowUp'),
-  right = keyboard('ArrowRight'),
-  down = keyboard('ArrowDown'),
-  space = keyboard(' ' || 'Spacebar');
+	up = keyboard('ArrowUp'),
+	right = keyboard('ArrowRight'),
+	down = keyboard('ArrowDown'),
+	space = keyboard(' ' || 'Spacebar');
 
 //Left arrow key `press` method
 up.press = () => {
-  if (app.stage.pivot.y >= app.renderer.view.height) {
-    app.stage.pivot.y =
-      Math.floor(app.stage.pivot.y / app.renderer.view.height) *
-        app.renderer.view.height -
-      app.renderer.view.height;
-    console.log(app.stage.pivot.y, app.renderer.view.height);
-    if (app.stage.pivot.y === firstView) {
-      app.renderer.backgroundColor = 0x1b1c2b;
-    } else if (app.stage.pivot.y === secondView) {
-      app.renderer.backgroundColor = 0x15112d;
-    } else if (app.stage.pivot.y === thirdView) {
-      app.renderer.backgroundColor = 0x7598aa;
-    } else if (app.stage.pivot.y === fourthView) {
-      app.renderer.backgroundColor = 0xe1b058;
-    }
-  } else app.stage.pivot.y = 0;
+	if (app.stage.pivot.y >= app.renderer.view.height) {
+		app.stage.pivot.y =
+			Math.floor(app.stage.pivot.y / app.renderer.view.height) *
+				app.renderer.view.height -
+			app.renderer.view.height;
+		if (app.stage.pivot.y === firstView) {
+			app.renderer.backgroundColor = 0x1b1c2b;
+		} else if (app.stage.pivot.y === secondView) {
+			app.renderer.backgroundColor = 0x15112d;
+		} else if (app.stage.pivot.y === thirdView) {
+			app.renderer.backgroundColor = 0x7598aa 
+		} else if (app.stage.pivot.y === fourthView) {
+			app.renderer.backgroundColor = 0xe1b058 
+		}
+	} else app.stage.pivot.y = 0;
+	menuContainer.position.y = app.stage.pivot.y + 10;
 };
 
 //Right
@@ -76,6 +76,7 @@ down.press = () => {
       app.renderer.backgroundColor = 0xe1b058;
     }
   } else app.stage.pivot.y = 3 * app.renderer.view.height;
+  menuContainer.position.y = app.stage.pivot.y + 10;
 };
 
 function keyboard(value) {
@@ -159,6 +160,7 @@ function keyboard(value) {
         app.renderer.backgroundColor = 0xe1b058;
       }
     }
+    	menuContainer.position.y = app.stage.pivot.y + 10;
   };
   // function onWindowResize() {
   //   app.renderer.setSize(window.innerWidth, window.innerHeight);
@@ -198,6 +200,7 @@ megaContainer.addChild(projectView);
 export const finalView = new PIXI.Container();
 megaContainer.addChild(finalView);
 
+
 /* resize - web resposive */
 window.addEventListener('resize', resize);
 
@@ -223,3 +226,8 @@ function resize() {
     }
   });
 }
+export const menuContainer = new PIXI.Container();
+megaContainer.addChild(menuContainer);
+
+menuContainer.position.x = 10;
+menuContainer.position.y = 10;

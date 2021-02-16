@@ -3,18 +3,55 @@
 :root {
 }
 * {
-  font-family: 'Nunito Sans', sans-serif;
+	font-family: 'Nunito Sans', sans-serif;
 }
 body {
 }
+.menu {
+	position: absolute;
+	top: 0;
+	align-items: center;
+	display: flex;
+	flex-direction: row;
+	color: white;
+	padding: 25px;
+}
+.menu > h1 {
+	margin: 10px;
+}
 #app {
-  /* max-width: 20%;
+	/* max-width: 20%;
 	padding: 1rem 3rem;
 	margin: 2rem;
 	border: solid 5px var(--main-bg-color);
 	outline-offset: 1rem;
 	/* outline: 3px solid var(--main-bg-color); */
-  /* outline: 1rem solid #363636;  */
+	/* outline: 1rem solid #363636;  */
+	max-width: 50%;
+	background-color: #ffffff;
 }
 #pixi {
+}
+
+#outerContainer {
+	display: flex;
+	flex-direction: row;
+}
+
+iframe {
+	z-index: 2;
+	position: absolute;
+	opacity: 1;
+}
+
+#loading {
+	z-index: 1;
+	height: 100%;
+	width: 100%;
+	position: relative;
+	opacity: 0.7;
+}
+
+#container {
+	display: flex;
 }

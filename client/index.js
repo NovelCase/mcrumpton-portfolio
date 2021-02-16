@@ -5,16 +5,18 @@ import MarigoldView from './MarigoldView';
 import LanternView from './LanternView';
 import ProjectView from './ProjectView';
 import FinalView from './FinalView';
+import Menu from './Menu';
 
 require('babel-core/register');
 require('babel-polyfill');
 
 ReactDOM.render(
-  <div>
-    <MarigoldView />
-    <LanternView />
-    <ProjectView />
-    <FinalView />
-  </div>,
-  document.getElementById('app')
+	<div>
+		<Menu />
+		<MarigoldView />
+		<LanternView />
+		<ProjectView />
+		<FinalView />
+	</div>,
+	document.getElementById('app')
 );
