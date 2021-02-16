@@ -18,8 +18,8 @@ let scales = {
 	resume: 0.46,
 };
 
-let width = window.innerWidth;
-let height = window.innerHeight;
+let width = PixiApp.app.renderer.view.width;
+let height = PixiApp.app.renderer.view.height;
 
 export default class FinalView extends React.Component {
 	constructor() {
@@ -30,6 +30,7 @@ export default class FinalView extends React.Component {
 		this.onClickTap = this.onClickTap.bind(this);
 		this.createSprite.bind(this);
 	}
+
 	onClickTap() {
 		if (this.state.visible) {
 			this.setState({ visible: false });
@@ -37,7 +38,7 @@ export default class FinalView extends React.Component {
 			PixiApp.app.renderer.view.width += width / 4;
 		} else {
 			this.setState({ visible: true });
-			PixiApp.app.renderer.view.width -= width / 4;
+			PixiApp.app.renderer.view.width += width / 4;
 		}
 	}
 	createSprite(x, y, texture, type, interactive) {
@@ -99,7 +100,6 @@ export default class FinalView extends React.Component {
 
 		spotify.on('pointertap', () => {
 			this.onClickTap();
-			PixiApp.app.stage.pivot.y = PixiApp.fourthView;
 		});
 
 		const bookCase = this.createSprite(
@@ -190,6 +190,7 @@ export default class FinalView extends React.Component {
 							//allowtransparency='true'
 							allow='encrypted-media'
 						></iframe>
+						<img id='loading' src='https://i.ibb.co/TWhb20W/Loading.png' />
 					</div>
 				) : (
 					<div />

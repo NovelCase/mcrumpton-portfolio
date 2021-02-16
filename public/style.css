@@ -16,7 +16,7 @@ body {
 	/* outline: 3px solid var(--main-bg-color); */
 	/* outline: 1rem solid #363636;  */
 	max-width: 50%;
-	background-color: #e3cdfe;
+	background-color: #ffffff;
 }
 #pixi {
 }
@@ -24,4 +24,22 @@ body {
 #outerContainer {
 	display: flex;
 	flex-direction: row;
+}
+
+iframe {
+	z-index: 2;
+	position: absolute;
+	opacity: 1;
+}
+
+#loading {
+	z-index: 1;
+	height: 100%;
+	width: 100%;
+	position: relative;
+	opacity: 0.7;
+}
+
+#container {
+	display: flex;
 }

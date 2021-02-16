@@ -1,6 +1,7 @@
 import React from 'react';
 import * as PixiApp from '../pixi/projectStage.js';
 import * as PIXI from 'pixi.js';
+import { data } from '../data';
 
 export const onClick = () => {};
 
@@ -15,6 +16,15 @@ let scales = {
 };
 
 let roomWidth = 4.5;
+
+let descriptionStyle = {
+	fontFamily: 'Nunito Sans',
+	fontSize: 23,
+	fontWeight: '300',
+	lineHeight: window.innerHeight / 2 / 16,
+	wordWrap: true,
+	wordWrapWidth: (window.innerWidth / 2 / 4) * 3,
+};
 
 export default class LanternView extends React.Component {
 	createSprite(x, y, texture, type, interactive) {
@@ -74,6 +84,37 @@ export default class LanternView extends React.Component {
 		return close;
 	}
 
+	createText(words, style, x, y) {
+		const styleTwo = { ...style };
+		// if (window.innerWidth < 400 && type.includes('project')) {
+		//   smallProject[type].x
+		//     ? (x = smallProject[type].x)
+		//     : (x = (window.innerWidth / 2) * 2.2);
+		//   smallProject[type].y
+		//     ? (y = smallProject[type].y)
+		//     : (y = (window.innerHeight / 4) * 2.95);
+		//   styleTwo.fontSize = styleTwo.fontSize - 5;
+		// } else if (window.innerWidth < 400) {
+		//   smallProject[type].x
+		//     ? (x = smallProject[type].x)
+		//     : (x = (window.innerWidth / 2) * 4.2);
+		//   smallProject[type].y
+		//     ? (y = smallProject[type].y)
+		//     : (y = (window.innerHeight / 4) * 2.95);
+		//   styleTwo.fontSize = styleTwo.fontSize - 5;
+		// }
+		const text = new PIXI.Text(words, styleTwo);
+		text.visible = false;
+		text.position.x = x;
+		text.position.y = y;
+		// if (interactive) {
+		//   text.interactive = true;
+		//   text.buttonMode = true;
+		// }
+		PixiApp.lanternView.addChild(text);
+		return text;
+	}
+
 	componentDidMount() {
 		/* textures */
 		const lanternsTexture = PIXI.Texture.from(
@@ -115,6 +156,7 @@ export default class LanternView extends React.Component {
 			book.interactive = false;
 			book.buttonMode = false;
 			blackCircleBook.visible = true;
+			bookText.visible = true;
 			PixiApp.app.stage.pivot.y = PixiApp.secondView;
 		});
 
@@ -137,6 +179,7 @@ export default class LanternView extends React.Component {
 			teapot.interactive = false;
 			teapot.buttonMode = false;
 			blackCircleTeapot.visible = true;
+			teapotText.visible = true;
 			PixiApp.app.stage.pivot.y = PixiApp.secondView;
 		});
 
@@ -159,6 +202,7 @@ export default class LanternView extends React.Component {
 			nintendoSwitch.interactive = false;
 			nintendoSwitch.buttonMode = false;
 			blackCircleNintendo.visible = true;
+			nintendoText.visible = true;
 			PixiApp.app.stage.pivot.y = PixiApp.secondView;
 		});
 
@@ -181,6 +225,7 @@ export default class LanternView extends React.Component {
 			ipad.interactive = false;
 			ipad.interactive = false;
 			blackCircleIpad.visible = true;
+			ipadText.visible = true;
 			PixiApp.app.stage.pivot.y = PixiApp.secondView;
 		});
 
@@ -220,8 +265,16 @@ export default class LanternView extends React.Component {
 			book.buttonMode = true;
 			ipad.interactive = true;
 			ipad.buttonMode = true;
+			bookText.visible = false;
 			PixiApp.app.stage.pivot.y = PixiApp.secondView;
 		});
+
+		const bookText = this.createText(
+			data.book.description,
+			descriptionStyle,
+			window.innerWidth / 3.9 + window.innerWidth / 2 / 10,
+			(window.innerHeight / 2) * 2.2 + window.innerHeight / 2 / 10
+		);
 
 		const popUpTeapot = this.createPopUpRect(
 			window.innerWidth / 3.9,
@@ -231,6 +284,13 @@ export default class LanternView extends React.Component {
 		const blackCircleTeapot = this.createBlackCircle(
 			window.innerWidth / 3.9,
 			(window.innerHeight / 2) * 2.2
+		);
+
+		const teapotText = this.createText(
+			data.teapot.description,
+			descriptionStyle,
+			window.innerWidth / 3.9 + window.innerWidth / 2 / 10,
+			(window.innerHeight / 2) * 2.2 + window.innerHeight / 2 / 10
 		);
 
 		blackCircleTeapot.on('pointertap', () => {
@@ -244,6 +304,7 @@ export default class LanternView extends React.Component {
 			book.buttonMode = true;
 			ipad.interactive = true;
 			ipad.buttonMode = true;
+			teapotText.visible = false;
 			PixiApp.app.stage.pivot.y = PixiApp.secondView;
 		});
 
@@ -257,6 +318,13 @@ export default class LanternView extends React.Component {
 			(window.innerHeight / 2) * 2.2
 		);
 
+		const nintendoText = this.createText(
+			data.nintendoSwitch.description,
+			descriptionStyle,
+			window.innerWidth / 3.9 + window.innerWidth / 2 / 10,
+			(window.innerHeight / 2) * 2.2 + window.innerHeight / 2 / 10
+		);
+
 		blackCircleNintendo.on('pointertap', () => {
 			popUpNintendo.visible = false;
 			blackCircleNintendo.visible = false;
@@ -268,6 +336,7 @@ export default class LanternView extends React.Component {
 			book.buttonMode = true;
 			ipad.interactive = true;
 			ipad.buttonMode = true;
+			nintendoText.visible = false;
 			PixiApp.app.stage.pivot.y = PixiApp.secondView;
 		});
 
@@ -281,6 +350,13 @@ export default class LanternView extends React.Component {
 			(window.innerHeight / 2) * 2.2
 		);
 
+		const ipadText = this.createText(
+			data.ipad.description,
+			descriptionStyle,
+			window.innerWidth / 3.9 + window.innerWidth / 2 / 10,
+			(window.innerHeight / 2) * 2.2 + window.innerHeight / 2 / 10
+		);
+
 		blackCircleIpad.on('pointertap', () => {
 			popUpIpad.visible = false;
 			blackCircleIpad.visible = false;
@@ -292,6 +368,7 @@ export default class LanternView extends React.Component {
 			book.buttonMode = true;
 			ipad.interactive = true;
 			ipad.buttonMode = true;
+			ipadText.visible = false;
 			PixiApp.app.stage.pivot.y = PixiApp.secondView;
 		});
 	}
