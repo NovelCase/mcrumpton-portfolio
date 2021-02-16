@@ -4,7 +4,7 @@ var _ = require('lodash');
 
 window.WebFontConfig = {
 	google: {
-		families: ['Nunito Sans'],
+		families: ['Cutive'],
 	},
 };
 (function () {

@@ -69,7 +69,7 @@ export function createPopUpRect(title) {
 	scrollbox.update();
 	let popLinkOne = createText(
 		data[title].linkOne,
-		descriptionStyle,
+		linkStyle,
 		x + 75,
 		y + rect.height - 50,
 		true,
@@ -79,8 +79,8 @@ export function createPopUpRect(title) {
 
 	let popLinkTwo = createText(
 		data[title].linkTwo,
-		descriptionStyle,
-		x + rect.width - 150,
+		linkStyle,
+		x + rect.width - 200,
 		y + rect.height - 50,
 		true,
 		'projectLive'
@@ -157,14 +157,14 @@ let scales = {
 };
 /* Styling */
 let titleStyle = {
-	fontFamily: 'Montserrat',
+	fontFamily: 'Cutive',
 	fontSize: 35,
 	fontWeight: '600',
 	wordWrap: true,
 	wordWrapWidth: PixiApp.app.renderer.view.width / 2 - 150,
 };
 let descriptionStyle = {
-	fontFamily: 'Montserrat',
+	fontFamily: 'Cutive',
 	fontSize: 23,
 	fontWeight: '400',
 	lineHeight: 50,
@@ -172,7 +172,7 @@ let descriptionStyle = {
 	wordWrapWidth: PixiApp.app.renderer.view.width / 2 - 150,
 };
 let linkStyle = {
-	fontFamily: 'Montserrat',
+	fontFamily: 'Cutive',
 	fontSize: 23,
 	fill: '#007EC7',
 };
@@ -194,6 +194,12 @@ export default class ProjectView extends React.Component {
 			sprite.buttonMode = true;
 			sprite.on('pointertap', function () {
 				createPopUpRect(type);
+			});
+			sprite.on('pointerover', function () {
+				sprite.scale.set(scales[type] * 1.1);
+			});
+			sprite.on('pointerout', function () {
+				sprite.scale.set(scales[type]);
 			});
 		}
 

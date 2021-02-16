@@ -18,7 +18,7 @@ let scales = {
 let roomWidth = 4.5;
 
 let descriptionStyle = {
-	fontFamily: 'Nunito Sans',
+	fontFamily: 'Cutive',
 	fontSize: 23,
 	fontWeight: '300',
 	lineHeight: window.innerHeight / 2 / 16,
@@ -117,9 +117,9 @@ export default class LanternView extends React.Component {
 
 	componentDidMount() {
 		/* textures */
-		 const lanternsTexture = PIXI.Texture.from(
-      'siteAssets/lanternView/lanternsLittleGlowTwo.png'
-    );
+		const lanternsTexture = PIXI.Texture.from(
+			'siteAssets/lanternView/lanternsLittleGlowTwo.png'
+		);
 		const grassTexture = PIXI.Texture.from('siteAssets/lanternView/grass.png');
 		const soulTexture = PIXI.Texture.from('siteAssets/lanternView/souls.png');
 		const bookTexture = PIXI.Texture.from('siteAssets/lanternView/book.png');

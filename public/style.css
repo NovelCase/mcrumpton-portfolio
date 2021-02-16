@@ -1,9 +1,9 @@
-@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cutive&display=swap');
 
 :root {
 }
 * {
-	font-family: 'Nunito Sans', sans-serif;
+	font-family: 'Cutive', serif;
 }
 body {
 }
@@ -17,6 +17,7 @@ body {
 	color: white;
 	width: 80%;
 	margin: 0 10%;
+	justify-content: space-around;
 }
 .menu > h1 {
 	font-size: 16pt;
