@@ -10,13 +10,16 @@ body {
 .menu {
 	position: absolute;
 	top: 0;
+	left: 100;
 	align-items: center;
 	display: flex;
 	flex-direction: row;
 	color: white;
-	padding: 25px;
+	width: 80%;
+	margin: 0 10%;
 }
 .menu > h1 {
+	font-size: 16pt;
 	margin: 10px;
 }
 #app {
@@ -54,4 +57,9 @@ iframe {
 
 #container {
 	display: flex;
+}
+@media only screen and (min-width: 600px) {
+	.menu > h1 {
+		font-size: 28pt;
+	}
 }
