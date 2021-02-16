@@ -26,18 +26,13 @@ export let data = {
 		linkTwo: 'Presentation',
 		linkTwoUrl: 'https://www.youtube.com/watch?v=dUDTRJXvqfY',
 	},
-	linkedIn: {
-		linkOneUrl: 'https://www.linkedin.com/in/mariecrumpton/',
-	},
-	github: {
-		linkOneUrl: 'https://github.com/mkcrumpton',
-	},
-	resume: {
-		linkOneUrl: 'https://mkcrumpton.github.io/Resume/',
-	},
-	spotify: {
-		embedLink: 'https://open.spotify.com/embed/playlist/1ieXH939lQPONeIlh1ILDo',
-	},
+	linkedIn: 'https://www.linkedin.com/in/mariecrumpton/',
+
+	github: 'https://github.com/mkcrumpton',
+
+	resume: 'https://mkcrumpton.github.io/Resume/',
+
+	spotify: 'https://open.spotify.com/embed/playlist/1ieXH939lQPONeIlh1ILDo',
 	ipad: {
 		description:
 			'One of my favorite creative outlets is drawing. I especially enjoy drawing on my iPad using the Procreate app. Most of the assets for this site were drawn by me using my iPad.',
