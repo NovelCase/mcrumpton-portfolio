@@ -40,23 +40,23 @@ export function createPopUpRect(title) {
 	let popTitle = createText(
 		data[title].name,
 		titleStyle,
-		x + 50,
-		y + 75,
+		x + rect.width / 10,
+		y + 50,
 		false,
 		'projectTitle'
 	);
 	scrollbox = popUpProject.addChild(
 		new Scrollbox({
-			boxWidth: rect.width - 90,
+			boxWidth: (rect.width / 11) * 10,
 			boxHeight: rect.height - 210,
 		})
 	);
 	let projectDetails = scrollbox.content.addChild(new PIXI.Graphics());
 	projectDetails
 		.beginFill(0xc2b9e1, 0.25) /* 0xe3cdfe */
-		.drawRect(0, 0, rect.width - 90, rect.height - 210)
+		.drawRect(0, 0, (rect.width / 11) * 9, rect.height - 210)
 		.endFill();
-	scrollbox.position.set(x + 50, y + 160);
+	scrollbox.position.set(x + rect.width / 10, y + 160);
 
 	let popDesc = createText(
 		data[title].description,
@@ -69,8 +69,8 @@ export function createPopUpRect(title) {
 	scrollbox.update();
 	let popLinkOne = createText(
 		data[title].linkOne,
-		descriptionStyle,
-		x + 75,
+		linkStyle,
+		x + rect.width / 6,
 		y + rect.height - 50,
 		true,
 		'projectGithub'
@@ -79,8 +79,8 @@ export function createPopUpRect(title) {
 
 	let popLinkTwo = createText(
 		data[title].linkTwo,
-		descriptionStyle,
-		x + rect.width - 150,
+		linkStyle,
+		x + (rect.width / 6) * 5,
 		y + rect.height - 50,
 		true,
 		'projectLive'
@@ -95,39 +95,8 @@ function openLink(projectName, linkType) {
 }
 
 function createText(words, style, x, y, interactive, type) {
-	const smallProject = {
-		projectTitle: {
-			y: (PixiApp.app.renderer.view.height / 2) * 0.4,
-		},
-		projectDescription: {
-			y: (PixiApp.app.renderer.view.height / 2) * 0.55,
-		},
-		projectGithub: {
-			x: (PixiApp.app.renderer.view.width / 2) * 2.2,
-		},
-		projectLive: {
-			x: (PixiApp.app.renderer.view.width / 2) * 2.7,
-		},
-	};
-	const styleTwo = { ...style };
-	if (PixiApp.app.renderer.view.width < 400 && type.includes('project')) {
-		smallProject[type].x
-			? (x = smallProject[type].x)
-			: (x = (PixiApp.app.renderer.view.width / 2) * 2.2);
-		smallProject[type].y
-			? (y = smallProject[type].y)
-			: (y = (PixiApp.app.renderer.view.height / 4) * 2.95);
-		styleTwo.fontSize = styleTwo.fontSize - 5;
-	} else if (PixiApp.app.renderer.view.width < 400) {
-		smallProject[type].x
-			? (x = smallProject[type].x)
-			: (x = (PixiApp.app.renderer.view.width / 2) * 4.2);
-		smallProject[type].y
-			? (y = smallProject[type].y)
-			: (y = (PixiApp.app.renderer.view.height / 4) * 2.95);
-		styleTwo.fontSize = styleTwo.fontSize - 5;
-	}
-	const text = new PIXI.Text(words, styleTwo);
+	const text = new PIXI.Text(words, style);
+	if (type === 'projectLive') text.anchor.set(1, 0);
 	text.visible = true;
 	text.position.x = x;
 	text.position.y = y;
@@ -157,22 +126,22 @@ let scales = {
 };
 /* Styling */
 let titleStyle = {
-	fontFamily: 'Montserrat',
+	fontFamily: 'Cutive',
 	fontSize: 35,
 	fontWeight: '600',
 	wordWrap: true,
-	wordWrapWidth: PixiApp.app.renderer.view.width / 2 - 150,
+	wordWrapWidth: Math.max(PixiApp.app.renderer.view.width / 2.5, 300),
 };
 let descriptionStyle = {
-	fontFamily: 'Montserrat',
+	fontFamily: 'Cutive',
 	fontSize: 23,
 	fontWeight: '400',
 	lineHeight: 50,
 	wordWrap: true,
-	wordWrapWidth: PixiApp.app.renderer.view.width / 2 - 150,
+	wordWrapWidth: Math.max(PixiApp.app.renderer.view.width / 2.5, 300),
 };
 let linkStyle = {
-	fontFamily: 'Montserrat',
+	fontFamily: 'Cutive',
 	fontSize: 23,
 	fill: '#007EC7',
 };
@@ -205,6 +174,9 @@ export default class ProjectView extends React.Component {
 				sprite.rotation = 0;
 			});
 			sprite.on('pointertap', function () {
+				PixiApp.app.stage.pivot.y = PixiApp.app.renderer.view.height * 3;
+				PixiApp.menuContainer.position.y =
+					PixiApp.app.renderer.view.height * 3 + 10;
 				createPopUpRect(type);
 			});
 		}

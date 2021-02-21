@@ -9,11 +9,11 @@ body {
 }
 .menu {
 	position: absolute;
-	top: 0;
-	left: 100;
+	top: 4px;
+	left: 0px;
 	align-items: center;
 	display: flex;
-	flex-direction: row;
+	flex-flow: row wrap;
 	color: white;
 	width: 80%;
 	margin: 0 10%;
@@ -60,6 +60,9 @@ iframe {
 	display: flex;
 }
 @media only screen and (min-width: 600px) {
+	.menu {
+		top: 10px;
+	}
 	.menu > h1 {
 		font-size: 28pt;
 	}

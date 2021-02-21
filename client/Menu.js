@@ -23,8 +23,9 @@ export default class Menu extends React.Component {
 		//menuSprite.anchor.set(0.5);
 		menuSprite.interactive = true;
 		menuSprite.buttonMode = true;
-
-		menuSprite.scale.set(0.5);
+		if (window.outerWidth <= 400) {
+			menuSprite.scale.set(0.1);
+		} else menuSprite.scale.set(0.25);
 
 		menuSprite.on('pointertap', () => {
 			this.onClickTap();
