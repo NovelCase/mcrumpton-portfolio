@@ -174,9 +174,8 @@ export default class ProjectView extends React.Component {
 				sprite.rotation = 0;
 			});
 			sprite.on('pointertap', function () {
-				PixiApp.app.stage.pivot.y = PixiApp.app.renderer.view.height * 3;
-				PixiApp.menuContainer.position.y =
-					PixiApp.app.renderer.view.height * 3 + 10;
+				PixiApp.app.stage.pivot.y = PixiApp.thirdView;
+				PixiApp.menuContainer.position.y = PixiApp.thirdView + 10;
 				createPopUpRect(type);
 			});
 		}
