@@ -34,12 +34,12 @@ export default class FinalView extends React.Component {
 	}
 
 	onClickTap() {
-		if (this.state.visible) {
-			this.setState({ visible: false });
-			PixiApp.app.renderer.view.width += width / 4;
-		} else {
+		if (!this.state.visible) {
 			this.setState({ visible: true });
 			PixiApp.app.renderer.view.width -= width / 4;
+		} else {
+			this.setState({ visible: false });
+			PixiApp.app.renderer.view.width += width / 4;
 		}
 	}
 	createSprite(x, y, texture, type, interactive) {
@@ -209,18 +209,17 @@ export default class FinalView extends React.Component {
 	}
 	render() {
 		return (
-			<div>
+			<div id='container'>
 				{this.state.visible ? (
-					<div id='container'>
+					<div>
 						<iframe
 							src={data.spotify}
 							width={width / 4}
 							height={height}
-							// frameborder='0'
-							//allowtransparency='true'
 							allow='encrypted-media'
+							allowTransparency={true}
 						></iframe>
-						<img id='loading' src='https://i.ibb.co/TWhb20W/Loading.png' />
+						<img id='loading' src='https://i.ibb.co/P13DzXz/loading.png' />
 					</div>
 				) : (
 					<div />

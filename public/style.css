@@ -31,7 +31,8 @@ body {
 	/* outline: 3px solid var(--main-bg-color); */
 	/* outline: 1rem solid #363636;  */
 	max-width: 50%;
-	background-color: #ffffff;
+	/* background-color: #ffffff; */
+	background-color: #c2b9e1;
 }
 #pixi {
 }
