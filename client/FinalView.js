@@ -7,6 +7,7 @@ export const onClick = () => {};
 
 let scales = {
 	hobbes: 0.5,
+	hello: 0.75,
 	floor: 1.2,
 	window: 1.1,
 	spotify: 1.1,
@@ -26,6 +27,7 @@ export default class FinalView extends React.Component {
 		super();
 		this.state = {
 			visible: false,
+			speech: false,
 		};
 		this.onClickTap = this.onClickTap.bind(this);
 		this.createSprite.bind(this);
@@ -47,6 +49,12 @@ export default class FinalView extends React.Component {
 		sprite.position.x = x;
 		sprite.position.y = y;
 		sprite.scale.set(scales[type]);
+		sprite.on('pointerover', () => {
+			sprite.rotation -= 0.4;
+		});
+		sprite.on('pointerout', () => {
+			sprite.rotation = 0;
+		});
 		if (type === 'floor') {
 			sprite.width = window.innerWidth;
 		} else if (interactive) {
@@ -74,6 +82,9 @@ export default class FinalView extends React.Component {
 		const tableTexture = PIXI.Texture.from('siteAssets/finalView/table.png');
 		const windowTexture = PIXI.Texture.from('siteAssets/finalView/window.png');
 		const resumeTexture = PIXI.Texture.from('siteAssets/finalView/Resume.png');
+		const speechTexture = PIXI.Texture.from(
+			'siteAssets/finalView/hobbesHello.png'
+		);
 
 		const floor = this.createSprite(
 			PixiApp.app.renderer.view.width / 2,
@@ -175,6 +186,26 @@ export default class FinalView extends React.Component {
 			'hobbes',
 			true
 		);
+
+		const hobbesHello = this.createSprite(
+			(PixiApp.app.renderer.view.width / 4) * 2.5,
+			(PixiApp.app.renderer.view.height / 2) * 6.721,
+			speechTexture,
+			'hello',
+			true
+		);
+
+		hobbesHello.visible = false;
+
+		hobbes.on('pointertap', () => {
+			if (!this.state.speech) {
+				hobbesHello.visible = true;
+				this.state.speech = true;
+			} else {
+				hobbesHello.visible = false;
+				this.state.speech = false;
+			}
+		});
 	}
 	render() {
 		return (

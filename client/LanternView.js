@@ -18,7 +18,7 @@ let scales = {
 let roomWidth = 4.5;
 
 let descriptionStyle = {
-	fontFamily: 'Nunito Sans',
+	fontFamily: 'Cutive',
 	fontSize: 23,
 	fontWeight: '300',
 	lineHeight: window.innerHeight / 2 / 16,
@@ -34,6 +34,12 @@ export default class LanternView extends React.Component {
 		sprite.position.x = x;
 		sprite.position.y = y;
 		sprite.scale.set(scales[type]);
+		sprite.on('pointerover', () => {
+			sprite.rotation -= 0.4;
+		});
+		sprite.on('pointerout', () => {
+			sprite.rotation = 0;
+		});
 		if (type === 'lantern') sprite.width = PixiApp.app.renderer.view.width;
 		else if (interactive) {
 			sprite.interactive = true;
@@ -57,7 +63,7 @@ export default class LanternView extends React.Component {
 		// 	y = (window.innerHeight / 2) * 0.2;
 		// }
 		const rect = new PIXI.Graphics();
-		rect.beginFill(0xf4f5e7).drawRoundedRect(x, y, width, height, 20).endFill();
+		rect.beginFill(0xc2b9e1).drawRoundedRect(x, y, width, height, 20).endFill();
 		rect.visible = false;
 		PixiApp.lanternView.addChild(rect);
 		return rect;
@@ -77,10 +83,17 @@ export default class LanternView extends React.Component {
 			.beginFill(0x000000)
 			.drawCircle(closeSize.x, closeSize.y, closeSize.radius)
 			.endFill();
+
 		close.visible = false; //set to false when I have click functionality
 		close.interactive = true;
 		close.buttonMode = true;
 		PixiApp.lanternView.addChild(close);
+		close.on('mouseover', () => {
+			close.tint = 0x696969;
+		});
+		close.on('mouseout', () => {
+			close.tint = 0x000000;
+		});
 		return close;
 	}
 
@@ -117,9 +130,9 @@ export default class LanternView extends React.Component {
 
 	componentDidMount() {
 		/* textures */
-		 const lanternsTexture = PIXI.Texture.from(
-      'siteAssets/lanternView/lanternsLittleGlowTwo.png'
-    );
+		const lanternsTexture = PIXI.Texture.from(
+			'siteAssets/lanternView/lanternsLittleGlowTwo.png'
+		);
 		const grassTexture = PIXI.Texture.from('siteAssets/lanternView/grass.png');
 		const soulTexture = PIXI.Texture.from('siteAssets/lanternView/souls.png');
 		const bookTexture = PIXI.Texture.from('siteAssets/lanternView/book.png');
