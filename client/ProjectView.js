@@ -168,7 +168,7 @@ export default class ProjectView extends React.Component {
 				sprite.scale.set(scales[type]);
 			});
 			sprite.on('pointerdown', function () {
-				sprite.rotation = 0.4;
+				sprite.rotation = 0.2;
 			});
 			sprite.on('pointerup', function () {
 				sprite.rotation = 0;
