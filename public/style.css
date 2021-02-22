@@ -1,9 +1,9 @@
-@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cutive&display=swap');
 
 :root {
 }
 * {
-	font-family: 'Nunito Sans', sans-serif;
+	font-family: 'Cutive', serif;
 }
 body {
 }
@@ -31,7 +31,8 @@ body {
 	/* outline: 3px solid var(--main-bg-color); */
 	/* outline: 1rem solid #363636;  */
 	max-width: 50%;
-	background-color: #ffffff;
+	/* background-color: #ffffff; */
+	background-color: #c2b9e1;
 }
 #pixi {
 }
