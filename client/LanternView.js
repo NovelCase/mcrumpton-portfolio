@@ -6,13 +6,13 @@ import { data } from '../data';
 export const onClick = () => {};
 
 let scales = {
-	lantern: 1.1,
-	grass: 0.75,
-	book: 0.7,
-	teapot: 0.7,
-	nintendoSwitch: 0.7,
-	ipad: 0.7,
-	souls: 0.6,
+  lantern: 1.1,
+  grass: 0.8,
+  book: 0.7,
+  teapot: 0.7,
+  nintendoSwitch: 0.7,
+  ipad: 0.7,
+  souls: 0.6,
 };
 
 let roomWidth = 4.5;
@@ -40,6 +40,7 @@ export default class LanternView extends React.Component {
 		sprite.on('pointerout', () => {
 			sprite.rotation = 0;
 		});
+    if (type === 'grass') sprite.scale.y = scales[type] + 0.3;
 		if (type === 'lantern') sprite.width = PixiApp.app.renderer.view.width;
 		else if (interactive) {
 			sprite.interactive = true;
@@ -133,8 +134,10 @@ export default class LanternView extends React.Component {
 		const lanternsTexture = PIXI.Texture.from(
 			'siteAssets/lanternView/lanternsLittleGlowTwo.png'
 		);
-		const grassTexture = PIXI.Texture.from('siteAssets/lanternView/grass.png');
-		const soulTexture = PIXI.Texture.from('siteAssets/lanternView/souls.png');
+    const grassTexture = PIXI.Texture.from(
+      'siteAssets/lanternView/newGrass.png'
+    );
+    const soulTexture = PIXI.Texture.from('siteAssets/lanternView/souls.png');
 		const bookTexture = PIXI.Texture.from('siteAssets/lanternView/book.png');
 		const ipadTexture = PIXI.Texture.from('siteAssets/lanternView/ipad.png');
 		const nintendoTexture = PIXI.Texture.from(
@@ -249,12 +252,12 @@ export default class LanternView extends React.Component {
 			'souls'
 		);
 
-		const grass = this.createSprite(
-			PixiApp.app.renderer.view.width / 2,
-			(PixiApp.app.renderer.view.height / 2) * 2.655,
-			grassTexture,
-			'grass'
-		);
+    const grass = this.createSprite(
+      PixiApp.app.renderer.view.width / 2,
+      (PixiApp.app.renderer.view.height / 2) * 3.9,
+      grassTexture,
+      'grass'
+    );
 
 		//popups
 		const popUpBook = this.createPopUpRect(

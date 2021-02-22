@@ -91,14 +91,14 @@ export default class MarigoldView extends React.Component {
 
     let stayName = this.createSprite(
       (PixiApp.app.renderer.view.width / 2) * 0.95,
-      (PixiApp.app.renderer.view.height / 4) * 0.4,
+      (PixiApp.app.renderer.view.height / 4) * 0.55,
       nameTexture,
       'stayName'
     );
 
     let aboutMe = this.createAnimatedSprtie(
-      (PixiApp.app.renderer.view.width / 2) * 0.75,
-      (PixiApp.app.renderer.view.height / 4) * 0.7,
+      (PixiApp.app.renderer.view.width / 2) * 0.9,
+      (PixiApp.app.renderer.view.height / 4) * 0.9,
       aboutMeArrTextures,
       'aboutMe',
       0.6,
@@ -111,7 +111,7 @@ export default class MarigoldView extends React.Component {
 
     let nameBlurTicker = PIXI.Ticker.shared;
     nameBlurTicker.speed = 0.1;
-    nameBlurTicker.elapsedMS = 10000;
+    nameBlurTicker.elapsedMS = 500;
     nameBlurTicker.add(() => {
       if (nameBlur.blur > 0) {
         nameBlur.blur -= 5;
