@@ -3,9 +3,9 @@ const PIXI = require('pixi.js');
 var _ = require('lodash');
 
 window.WebFontConfig = {
-  google: {
-    families: ['Nunito Sans'],
-  },
+	google: {
+		families: ['Cutive'],
+	},
 };
 (function () {
   const wf = document.createElement('script');

@@ -4,7 +4,11 @@ import * as PIXI from 'pixi.js';
 
 let width = PixiApp.app.renderer.view.width;
 let height = PixiApp.app.renderer.view.height;
-
+const hamMenu = PIXI.Texture.from('/siteAssets/Hamburger_icon.png');
+const hamHover = PIXI.Texture.from('/siteAssets/HamburgerHover.png');
+const closedIcon = PIXI.Texture.from('/siteAssets/close_icon.png');
+const closeHover = PIXI.Texture.from('/siteAssets/closeHover.png');
+let menuSprite;
 export default class Menu extends React.Component {
 	constructor() {
 		super();
@@ -14,32 +18,41 @@ export default class Menu extends React.Component {
 		this.onClickTap = this.onClickTap.bind(this);
 	}
 	componentDidMount() {
-		const menu = PIXI.Texture.from('/siteAssets/Hamburger_icon.png');
-
-		const menuSprite = new PIXI.Sprite(menu);
+		menuSprite = new PIXI.Sprite(hamMenu);
 		PixiApp.menuContainer.addChild(menuSprite);
-		menuSprite.anchor.set(0.5);
+		//menuSprite.anchor.set(0.5);
 		menuSprite.interactive = true;
 		menuSprite.buttonMode = true;
-
-		menuSprite.scale.set(0.05);
+		if (window.outerWidth <= 400) {
+			menuSprite.scale.set(0.1);
+		} else menuSprite.scale.set(0.25);
 
 		menuSprite.on('pointertap', () => {
 			this.onClickTap();
 		});
-		// spotifySprite.on('pointerover', function (event) {
-		// 	this.texture = spotifyHover;
-		// });
-		// spotifySprite.on('pointerout', function (event) {
-		// 	this.texture = spotify;
-		// });
+		menuSprite.on('pointerover', function () {
+			if (this.texture === hamMenu) {
+				this.texture = hamHover;
+			} else {
+				this.texture = closeHover;
+			}
+		});
+		menuSprite.on('pointerout', function () {
+			if (this.texture === hamHover || this.texture === hamMenu) {
+				this.texture = hamMenu;
+			} else {
+				this.texture = closedIcon;
+			}
+		});
 	}
 
 	onClickTap() {
 		if (this.state.visible) {
 			this.setState({ visible: false });
+			menuSprite.texture = hamMenu;
 		} else {
 			this.setState({ visible: true });
+			menuSprite.texture = closedIcon;
 		}
 	}
 

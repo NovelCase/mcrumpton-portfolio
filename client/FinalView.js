@@ -8,6 +8,7 @@ export const onClick = () => {};
 
 let scales = {
   hobbes: 0.5,
+  hello: 0.75,
   floor: 1.2,
   window: 1.1,
   spotify: 1.1,
@@ -181,25 +182,44 @@ export default class FinalView extends React.Component {
       true
     );
   }
-  render() {
-    return (
-      <div>
-        {this.state.visible ? (
-          <div id="container">
-            <iframe
-              src={data.spotify}
-              width={width / 4}
-              height={height}
-              // frameborder='0'
-              //allowtransparency='true'
-              allow="encrypted-media"
-            ></iframe>
-            {/* <img id="loading" src={loading} /> */}
-          </div>
-        ) : (
-          <div />
-        )}
-      </div>
-    );
-  }
+		const hobbesHello = this.createSprite(
+			(PixiApp.app.renderer.view.width / 4) * 2.5,
+			(PixiApp.app.renderer.view.height / 2) * 6.721,
+			speechTexture,
+			'hello',
+			true
+		);
+
+		hobbesHello.visible = false;
+
+		hobbes.on('pointertap', () => {
+			if (!this.state.speech) {
+				hobbesHello.visible = true;
+				this.state.speech = true;
+			} else {
+				hobbesHello.visible = false;
+				this.state.speech = false;
+			}
+		});
+	}
+	render() {
+		return (
+			<div id='container'>
+				{this.state.visible ? (
+					<div>
+						<iframe
+							src={data.spotify}
+							width={width / 4}
+							height={height}
+							allow='encrypted-media'
+							allowTransparency={true}
+						></iframe>
+						<img id='loading' src='https://i.ibb.co/P13DzXz/loading.png' />
+					</div>
+				) : (
+					<div />
+				)}
+			</div>
+		);
+	}
 }

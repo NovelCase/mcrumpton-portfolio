@@ -1,23 +1,24 @@
-@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cutive&display=swap');
 
 :root {
 }
 * {
-  font-family: 'Nunito Sans', sans-serif;
+	font-family: 'Cutive', serif;
 }
 body {
   background-color: #1b1c2b /* #532b18 */;
 }
 .menu {
-  position: absolute;
-  top: 0;
-  left: 100;
-  align-items: center;
-  display: flex;
-  flex-direction: row;
-  color: white;
-  width: 80%;
-  margin: 0 10%;
+	position: absolute;
+	top: 4px;
+	left: 0px;
+	align-items: center;
+	display: flex;
+	flex-flow: row wrap;
+	color: white;
+	width: 80%;
+	margin: 0 10%;
+	justify-content: space-around;
 }
 .menu > h1 {
   font-size: 16pt;
@@ -30,9 +31,10 @@ body {
 	border: solid 5px var(--main-bg-color);
 	outline-offset: 1rem;
 	/* outline: 3px solid var(--main-bg-color); */
-  /* outline: 1rem solid #363636;  */
-  max-width: 50%;
-  background-color: #ffffff;
+	/* outline: 1rem solid #363636;  */
+	max-width: 50%;
+	/* background-color: #ffffff; */
+	background-color: #c2b9e1;
 }
 #pixi {
 }
@@ -60,7 +62,10 @@ iframe {
   display: flex;
 }
 @media only screen and (min-width: 600px) {
-  .menu > h1 {
-    font-size: 28pt;
-  }
+	.menu {
+		top: 10px;
+	}
+	.menu > h1 {
+		font-size: 28pt;
+	}
 }
