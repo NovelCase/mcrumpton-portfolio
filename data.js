@@ -1,3 +1,9 @@
+import * as PIXI from 'pixi.js';
+
+function createTexture(asset) {
+  return PIXI.Texture.from(asset);
+}
+
 export let data = {
   gobARk: {
     name: 'go.bARk',
@@ -26,6 +32,16 @@ export let data = {
     linkTwo: 'Presentation',
     linkTwoUrl: 'https://www.youtube.com/watch?v=dUDTRJXvqfY',
   },
+  novelCase: {
+    name: 'novel Case',
+    description: 'Coming soon!',
+    // linkOne: 'Deployed',
+    // linkeOneUrl: '',
+  },
+  stack: {
+    name: 'Stack: ',
+    techStack: createTexture('siteAssets/projectView/techStack.png'),
+  },
   linkedIn: 'https://www.linkedin.com/in/mariecrumpton/',
 
   github: 'https://github.com/mkcrumpton',
@@ -33,6 +49,10 @@ export let data = {
   resume: 'https://mkcrumpton.github.io/Resume/',
 
   spotify: 'https://open.spotify.com/embed/playlist/1ieXH939lQPONeIlh1ILDo',
+  aboutMe: {
+    description:
+      'About Me \n I need to find a way to fill this up with info about me, but I am also concerned about the look of everything.',
+  },
   ipad: {
     description:
       'One of my favorite creative outlets is drawing. I especially enjoy drawing on my iPad using the Procreate app. Most of the assets for this site were drawn by me using my iPad.',
