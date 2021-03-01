@@ -44,10 +44,8 @@ export default class MarigoldView extends React.Component {
     sprite.anchor.set(0.5);
     sprite.position.x = x;
     sprite.position.y = y;
-    console.log(scaleType);
     sprite.scale.x = scaleType[type][0];
     sprite.scale.y = scaleType[type][1];
-    console.log(texture, sprite.scale);
     return sprite;
   }
   createAnimatedSprtie(x, y, textureArr, type, speed, notVisible) {
@@ -216,6 +214,7 @@ export default class MarigoldView extends React.Component {
       bridgeTexture,
       'bridge'
     );
+    bridge.width = window.outerWidth * 0.2 + window.outerWidth;
     setTimeout(() => (drops.visible = true), 500);
   }
   render() {

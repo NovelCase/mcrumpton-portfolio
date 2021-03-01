@@ -1,11 +1,10 @@
-const { Sprite } = require('pixi.js');
 const PIXI = require('pixi.js');
 var _ = require('lodash');
 
 window.WebFontConfig = {
-	google: {
-		families: ['Cutive'],
-	},
+  google: {
+    families: ['Cutive'],
+  },
 };
 (function () {
   const wf = document.createElement('script');
@@ -28,18 +27,12 @@ let pixiDiv = document.getElementById('pixi');
 pixiDiv.appendChild(app.view);
 
 export let firstView = app.stage.pivot.y;
-let firsTransition;
 export const secondView = app.renderer.view.height;
-let secondTransition;
 export const thirdView = secondView * 2;
-let thirdTransition;
 export const fourthView = secondView * 3;
 
-let left = keyboard('ArrowLeft'),
-  up = keyboard('ArrowUp'),
-  right = keyboard('ArrowRight'),
-  down = keyboard('ArrowDown'),
-  space = keyboard(' ' || 'Spacebar');
+let up = keyboard('ArrowUp'),
+  down = keyboard('ArrowDown');
 
 //Left arrow key `press` method
 up.press = () => {
@@ -48,15 +41,6 @@ up.press = () => {
       Math.floor(app.stage.pivot.y / app.renderer.view.height) *
         app.renderer.view.height -
       app.renderer.view.height;
-    // if (app.stage.pivot.y === firstView) {
-    //   app.renderer.backgroundColor = 0x1b1c2b;
-    // } else if (app.stage.pivot.y === secondView) {
-    //   app.renderer.backgroundColor = 0x15112d;
-    // } else if (app.stage.pivot.y === thirdView) {
-    //   app.renderer.backgroundColor = 0x7598aa;
-    // } else if (app.stage.pivot.y === fourthView) {
-    //   app.renderer.backgroundColor = 0xe1b058;
-    // }
   } else app.stage.pivot.y = 0;
   menuContainer.position.y = app.stage.pivot.y + 10;
 };
@@ -68,13 +52,6 @@ down.press = () => {
       Math.floor(app.stage.pivot.y / app.renderer.view.height) *
         app.renderer.view.height +
       app.renderer.view.height;
-    // if (app.stage.pivot.y === secondView) {
-    //   app.renderer.backgroundColor = 0x15112d;
-    // } else if (app.stage.pivot.y === thirdView) {
-    //   app.renderer.backgroundColor = 0x7598aa;
-    // } else if (app.stage.pivot.y === fourthView) {
-    //   app.renderer.backgroundColor = 0xe1b058;
-    // }
   } else app.stage.pivot.y = 3 * app.renderer.view.height;
   menuContainer.position.y = app.stage.pivot.y + 10;
 };
@@ -107,7 +84,6 @@ function keyboard(value) {
   };
 
   onwheel = (event) => {
-    // console.log(event);
     if (
       //don't scroll any further (top of page)
       app.stage.pivot.y < 0 ||
@@ -124,31 +100,9 @@ function keyboard(value) {
     } else {
       //keep scrolling
       app.stage.pivot.y += event.deltaY * 1.3 || event.deltaX * 1.3;
-      // if (app.stage.pivot.y >= 0 && app.stage.pivot.y < secondView / 2) {
-      //   // console.log('first background', app.stage.pivot.y);
-      //   app.renderer.backgroundColor = 0x1b1c2b;
-      // } else if (
-      //   app.stage.pivot.y > secondView / 2 &&
-      //   app.stage.pivot.y < thirdView * 0.94
-      // ) {
-      //   // console.log('second background', app.stage.pivot.y);
-      //   app.renderer.backgroundColor = 0x15112d;
-      // } else if (
-      //   app.stage.pivot.y > thirdView * 0.94 &&
-      //   app.stage.pivot.y < secondView / 2 + thirdView
-      // ) {
-      //   console.log('third background', app.stage.pivot.y);
-      //   app.renderer.backgroundColor = 0x395672 /* 46699e */ /* 0x7598aa */;
-      // } else if (app.stage.pivot.y > secondView / 3 + thirdView) {
-      //   console.log('fourth view', app.stage.pivot.y);
-      //   app.renderer.backgroundColor = 0x426783 /* 324e64 */ /* e1b058 */;
-      // }
     }
     menuContainer.position.y = app.stage.pivot.y + 10;
   };
-  // function onWindowResize() {
-  //   app.renderer.setSize(window.innerWidth, window.innerHeight);
-  // }
 
   // Attach event listeners
   const downListener = key.downHandler.bind(key);
@@ -175,20 +129,11 @@ function createGradTexture() {
 
   const ctx = canvas.getContext('2d');
 
-  // use canvas2d API to create gradient
   const grd = ctx.createLinearGradient(0, 0, 0, canvas.height);
   grd.addColorStop(0, '#15112d');
   grd.addColorStop(0.4, '#231C49');
-  // grd.addColorStop(0.4, '#15112d');
-  // grd.addColorStop(0.7, '#395672')
-  // grd.addColorStop(0.63, '#334266');
   grd.addColorStop(0.58, '#413970');
   grd.addColorStop(0.78, '#426783');
-  // grd.addColorStop(0, '#1b1c2b');
-  // grd.addColorStop(0.3, '#231C49');
-  // // grd.addColorStop(0.4, '#15112d');
-  // // grd.addColorStop(0.75, '#395672');
-  // grd.addColorStop(1, '#426783');
 
   ctx.fillStyle = grd;
   ctx.fillRect(0, 0, window.innerWidth, window.innerHeight);
@@ -225,7 +170,6 @@ window.addEventListener('resize', resize);
 
 /* for scaling adjustment not on refresh */
 function resize() {
-  //has an issue adjusting for height differece
   let widthDiff = window.innerWidth - app.renderer.view.width;
   let heightDiff = window.innerHeight - app.renderer.view.height;
   let method = 'add';
