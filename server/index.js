@@ -11,18 +11,18 @@ app.use(express.static(path.join(__dirname, '..', 'public')));
 app.use(morgan('dev'));
 
 app.get('*', (req, res, next) => {
-	res.sendFile(path.join(__dirname, '../index.html'));
+  res.sendFile(path.join(__dirname, '../index.html'));
 });
 
 app.use((req, res, next) => {
-	const err = new Error('Not Found');
-	err.status = 404;
-	next(err);
+  const err = new Error('Not Found');
+  err.status = 404;
+  next(err);
 });
 app.use((err, req, res, next) => {
-	res.status(err.status || 500).send(err.message || 'Internal server error');
-	console.error(err);
+  res.status(err.status || 500).send(err.message || 'Internal server error');
+  console.error(err);
 });
 app.listen(process.env.PORT || 5000, () => {
-	console.log(`Serving data on ${process.env.PORT}`);
+  console.log(`Serving data on ${process.env.PORT}`);
 });
