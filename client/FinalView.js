@@ -231,7 +231,7 @@ export default class FinalView extends React.Component {
 
     spotify.on('pointertap', () => {
       if (window.innerWidth < 800) {
-        window.open(data.spotify, '_blank');
+        window.open(data.spotify, '_blank', 'noopener', 'noreferrer');
       } else {
         this.onClickTap();
       }
@@ -253,7 +253,7 @@ export default class FinalView extends React.Component {
     );
 
     github.on('pointertap', () => {
-      window.open(data.github, '_blank');
+      window.open(data.github, '_blank', 'noopener', 'noreferrer');
       PixiApp.app.stage.pivot.y = PixiApp.fourthView;
     });
 
@@ -266,7 +266,7 @@ export default class FinalView extends React.Component {
     );
 
     linkedIn.on('pointertap', () => {
-      window.open(data.linkedIn, '_blank');
+      window.open(data.linkedIn, '_blank', 'noopener', 'noreferrer');
       PixiApp.app.stage.pivot.y = PixiApp.fourthView;
     });
 

@@ -56,6 +56,8 @@ export let data = {
     name: 'About Me',
     description:
       'Hi! I’m Marie, a full stack software developer with a background in education who is motivated by continuous learning, creativity, and problem solving. After an exciting indoor recess involving a coding game, I discovered a new passion and desire to become a developer. Now as a developer I enjoy collaborating with others to problem solve and craft solutions. When I’m not programming, you can find me reading, gaming, drawing, or playing with my Saint Bernard, Hobbes.',
+    linkOne: 'Resume',
+    linkOneUrl: 'https://mkcrumpton.github.io/Resume/',
   },
   ipad: {
     name: 'Draw',

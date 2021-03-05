@@ -125,7 +125,12 @@ function createStackSprite(x, y, texture, type) {
 
 function openLink(projectName, linkType) {
   linkType = 'link' + linkType + 'Url';
-  window.open(`${data[projectName][linkType]}`);
+  window.open(
+    `${data[projectName][linkType]}`,
+    '_blank',
+    'noopener',
+    'noreferrer'
+  );
 }
 
 function createText(words, style, x, y, interactive, type) {
