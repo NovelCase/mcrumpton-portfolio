@@ -66,7 +66,6 @@ export default class MarigoldView extends React.Component {
     animSprite.anchor.set(0.5);
     animSprite.x = x;
     animSprite.y = y;
-    // animSprite.play();
     if (notVisible) animSprite.visible = false;
     return animSprite;
   }
@@ -197,7 +196,7 @@ export default class MarigoldView extends React.Component {
         if (
           particle.x > PixiApp.app.renderer.width ||
           particle.x < 0 ||
-          particle.y > PixiApp.app.renderer.height * 1.8 /* 1.3 */ //determines how far down particles fall before reset
+          particle.y > PixiApp.app.renderer.height * 1.8 //determines how far down particles fall before reset
         )
           reset(particle);
       }
