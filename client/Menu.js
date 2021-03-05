@@ -18,7 +18,6 @@ export default class Menu extends React.Component {
   componentDidMount() {
     menuSprite = new PIXI.Sprite(hamMenu);
     PixiApp.menuContainer.addChild(menuSprite);
-    //menuSprite.anchor.set(0.5);
     menuSprite.interactive = true;
     menuSprite.buttonMode = true;
     if (window.outerWidth <= 400) {

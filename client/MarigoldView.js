@@ -142,9 +142,7 @@ export default class MarigoldView extends React.Component {
     // Reset particle start points based on screen
     const reset = (p) => {
       p.x = floored(PixiApp.app.renderer.width);
-      p.y =
-        (PixiApp.app.renderer.view.height / 2) *
-        1.6 /* -(p.size + floored(PixiApp.app.renderer.height)) */;
+      p.y = (PixiApp.app.renderer.view.height / 2) * 1.6;
       p.vy = floored(UPPER_LIMIT_Y) + 2;
     };
     // Generate a particle set based on a given texture
@@ -195,12 +193,11 @@ export default class MarigoldView extends React.Component {
         particle.y += particle.vy;
 
         if (Math.random() > 0.9) particle.vx = update(particle.vx);
-        // if (Math.random() > 0.9)
-        //   particle.vy = Math.min(particle.vy + 1, UPPER_LIMIT_Y);
+
         if (
           particle.x > PixiApp.app.renderer.width ||
           particle.x < 0 ||
-          particle.y > PixiApp.app.renderer.height * 1.3 //determines how far down particles fall before reset
+          particle.y > PixiApp.app.renderer.height * 1.8 /* 1.3 */ //determines how far down particles fall before reset
         )
           reset(particle);
       }

@@ -5,20 +5,31 @@ import { data } from '../data';
 import { Scrollbox } from 'pixi-scrollbox';
 
 let width = PixiApp.app.renderer.view.width / 2;
-export function createPopUpRect(title) {
+export function createPopUpRect(title, x, y, scrollView, popUpView) {
   popUpProject.removeChildren();
-  let x = PixiApp.app.renderer.view.width / 4;
-  let y = (PixiApp.app.renderer.view.height * 9) / 4;
-  // width = PixiApp.app.renderer.view.width / 2;
   let height = PixiApp.app.renderer.view.height / 2;
   if (window.innerWidth < 500) {
     x = 0;
-    y = PixiApp.app.renderer.view.height * 2.125;
+    popUpView === PixiApp.secondView
+      ? (y = PixiApp.app.renderer.view.height * 1.125)
+      : (y = PixiApp.app.renderer.view.height * 2.125);
     width = window.innerWidth;
     height = PixiApp.app.renderer.view.height * 0.75;
   }
+  let shadow = new PIXI.Graphics();
+  shadow
+    .beginFill(0x000000, 0.65)
+    .drawRect(
+      0,
+      0,
+      PixiApp.app.renderer.view.width * 4,
+      PixiApp.app.renderer.view.height * 4
+    )
+    .endFill();
+  shadow.visible = true;
+
   let rect = new PIXI.Graphics();
-  rect.beginFill(0xc2b9e1).drawRoundedRect(x, y, width, height, 20).endFill();
+  rect.beginFill(0xd4cce7).drawRoundedRect(x, y, width, height, 20).endFill();
   rect.visible = true;
 
   const closeButton = new PIXI.Graphics();
@@ -32,11 +43,13 @@ export function createPopUpRect(title) {
   closeButton.interactive = true;
   closeButton.buttonMode = true;
   closeButton.on('pointertap', function () {
-    PixiApp.app.stage.pivot.y = PixiApp.thirdView;
-    PixiApp.menuContainer.position.y = PixiApp.thirdView + 10;
+    PixiApp.app.stage.pivot.y = popUpView;
+    PixiApp.menuContainer.position.y = popUpView + 10;
     popUpProject.removeChildren();
     popUpProject.visible = true;
+    PixiApp.noScroll[scrollView] = true;
   });
+  popUpProject.addChild(shadow);
   popUpProject.addChild(rect);
   popUpProject.addChild(closeButton);
   let popTitle = createText(
@@ -55,10 +68,14 @@ export function createPopUpRect(title) {
   );
   let projectDetails = scrollbox.content.addChild(new PIXI.Graphics());
   projectDetails
-    .beginFill(0xc2b9e1, 0.25)
+    .beginFill(0xd4cce7, 0.25)
     .drawRect(0, 0, (rect.width / 11) * 8.5, rect.height - 210)
     .endFill();
   scrollbox.position.set(x + rect.width / 10, y + 160);
+  if (window.innerWidth < 800) {
+    scrollbox.boxWidth = (rect.width / 11) * 9.5;
+    scrollbox.position.x = rect.width / 15;
+  }
 
   if (title === 'stack') {
     let stacks = createStackSprite(0, 0, data.stack.techStack, 'techStack');
@@ -240,7 +257,7 @@ let linkStyle = {
   fill: '#007EC7',
 };
 export default class ProjectView extends React.Component {
-  createSprite(x, y, texture, type, interactive) {
+  createSprite(x, y, texture, type, interactive, anchor) {
     let scaleType = scales;
     if (
       PixiApp.app.renderer.view.width < 380 &&
@@ -266,7 +283,7 @@ export default class ProjectView extends React.Component {
     }
     const sprite = new PIXI.Sprite(texture);
     PixiApp.projectView.addChild(sprite);
-    sprite.anchor.set(0.5);
+    anchor ? sprite.anchor.set(anchor[0], anchor[1]) : sprite.anchor.set(0.5);
     sprite.position.x = x;
     sprite.position.y = y;
     sprite.scale.x = scaleType[type][0];
@@ -279,18 +296,24 @@ export default class ProjectView extends React.Component {
       });
       sprite.on('pointerout', function () {
         sprite.scale.set(scaleType[type][0]);
-        sprite.rotation = 0;
-      });
-      sprite.on('pointerdown', function () {
-        sprite.rotation = -0.4;
-      });
-      sprite.on('pointerup', function () {
-        sprite.rotation = 0;
       });
       sprite.on('pointertap', function () {
         PixiApp.app.stage.pivot.y = PixiApp.thirdView;
         PixiApp.menuContainer.position.y = PixiApp.thirdView + 10;
-        createPopUpRect(type);
+        createPopUpRect(
+          type,
+          PixiApp.app.renderer.view.width / 4,
+          (PixiApp.app.renderer.view.height * 9) / 4,
+          'projectScrolling',
+          PixiApp.thirdView
+        );
+        PixiApp.noScroll.projectScrolling = false;
+      });
+      sprite.on('touchstart', function () {
+        sprite.scale.set(scaleType[type][0] * 1.5);
+      });
+      sprite.on('touchend', function () {
+        sprite.scale.set(scaleType[type][0]);
       });
     }
     return sprite;
@@ -366,17 +389,21 @@ export default class ProjectView extends React.Component {
     );
 
     const plantsR = this.createSprite(
-      (window.innerWidth / 2) * 1.7,
-      (PixiApp.app.renderer.view.height / 2) * 4.8497,
+      PixiApp.app.renderer.view.width,
+      (PixiApp.app.renderer.view.height / 2) * 3.9,
       plantsRTexture,
-      'plantsR'
+      'plantsR',
+      false,
+      [1, 0]
     );
 
     const plantsL = this.createSprite(
-      (PixiApp.app.renderer.view.width / 2) * 0.12,
-      (PixiApp.app.renderer.view.height / 2) * 4.8501,
+      0,
+      (PixiApp.app.renderer.view.height / 2) * 4.3,
       plantsLTexture,
-      'plantsL'
+      'plantsL',
+      false,
+      [0.2, 0.2]
     );
     PixiApp.projectView.addChild(popUpProject);
   }

@@ -25,11 +25,14 @@ export const app = new PIXI.Application({
 app.renderer.backgroundColor = 0x1b1c2b;
 let pixiDiv = document.getElementById('pixi');
 pixiDiv.appendChild(app.view);
+app.renderer.view.draggable = true;
 
 export let firstView = app.stage.pivot.y;
 export const secondView = app.renderer.view.height;
 export const thirdView = secondView * 2;
 export const fourthView = secondView * 3;
+
+export let noScroll = { lanternScrolling: true, projectScrolling: true };
 
 let up = keyboard('ArrowUp'),
   down = keyboard('ArrowDown');
@@ -84,7 +87,12 @@ function keyboard(value) {
   };
 
   onwheel = (event) => {
-    if (
+    // console.log(event);
+    if (!noScroll.projectScrolling) {
+      app.stage.pivot.y = app.renderer.view.height * 2;
+    } else if (!noScroll.lanternScrolling) {
+      app.stage.pivot.y = secondView;
+    } else if (
       //don't scroll any further (top of page)
       app.stage.pivot.y < 0 ||
       app.stage.pivot.y + (event.deltaY * 1.3 || event.deltaX * 1.3) < 0
@@ -104,6 +112,35 @@ function keyboard(value) {
     menuContainer.position.y = app.stage.pivot.y + 10;
   };
 
+  //Start to getting scroll to work on mobile device
+  // const touch = (event) => {
+  //   console.log(event.touches[0]);
+  //   let Y = event.touches[0];
+  //   if (!noScroll.scrolling) {
+  //     app.stage.pivot.y = app.renderer.view.height * 2;
+  //   } else {
+  //     app.stage.pivot.y = app.renderer.view.height * 3;
+  //   }
+  //   // } else if (
+  //   //   //don't scroll any further (top of page)
+  //   //   app.stage.pivot.y < 0 ||
+  //   //   app.stage.pivot.y + (event.deltaY * 1.3 || event.deltaX * 1.3) < 0
+  //   // ) {
+  //   //   app.stage.pivot.y = 0;
+  //   // } else if (
+  //   //   //don't scroll any further (bottom of page)
+  //   //   app.stage.pivot.y > app.renderer.view.height * 3 ||
+  //   //   app.stage.pivot.y + (event.deltaY * 1.3 || event.deltaX * 1.3) >
+  //   //     app.renderer.view.height * 3
+  //   // ) {
+  //   //   app.stage.pivot.y = app.renderer.view.height * 3;
+  //   // } else {
+  //   //   //keep scrolling
+  //   //   app.stage.pivot.y += event.deltaY * 1.3 || event.deltaX * 1.3;
+  //   // }
+  //   menuContainer.position.y = app.stage.pivot.y + 10;
+  // };
+
   // Attach event listeners
   const downListener = key.downHandler.bind(key);
   const upListener = key.upHandler.bind(key);
@@ -111,6 +148,7 @@ function keyboard(value) {
   window.addEventListener('keydown', downListener, false);
   window.addEventListener('keyup', upListener, false);
   window.addEventListener('wheel', _.throttle(onwheel, 0), false);
+  // window.addEventListener('touchmove', touch, false);
 
   // Detach event listeners
   key.unsubscribe = () => {
@@ -165,6 +203,12 @@ megaContainer.addChild(projectView);
 export const finalView = new PIXI.Container();
 megaContainer.addChild(finalView);
 
+export const menuContainer = new PIXI.Container();
+megaContainer.addChild(menuContainer);
+
+menuContainer.position.x = 10;
+menuContainer.position.y = 10;
+
 /* resize - web resposive */
 window.addEventListener('resize', resize);
 
@@ -189,8 +233,5 @@ function resize() {
     }
   });
 }
-export const menuContainer = new PIXI.Container();
-megaContainer.addChild(menuContainer);
 
-menuContainer.position.x = 10;
-menuContainer.position.y = 10;
+//comment

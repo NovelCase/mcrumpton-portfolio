@@ -7,6 +7,7 @@ import ProjectView from './ProjectView';
 import FinalView from './FinalView';
 import Menu from './Menu';
 
+
 require('babel-core/register');
 require('babel-polyfill');
 

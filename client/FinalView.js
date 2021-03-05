@@ -2,7 +2,6 @@ import React from 'react';
 import * as PixiApp from '../pixi/projectStage.js';
 import * as PIXI from 'pixi.js';
 import { data } from '../data';
-// import loading from 'public/siteAssets/finalView/loading.png';
 
 export const onClick = () => {};
 
@@ -12,6 +11,7 @@ let scales = {
   hello: [0.75, 0.75],
   floor: [1.2, 1.2],
   window: [1.1, 1.1],
+  /* windows: [1.1, 1.1], */
   spotify: [1.1, 1.1],
   bookcase: [1.02, 1.02],
   github: [1.1, 1.1],
@@ -31,9 +31,9 @@ let mobileScalesY600 = {
   floor: [1.2, 1.2],
   floorY: (PixiApp.app.renderer.view.height / 2) * 6.7,
   window: [0, 0],
-  spotify: [0.6, 0.6],
-  spotifyX: (PixiApp.app.renderer.view.width / 4) * 3.5,
-  spotifyY: (PixiApp.app.renderer.view.height / 2) * 7.26,
+  spotify: [0.45, 0.45],
+  spotifyX: PixiApp.app.renderer.view.width,
+  spotifyY: (PixiApp.app.renderer.view.height / 2) * 7.85,
   bookcase: [0.5, 0.65],
   bookcaseY: (PixiApp.app.renderer.view.height / 2) * 6.89,
   github: [0.55, 0.55],
@@ -61,9 +61,9 @@ let mobileScalesY700 = {
   floor: [1.2, 1.2],
   floorY: (PixiApp.app.renderer.view.height / 2) * 6.7,
   window: [0, 0],
-  spotify: [0.6, 0.6],
-  spotifyX: (PixiApp.app.renderer.view.width / 4) * 3.45,
-  spotifyY: (PixiApp.app.renderer.view.height / 2) * 7.17,
+  spotify: [0.45, 0.45],
+  spotifyX: PixiApp.app.renderer.view.width,
+  spotifyY: (PixiApp.app.renderer.view.height / 2) * 7.65,
   bookcase: [0.5, 0.65],
   bookcaseY: (PixiApp.app.renderer.view.height / 2) * 6.89,
   github: [0.55, 0.55],
@@ -91,9 +91,9 @@ let mobileScalesY800 = {
   floor: [1.2, 1.2],
   floorY: (PixiApp.app.renderer.view.height / 2) * 6.7,
   window: [0, 0],
-  spotify: [0.63, 0.63],
-  spotifyX: (PixiApp.app.renderer.view.width / 4) * 3.45,
-  spotifyY: (PixiApp.app.renderer.view.height / 2) * 7.1,
+  spotify: [0.5, 0.5],
+  spotifyX: PixiApp.app.renderer.view.width,
+  spotifyY: (PixiApp.app.renderer.view.height / 2) * 7.57,
   bookcase: [0.5, 0.75],
   bookcaseY: (PixiApp.app.renderer.view.height / 2) * 6.77,
   github: [0.55, 0.55],
@@ -134,7 +134,7 @@ export default class FinalView extends React.Component {
       PixiApp.app.renderer.view.width -= width / 4;
     }
   }
-  createSprite(x, y, texture, type, interactive) {
+  createSprite(x, y, texture, type, interactive, anchor) {
     let scaleType = scales;
     if (
       PixiApp.app.renderer.view.width < 380 &&
@@ -161,13 +161,14 @@ export default class FinalView extends React.Component {
 
     const sprite = new PIXI.Sprite(texture);
     PixiApp.finalView.addChild(sprite);
-    sprite.anchor.set(0.5);
+    anchor ? sprite.anchor.set(anchor) : sprite.anchor.set(0.5);
     sprite.position.x = x;
     sprite.position.y = y;
     sprite.scale.x = scaleType[type][0];
     sprite.scale.y = scaleType[type][1];
     if (type === 'floor') {
-      sprite.width = window.innerWidth;
+      sprite.width = window.innerWidth * 2;
+      console.log(PixiApp.app.renderer.view.width, sprite.width);
     } else if (interactive) {
       sprite.interactive = true;
       sprite.buttonMode = true;
@@ -203,17 +204,125 @@ export default class FinalView extends React.Component {
     const windowTexture = PIXI.Texture.from(
       'siteAssets/finalView/darkWindowFinished.png'
     );
+    // const windowsTexture = PIXI.Texture.from(
+    //   'siteAssets/finalView/windows.png'
+    // );
     const resumeTexture = PIXI.Texture.from('siteAssets/finalView/Resume.png');
     const speechTexture = PIXI.Texture.from(
       'siteAssets/finalView/hobbesHello.png'
     );
 
     const floor = this.createSprite(
-      PixiApp.app.renderer.view.width / 2,
+      /* PixiApp.app.renderer.view.width / 2 */ 0,
       (PixiApp.app.renderer.view.height / 2) * 7.07,
       floorTexture,
-      'floor'
+      'floor',
+      false,
+      0
     );
+
+    // const windows = this.createSprite(
+    //   (PixiApp.app.renderer.view.width / 4) * 2.7,
+    //   (PixiApp.app.renderer.view.height / 2) * 6.84,
+    //   windowsTexture,
+    //   'windows'
+    // );
+
+    // const UPPER_LIMIT_Y = 3;
+    // const UPPER_LIMIT_X = 2;
+    // const LOWER_LIMIT_X = -2;
+    // const MAX_SIZE = 6;
+    // const MIN_SIZE = 2;
+    // const AMOUNT = 230;
+    // const COLOR = 0xffffff;
+
+    // const getRandomColor = () =>
+    //   [0xf22613, 0xf9690e, 0xf9bf3b, 0x2ecc71, 0x19b5fe, 0x663399, 0x947cb0][
+    //     Math.floor(Math.random() * 7)
+    //   ];
+    // const xfloored = (v) => {
+    //   if (
+    //     Math.floor(Math.random() * v) * 3.2 >
+    //     (PixiApp.app.renderer.view.width / 2) * 0.9
+    //   ) {
+    //     return Math.floor(Math.random() * v);
+    //   }
+    // };
+    // const floored = (v) => Math.floor(Math.random() * v);
+    // // Update value by either subtracting to adding
+    // const update = (p) =>
+    //   Math.random() > 0.5
+    //     ? Math.max(LOWER_LIMIT_X, p - 1)
+    //     : Math.min(p + 1, UPPER_LIMIT_X);
+    // // Reset particle start points based on screen
+    // const reset = (p) => {
+    //   p.x = xfloored(PixiApp.app.renderer.width / 4);
+    //   p.y = PixiApp.fourthView * 0.8;
+    //   p.vy = floored(UPPER_LIMIT_Y) + 2;
+    // };
+    // // Generate a particle set based on a given texture
+    // const genParticles = (t) =>
+    //   new Array(AMOUNT).fill().map((p) => {
+    //     const SIZE = floored(MAX_SIZE) + MIN_SIZE;
+    //     p = new PIXI.Sprite(t);
+    //     p.size = SIZE;
+    //     p.vx = floored(UPPER_LIMIT_X) - UPPER_LIMIT_X;
+    //     p.vy = floored(UPPER_LIMIT_Y) + 4;
+    //     p.alpha = Math.random();
+    //     p.x = p.startX = xfloored(PixiApp.app.renderer.width / 4);
+    //     p.y = p.startY = PixiApp.fourthView * 0.8;
+    //     p.width = p.height = SIZE;
+    //     p.tint = getRandomColor();
+    //     drops.addChild(p);
+    //     return p;
+    //   });
+    // const drops = new PIXI.ParticleContainer(AMOUNT, {
+    //   scale: true,
+    //   position: true,
+    //   rotation: true,
+    //   alpha: true,
+    // });
+    // drops.visible = false;
+    // PixiApp.finalView.addChild(drops);
+
+    // // Create a base graphic for sprites
+    // const p = new PIXI.Graphics();
+    // p.beginFill(COLOR);
+    // p.drawCircle(0, 0, 100);
+    // p.endFill();
+
+    // // Generate a base texture from the base graphic
+    // const baseTexture = PixiApp.app.renderer.generateTexture(p);
+    // let particles = genParticles(baseTexture);
+    // PixiApp.app.ticker.add((i) => {
+    //   if (
+    //     PixiApp.app.renderer.height !== innerHeight ||
+    //     PixiApp.app.renderer.width !== innerWidth
+    //   ) {
+    //     PixiApp.app.renderer.resize(innerWidth, innerHeight);
+    //     drops.removeChildren();
+    //     particles = genParticles(baseTexture);
+    //   }
+    //   for (let particle of particles) {
+    //     if (particle.y > 0) particle.x += particle.vx;
+    //     particle.y += particle.vy;
+
+    //     if (Math.random() > 0.9) particle.vx = update(particle.vx);
+
+    //     if (
+    //       particle.x > (PixiApp.app.renderer.width / 4) * 4 ||
+    //       particle.x < (PixiApp.app.renderer.width / 4) * 2 ||
+    //       particle.y > PixiApp.fourthView * 1.4 /* 1.3 */ //determines how far down particles fall before reset
+    //     )
+    //       reset(particle);
+    //   }
+    //   PixiApp.app.renderer.render(drops);
+    // });
+    // setTimeout(() => {
+    //   if (window.innerWidth > 800) {
+    //     drops.visible = true;
+    //   }
+    // }, 500);
 
     const windowSprite = this.createSprite(
       (PixiApp.app.renderer.view.width / 4) * 2.7,
@@ -223,15 +332,18 @@ export default class FinalView extends React.Component {
     );
 
     const spotify = this.createSprite(
-      (PixiApp.app.renderer.view.width / 4) * 3.599,
-      (PixiApp.app.renderer.view.height / 2) * 7.16,
+      PixiApp.app.renderer.view.width,
+      (PixiApp.app.renderer.view.height / 2) * 7.85,
+      /* (PixiApp.app.renderer.view.width / 4) * 3.599,
+      (PixiApp.app.renderer.view.height / 2) * 7.16, */
       spotfiyTexture,
       'spotify',
-      true
+      true,
+      1
     );
 
     spotify.on('pointertap', () => {
-      if (window.innerWidth < 500) {
+      if (window.innerWidth < 800) {
         window.open(data.spotify, '_blank');
       } else {
         this.onClickTap();
@@ -333,22 +445,30 @@ export default class FinalView extends React.Component {
       }
     });
   }
+  //comment
   render() {
     return (
-      <div id="container">
+      <div>
         {this.state.visible ? (
-          <div>
+          <div id="container">
             <iframe
               src={data.spotify}
               width={width / 4}
               height={height}
               allow="encrypted-media"
-              allowTransparency={true}
+              allowtransparency="true"
             ></iframe>
-            <img id="loading" src="https://i.ibb.co/P13DzXz/loading.png" />
+            <div id="loading">
+              <div id="atul">
+                <img src="siteAssets/finalView/atulPlay.gif" />
+              </div>
+              <div>
+                <h1>Loading!</h1>
+              </div>
+            </div>
           </div>
         ) : (
-          <div />
+          <></>
         )}
       </div>
     );
