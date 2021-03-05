@@ -10,15 +10,15 @@ let scales = {
   hobbes: [0.5, 0.5],
   hello: [0.75, 0.75],
   floor: [1.2, 1.2],
-  window: [1.1, 1.1],
+  window: [1, 1.1],
   /* windows: [1.1, 1.1], */
-  spotify: [1.1, 1.1],
-  bookcase: [1.02, 1.02],
-  github: [1.1, 1.1],
-  linkedIn: [1.1, 1.1],
+  spotify: [1, 1],
+  bookcase: [1, 1.02],
+  github: [1, 1],
+  linkedIn: [1, 1],
   table: [1.1, 1.1],
   guestbook: [1.1, 1.1],
-  resume: [0.9, 0.9],
+  resume: [0.8, 0.8],
 };
 
 let mobileScalesY600 = {
@@ -166,10 +166,7 @@ export default class FinalView extends React.Component {
     sprite.position.y = y;
     sprite.scale.x = scaleType[type][0];
     sprite.scale.y = scaleType[type][1];
-    if (type === 'floor') {
-      sprite.width = window.innerWidth * 2;
-      console.log(PixiApp.app.renderer.view.width, sprite.width);
-    } else if (interactive) {
+    if (interactive) {
       sprite.interactive = true;
       sprite.buttonMode = true;
       sprite.on('pointerover', function () {
@@ -198,7 +195,7 @@ export default class FinalView extends React.Component {
       'siteAssets/finalView/linkedIn.png'
     );
     const spotfiyTexture = PIXI.Texture.from(
-      'siteAssets/finalView/spotify.png'
+      'siteAssets/finalView/spotifyFinished.png'
     );
     const tableTexture = PIXI.Texture.from('siteAssets/finalView/table.png');
     const windowTexture = PIXI.Texture.from(
@@ -213,12 +210,11 @@ export default class FinalView extends React.Component {
     );
 
     const floor = this.createSprite(
-      /* PixiApp.app.renderer.view.width / 2 */ 0,
+      PixiApp.app.renderer.view.width / 2,
       (PixiApp.app.renderer.view.height / 2) * 7.07,
       floorTexture,
       'floor',
-      false,
-      0
+      false
     );
 
     // const windows = this.createSprite(
@@ -332,10 +328,8 @@ export default class FinalView extends React.Component {
     );
 
     const spotify = this.createSprite(
-      PixiApp.app.renderer.view.width,
-      (PixiApp.app.renderer.view.height / 2) * 7.85,
-      /* (PixiApp.app.renderer.view.width / 4) * 3.599,
-      (PixiApp.app.renderer.view.height / 2) * 7.16, */
+      PixiApp.app.renderer.view.width / 0.93,
+      (PixiApp.app.renderer.view.height / 2) * 7.88,
       spotfiyTexture,
       'spotify',
       true,
@@ -358,8 +352,8 @@ export default class FinalView extends React.Component {
     );
 
     const github = this.createSprite(
-      (PixiApp.app.renderer.view.width / 5) * 1.16,
-      (PixiApp.app.renderer.view.height / 2) * 6.391,
+      bookCase.x * 1.2,
+      bookCase.y * 0.94,
       githubTexture,
       'github',
       true
@@ -371,8 +365,8 @@ export default class FinalView extends React.Component {
     });
 
     const linkedIn = this.createSprite(
-      (PixiApp.app.renderer.view.width / 5) * 0.75,
-      (PixiApp.app.renderer.view.height / 2) * 6.882,
+      bookCase.x * 0.76,
+      bookCase.y * 1.008,
       linkedinTexture,
       'linkedIn',
       true
@@ -384,8 +378,8 @@ export default class FinalView extends React.Component {
     });
 
     const resume = this.createSprite(
-      (PixiApp.app.renderer.view.width / 5) * 1.37,
-      (PixiApp.app.renderer.view.height / 2) * 6.88,
+      bookCase.x * 1.36,
+      bookCase.y * 1.007,
       resumeTexture,
       'resume',
       true

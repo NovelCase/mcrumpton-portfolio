@@ -4,8 +4,10 @@
   font-family: 'Cutive', serif;
 }
 body {
-  background-color: #1b1c2b /* #532b18 */;
+  background-color: #1b1c2b;
+  touch-action: pan-y;
 }
+
 .menu {
   position: absolute;
   top: 4px;
@@ -41,7 +43,7 @@ iframe {
 }
 
 #loading {
-  width: inherit;
+  width: 25vw;
   display: flex;
   flex-flow: column wrap;
   z-index: 1;
