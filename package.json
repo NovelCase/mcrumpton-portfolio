@@ -13,7 +13,7 @@
   "permissions": [
     "geolocation"
   ],
-  "author": "LiMe",
+  "author": "Marie Crumpton",
   "license": "ISC",
   "dependencies": {
     "babel-preset-es2016": "^6.24.1",
