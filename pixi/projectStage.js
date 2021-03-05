@@ -124,7 +124,7 @@ function keyboard(value) {
   let Pan = new Hammer.Pan();
   Pan.set({ direction: Hammer.DIRECTION_VERTICAL });
   hammertime.add(Pan);
-  hammertime.on('pan', onwheel);
+  hammertime.on('pan', _.throttle(onwheel, 0));
 
   // Detach event listeners
   key.unsubscribe = () => {
