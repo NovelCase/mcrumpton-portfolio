@@ -1,7 +1,6 @@
 import React from 'react';
 import * as PixiApp from '../pixi/projectStage.js';
 import * as PIXI from 'pixi.js';
-import { data } from '../data';
 import { createPopUpRect } from './ProjectView';
 
 export const onClick = () => {};
@@ -203,4 +202,3 @@ export default class LanternView extends React.Component {
     return <div></div>;
   }
 }
-
