@@ -155,9 +155,9 @@ let popUpProject = new PIXI.Container();
 
 /* Scales */
 let scales = {
-  gobARk: [0.37, 0.37],
-  seeTurtleExploration: [0.39, 0.39],
-  brosApothecary: [0.42, 0.42],
+  gobARk: [0.37, 0.36],
+  seeTurtleExploration: [0.38, 0.37],
+  brosApothecary: [0.39, 0.41],
   novelCase: [0.35, 0.35],
   plantsR: [1, 1.1],
   plantsL: [1, 1.1],
@@ -349,52 +349,51 @@ export default class ProjectView extends React.Component {
     );
 
     const gobARk = this.createSprite(
-      (PixiApp.app.renderer.view.width / 2) * 0.79,
-      (PixiApp.app.renderer.view.height / 2) * 5.3,
+      panel.x * 0.83,
+      panel.y * 1.034,
       barkTexture,
       'gobARk',
       true
     );
 
     const seeTurtle = this.createSprite(
-      (PixiApp.app.renderer.view.width / 2) * 1.1,
-      (PixiApp.app.renderer.view.height / 2) * 5.3,
+      panel.x * 1.158,
+      panel.y * 1.034,
       seeTexture,
       'seeTurtleExploration',
       true
     );
 
     const brosApothecary = this.createSprite(
-      (PixiApp.app.renderer.view.width / 2) * 1.1,
-      (PixiApp.app.renderer.view.height / 2) * 4.91,
+      panel.x * 1.15,
+      panel.y * 0.96,
       broTexture,
       'brosApothecary',
       true
     );
 
     const stack = this.createSprite(
-      (PixiApp.app.renderer.view.width / 2) * 1.08,
-      (PixiApp.app.renderer.view.height / 2) * 4.54,
+      panel.x * 1.15,
+      panel.y * 0.885,
       stackTexture,
       'stack',
       true
     );
 
     const novelCase = this.createSprite(
-      (PixiApp.app.renderer.view.width / 2) * 0.79,
-      (PixiApp.app.renderer.view.height / 2) * 4.91,
+      panel.x * 0.838,
+      panel.y * 0.96,
       novelTexture,
       'novelCase',
       true
     );
 
     const plantsR = this.createSprite(
-      PixiApp.app.renderer.view.width,
-      (PixiApp.app.renderer.view.height / 2) * 3.9,
+      PixiApp.app.renderer.view.width * 0.89,
+      (PixiApp.app.renderer.view.height / 2) * 4.9,
       plantsRTexture,
       'plantsR',
-      false,
-      [1, 0]
+      false
     );
 
     const plantsL = this.createSprite(

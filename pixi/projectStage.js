@@ -1,3 +1,5 @@
+import { ppid } from 'process';
+
 const PIXI = require('pixi.js');
 var _ = require('lodash');
 
@@ -87,7 +89,7 @@ function keyboard(value) {
   };
 
   onwheel = (event) => {
-    // console.log(event);
+    // console.log(event.deltaY);
     if (!noScroll.projectScrolling) {
       app.stage.pivot.y = app.renderer.view.height * 2;
     } else if (!noScroll.lanternScrolling) {
@@ -112,34 +114,46 @@ function keyboard(value) {
     menuContainer.position.y = app.stage.pivot.y + 10;
   };
 
-  //Start to getting scroll to work on mobile device
-  // const touch = (event) => {
-  //   console.log(event.touches[0]);
-  //   let Y = event.touches[0];
-  //   if (!noScroll.scrolling) {
-  //     app.stage.pivot.y = app.renderer.view.height * 2;
-  //   } else {
-  //     app.stage.pivot.y = app.renderer.view.height * 3;
-  //   }
-  //   // } else if (
-  //   //   //don't scroll any further (top of page)
-  //   //   app.stage.pivot.y < 0 ||
-  //   //   app.stage.pivot.y + (event.deltaY * 1.3 || event.deltaX * 1.3) < 0
-  //   // ) {
-  //   //   app.stage.pivot.y = 0;
-  //   // } else if (
-  //   //   //don't scroll any further (bottom of page)
-  //   //   app.stage.pivot.y > app.renderer.view.height * 3 ||
-  //   //   app.stage.pivot.y + (event.deltaY * 1.3 || event.deltaX * 1.3) >
-  //   //     app.renderer.view.height * 3
-  //   // ) {
-  //   //   app.stage.pivot.y = app.renderer.view.height * 3;
-  //   // } else {
-  //   //   //keep scrolling
-  //   //   app.stage.pivot.y += event.deltaY * 1.3 || event.deltaX * 1.3;
-  //   // }
-  //   menuContainer.position.y = app.stage.pivot.y + 10;
-  // };
+  // Start to getting scroll to work on mobile device
+  const touch = (event) => {
+    console.log(event.touches[0]);
+    if (!noScroll.projectScrolling) {
+      app.stage.pivot.y = app.renderer.view.height * 2;
+    } else if (!noScroll.lanternScrolling) {
+      app.stage.pivot.y = secondView;
+    } else if (app.stage.pivot.y < 0 || app.stage.pivot.y + 100 < 0) {
+      //don't scroll up
+      app.stage.pivot.y = 0;
+    } else if (
+      //don't scroll any further (bottom of page)
+      app.stage.pivot.y > app.renderer.view.height * 3 ||
+      app.stage.pivot.y + 100 > app.renderer.view.height * 3
+    ) {
+      app.stage.pivot.y = app.renderer.view.height * 3;
+    } else {
+      //keep scrolling
+      app.stage.pivot.y += 100;
+    }
+
+    // } else if (
+    //   //don't scroll any further (top of page)
+    //   app.stage.pivot.y < 0 ||
+    //   app.stage.pivot.y + (event.deltaY * 1.3 || event.deltaX * 1.3) < 0
+    // ) {
+    //   app.stage.pivot.y = 0;
+    // } else if (
+    //   //don't scroll any further (bottom of page)
+    //   app.stage.pivot.y > app.renderer.view.height * 3 ||
+    //   app.stage.pivot.y + (event.deltaY * 1.3 || event.deltaX * 1.3) >
+    //     app.renderer.view.height * 3
+    // ) {
+    //   app.stage.pivot.y = app.renderer.view.height * 3;
+    // } else {
+    //   //keep scrolling
+    //   app.stage.pivot.y += event.deltaY * 1.3 || event.deltaX * 1.3;
+    // }
+    menuContainer.position.y = app.stage.pivot.y + 10;
+  };
 
   // Attach event listeners
   const downListener = key.downHandler.bind(key);
@@ -149,12 +163,16 @@ function keyboard(value) {
   window.addEventListener('keyup', upListener, false);
   window.addEventListener('wheel', _.throttle(onwheel, 0), false);
   // window.addEventListener('touchmove', touch, false);
+  // window.addEventListener('touchstart', (evt) => console.log(evt), {
+  //   passive: true,
+  // });
 
   // Detach event listeners
   key.unsubscribe = () => {
     window.removeEventListener('keydown', downListener);
     window.removeEventListener('keyup', upListener);
     window.removeEventListener('wheel', _.throttle(onwheel, 0), false);
+    // window.removeEventListener('touchmove', touch, false);
   };
 
   return key;
@@ -233,5 +251,3 @@ function resize() {
     }
   });
 }
-
-//comment

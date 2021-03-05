@@ -55,10 +55,8 @@ export let data = {
   aboutMe: {
     name: 'About Me',
     description:
-      "Hi! I'm Marie, a full-stack software developer with a background in education. motivated by life long learning, SOMETHING ABOUT CREATIVITY, and striving to find the solution. \n As a recent graduate of the Grace Hopper Program at Fullstack Academy my journey to software development began with one-to-one technology.  ? SOMETHING. As an avid user of technology myself, I maximized my students' one to one computers to enhance learning, creativity, and technical literacy. I was excited to learn my students had one to one technology. In order to grow technical literacy SOMETHING As a teacher, I relied heavily on technology to help me maximize learning and creativity in my classroom ",
-    // "About Me \n Hi! I'm Marie Crumpton, a full-stack software developer motivated by the power of technology to create SOMETHING MORE HERE AND IN BETWEEN \n Before becoming a software developer, I worked as an elementary school teacher. As a teacher, I relied heavily on technology to help me maximize learning and creativity in my classroom. WRITE MORE \n Learn more about me by clicking on some of my favorite objects! (REPHRASE)",
+      'Hi! I’m Marie, a full stack software developer with a background in education who is motivated by continuous learning, creativity, and problem solving. After an exciting indoor recess involving a coding game, I discovered a new passion and desire to become a developer. Now as a developer I enjoy collaborating with others to problem solve and craft solutions. When I’m not programming, you can find me reading, gaming, drawing, or playing with my Saint Bernard, Hobbes.',
   },
-
   ipad: {
     name: 'Draw',
     description:
