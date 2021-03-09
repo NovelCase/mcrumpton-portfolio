@@ -1,4 +1,7 @@
+<img src="public/siteAssets/hobbesTalking.png" alt="dog website link" align="left" width="70"/>
+
 # Marie Crumpton - Portfolio
+
 
 <p float="left">
 <img src="public/siteAssets/portfolio.gif" alt="portfolio gif" width="60%"/>
