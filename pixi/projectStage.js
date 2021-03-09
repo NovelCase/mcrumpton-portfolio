@@ -87,7 +87,7 @@ function keyboard(value) {
     }
   };
 
-  onwheel = (event) => {
+  onwheel = (event, direction = 1) => {
     if (!noScroll.projectScrolling) {
       app.stage.pivot.y = app.renderer.view.height * 2;
     } else if (!noScroll.lanternScrolling) {
@@ -95,19 +95,23 @@ function keyboard(value) {
     } else if (
       //don't scroll any further (top of page)
       app.stage.pivot.y < 0 ||
-      app.stage.pivot.y + (event.deltaY * 1.3 || event.deltaX * 1.3) < 0
+      app.stage.pivot.y +
+        (event.deltaY * 1.3 || event.deltaX * 1.3) * direction <
+        0
     ) {
       app.stage.pivot.y = 0;
     } else if (
       //don't scroll any further (bottom of page)
       app.stage.pivot.y > app.renderer.view.height * 3 ||
-      app.stage.pivot.y + (event.deltaY * 1.3 || event.deltaX * 1.3) >
+      app.stage.pivot.y +
+        (event.deltaY * 1.3 || event.deltaX * 1.3) * direction >
         app.renderer.view.height * 3
     ) {
       app.stage.pivot.y = app.renderer.view.height * 3;
     } else {
       //keep scrolling
-      app.stage.pivot.y += event.deltaY * 1.5 || event.deltaX * 1.5;
+      app.stage.pivot.y +=
+        (event.deltaY * 1.5 || event.deltaX * 1.5) * direction;
     }
     menuContainer.position.y = app.stage.pivot.y + 10;
   };
@@ -124,7 +128,10 @@ function keyboard(value) {
   let Pan = new Hammer.Pan();
   Pan.set({ direction: Hammer.DIRECTION_VERTICAL });
   hammertime.add(Pan);
-  hammertime.on('pan', _.throttle(onwheel, 0));
+  hammertime.on(
+    'pan',
+    _.throttle((evt) => onwheel(evt, -1), 0)
+  );
 
   // Detach event listeners
   key.unsubscribe = () => {

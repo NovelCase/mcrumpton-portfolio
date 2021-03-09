@@ -1,7 +1,7 @@
 {
   "name": "mkcrumpton-portfolio",
   "version": "1.0.0",
-  "description": "A portfolio site built with React and PixiJS",
+  "description": "A portfolio site built with React and PixiJS. Developed by the Novel Case.",
   "main": "server/index.js",
   "scripts": {
     "test": "test",
@@ -14,7 +14,7 @@
   "permissions": [
     "geolocation"
   ],
-  "author": "Marie Crumpton",
+  "author": "Novel Case",
   "license": "ISC",
   "dependencies": {
     "babel-preset-es2016": "^6.24.1",
