@@ -54,10 +54,87 @@ let mobileScalesY800 = {
   aboutMeY: (PixiApp.app.renderer.view.height / 2) * 3.5,
 };
 
+let mobileScalesY350 = {
+  lantern: [0.4, 0.4],
+  grass: [0.6, 0.2],
+  grassY: (PixiApp.app.renderer.view.height / 2) * 3.87,
+  book: [0.28, 0.28],
+  bookX: (PixiApp.app.renderer.view.width / 4) * 0.48,
+  bookY: (PixiApp.app.renderer.view.height / 2) * 2.82,
+  teapot: [0.33, 0.33],
+  teapotX: (PixiApp.app.renderer.view.width / 4) * 0.7,
+  nintendoSwitch: [0.33, 0.33],
+  nintendoSwitchX: (PixiApp.app.renderer.view.width / 4) * 2.98,
+  ipad: [0.33, 0.33],
+  ipadX: (PixiApp.app.renderer.view.width / 4) * 3.5,
+  ipadY: (PixiApp.app.renderer.view.height / 2) * 2.99,
+  souls: [0.3, 0.3],
+  soulsX: (PixiApp.app.renderer.view.width / 4) * 1.3,
+  aboutMe: [0.05, 0.05],
+  aboutMeX: (PixiApp.app.renderer.view.width / 4) * 2,
+  aboutMeY: (PixiApp.app.renderer.view.height / 2) * 3.5,
+};
+
+let mobileScalesY400 = {
+  lantern: [0.5, 0.5],
+  grass: [0.6, 0.2],
+  grassY: (PixiApp.app.renderer.view.height / 2) * 3.87,
+  book: [0.28, 0.28],
+  bookX: (PixiApp.app.renderer.view.width / 4) * 0.48,
+  bookY: (PixiApp.app.renderer.view.height / 2) * 2.82,
+  teapot: [0.33, 0.33],
+  teapotX: (PixiApp.app.renderer.view.width / 4) * 0.7,
+  nintendoSwitch: [0.33, 0.33],
+  nintendoSwitchX: (PixiApp.app.renderer.view.width / 4) * 2.98,
+  ipad: [0.33, 0.33],
+  ipadX: (PixiApp.app.renderer.view.width / 4) * 3.5,
+  ipadY: (PixiApp.app.renderer.view.height / 2) * 2.99,
+  souls: [0.3, 0.3],
+  soulsX: (PixiApp.app.renderer.view.width / 4) * 1.35,
+  aboutMe: [0.05, 0.05],
+  aboutMeX: (PixiApp.app.renderer.view.width / 4) * 2,
+  aboutMeY: (PixiApp.app.renderer.view.height / 2) * 3.5,
+};
+
+let mobileScalesY420 = {
+  lantern: [0.55, 0.55],
+  grass: [0.6, 0.25],
+  grassY: (PixiApp.app.renderer.view.height / 2) * 3.87,
+  book: [0.28, 0.28],
+  bookX: (PixiApp.app.renderer.view.width / 4) * 0.48,
+  bookY: (PixiApp.app.renderer.view.height / 2) * 2.82,
+  teapot: [0.33, 0.33],
+  teapotX: (PixiApp.app.renderer.view.width / 4) * 0.7,
+  nintendoSwitch: [0.33, 0.33],
+  nintendoSwitchX: (PixiApp.app.renderer.view.width / 4) * 2.98,
+  ipad: [0.33, 0.33],
+  ipadX: (PixiApp.app.renderer.view.width / 4) * 3.5,
+  ipadY: (PixiApp.app.renderer.view.height / 2) * 2.99,
+  souls: [0.3, 0.3],
+  soulsX: (PixiApp.app.renderer.view.width / 4) * 1.3,
+  aboutMe: [0.05, 0.05],
+  aboutMeX: (PixiApp.app.renderer.view.width / 4) * 1.9,
+  aboutMeY: (PixiApp.app.renderer.view.height / 2) * 3.5,
+};
+
 export default class LanternView extends React.Component {
   createSprite(x, y, texture, type, interactive) {
     let scaleType = scales;
-    if (
+    if (PixiApp.app.renderer.view.height < 420) {
+      if (PixiApp.app.renderer.view.height <= 360) {
+        scaleType = mobileScalesY350;
+        if (scaleType[`${type}X`]) x = scaleType[`${type}X`];
+        if (scaleType[`${type}Y`]) y = scaleType[`${type}Y`];
+      } else if (PixiApp.app.renderer.view.height < 400) {
+        scaleType = mobileScalesY400;
+        if (scaleType[`${type}X`]) x = scaleType[`${type}X`];
+        if (scaleType[`${type}Y`]) y = scaleType[`${type}Y`];
+      } else {
+        scaleType = mobileScalesY420;
+        if (scaleType[`${type}X`]) x = scaleType[`${type}X`];
+        if (scaleType[`${type}Y`]) y = scaleType[`${type}Y`];
+      }
+    } else if (
       PixiApp.app.renderer.view.width < 380 &&
       PixiApp.app.renderer.view.height < 700
     ) {

@@ -27,10 +27,23 @@ let mobileScales350 = {
   aboutMeY: (PixiApp.app.renderer.view.height / 4) * 1.2,
 };
 
+let mobileScalesY420 = {
+  bridge: [0.7, 0.35],
+  bridgeY: (PixiApp.app.renderer.view.height / 2) * 1.8,
+  stayName: [0.2, 0.3],
+  stayNameY: (PixiApp.app.renderer.view.height / 4) * 1.2,
+  aboutMe: 0.14,
+  aboutMeY: (PixiApp.app.renderer.view.height / 4) * 1.7,
+};
+
 export default class MarigoldView extends React.Component {
   createSprite(x, y, texture, type) {
     let scaleType = scales;
-    if (PixiApp.app.renderer.view.width < 380) {
+    if (PixiApp.app.renderer.view.height < 420) {
+      scaleType = mobileScalesY420;
+      x = PixiApp.app.renderer.view.width / 2;
+      y = scaleType[`${type}Y`];
+    } else if (PixiApp.app.renderer.view.width < 380) {
       scaleType = mobileScales350;
       x = PixiApp.app.renderer.view.width / 2;
       y = scaleType[`${type}Y`];
@@ -50,7 +63,11 @@ export default class MarigoldView extends React.Component {
   }
   createAnimatedSprtie(x, y, textureArr, type, speed, notVisible) {
     let scaleType = scales;
-    if (PixiApp.app.renderer.view.width < 380) {
+    if (PixiApp.app.renderer.view.height < 420) {
+      scaleType = mobileScalesY420;
+      x = PixiApp.app.renderer.view.width / 2;
+      y = scaleType[`${type}Y`];
+    } else if (PixiApp.app.renderer.view.width < 380) {
       scaleType = mobileScales350;
       x = PixiApp.app.renderer.view.width / 2;
       y = scaleType[`${type}Y`];

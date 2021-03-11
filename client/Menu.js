@@ -20,7 +20,7 @@ export default class Menu extends React.Component {
     PixiApp.menuContainer.addChild(menuSprite);
     menuSprite.interactive = true;
     menuSprite.buttonMode = true;
-    if (window.outerWidth <= 400) {
+    if (window.outerWidth <= 400 || window.outerHeight < 500) {
       menuSprite.scale.set(0.1);
     } else menuSprite.scale.set(0.25);
 
@@ -41,15 +41,30 @@ export default class Menu extends React.Component {
         this.texture = closedIcon;
       }
     });
+
+    // shadow = new PIXI.Graphics();
+    // shadow
+    //   .beginFill(0x000000, 0.2)
+    //   .drawRect(
+    //     0,
+    //     0,
+    //     PixiApp.app.renderer.view.width,
+    //     PixiApp.app.renderer.view.height
+    //   )
+    //   .endFill();
+    // shadow.visible = false;
+    // PixiApp.menuContainer.addChild(shadow);
   }
 
   onClickTap() {
     if (this.state.visible) {
       this.setState({ visible: false });
       menuSprite.texture = hamMenu;
+      PixiApp.shadow.visible = false;
     } else {
       this.setState({ visible: true });
       menuSprite.texture = closedIcon;
+      PixiApp.shadow.visible = true;
     }
   }
 
@@ -97,7 +112,7 @@ export default class Menu extends React.Component {
                 this.onClickTap();
               }}
             >
-              Contact
+              Connect
             </h1>
           </div>
         ) : (

@@ -70,3 +70,9 @@ iframe {
     font-size: 25pt;
   }
 }
+
+@media only screen and (max-height: 500px) {
+  .menu > h1 {
+    font-size: 17pt;
+  }
+}
