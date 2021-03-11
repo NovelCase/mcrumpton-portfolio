@@ -87,7 +87,7 @@ function keyboard(value) {
     }
   };
 
-  onwheel = (event, direction = 1) => {
+  onwheel = (event, direction = 1, type) => {
     if (!noScroll.projectScrolling) {
       app.stage.pivot.y = app.renderer.view.height * 2;
     } else if (!noScroll.lanternScrolling) {
@@ -96,7 +96,7 @@ function keyboard(value) {
       //don't scroll any further (top of page)
       app.stage.pivot.y < 0 ||
       app.stage.pivot.y +
-        (event.deltaY * 1.3 || event.deltaX * 1.3) * direction <
+        (event.deltaY * 1.2 || event.deltaX * 1.2) * direction <
         0
     ) {
       app.stage.pivot.y = 0;
@@ -104,14 +104,14 @@ function keyboard(value) {
       //don't scroll any further (bottom of page)
       app.stage.pivot.y > app.renderer.view.height * 3 ||
       app.stage.pivot.y +
-        (event.deltaY * 1.3 || event.deltaX * 1.3) * direction >
+        (event.deltaY * 1.2 || event.deltaX * 1.2) * direction >
         app.renderer.view.height * 3
     ) {
       app.stage.pivot.y = app.renderer.view.height * 3;
     } else {
       //keep scrolling
       app.stage.pivot.y +=
-        (event.deltaY * 1.5 || event.deltaX * 1.5) * direction;
+        (event.deltaY * 0.9 || event.deltaX * 0.9) * direction;
     }
     menuContainer.position.y = app.stage.pivot.y + 10;
   };
@@ -189,6 +189,14 @@ megaContainer.addChild(finalView);
 export const menuContainer = new PIXI.Container();
 megaContainer.addChild(menuContainer);
 
+export let shadow = new PIXI.Graphics();
+shadow
+  .beginFill(0x000000, 0.25)
+  .drawRect(0, 0, app.renderer.view.width * 4, app.renderer.view.height * 4)
+  .endFill();
+shadow.visible = false;
+megaContainer.addChild(shadow);
+
 menuContainer.position.x = 10;
 menuContainer.position.y = 10;
 
@@ -197,22 +205,26 @@ window.addEventListener('resize', resize);
 
 /* for scaling adjustment not on refresh */
 function resize() {
-  let widthDiff = window.innerWidth - app.renderer.view.width;
-  let heightDiff = window.innerHeight - app.renderer.view.height;
-  let method = 'add';
-  if (window.innerWidth < app.renderer.view.width) {
-    method = 'subtract';
-    widthDiff = app.renderer.view.width - window.innerWidth;
-    heightDiff = app.renderer.view.height - window.innerHeight;
-  }
-  app.renderer.resize(window.innerWidth, window.innerHeight);
-  app.stage.children.forEach((child, idx) => {
-    if (method === 'add') {
-      child.width += widthDiff;
-      child.height += heightDiff;
-    } else {
-      child.width -= widthDiff;
-      child.height -= heightDiff;
+  if (window.outerHeight < 600 || window.outerWidth < 600) {
+    window.location.reload();
+  } else {
+    let widthDiff = window.innerWidth - app.renderer.view.width;
+    let heightDiff = window.innerHeight - app.renderer.view.height;
+    let method = 'add';
+    if (window.innerWidth < app.renderer.view.width) {
+      method = 'subtract';
+      widthDiff = app.renderer.view.width - window.innerWidth;
+      heightDiff = app.renderer.view.height - window.innerHeight;
     }
-  });
+    app.renderer.resize(window.innerWidth, window.innerHeight);
+    app.stage.children.forEach((child, idx) => {
+      if (method === 'add') {
+        child.width += widthDiff;
+        child.height += heightDiff;
+      } else {
+        child.width -= widthDiff;
+        child.height -= heightDiff;
+      }
+    });
+  }
 }

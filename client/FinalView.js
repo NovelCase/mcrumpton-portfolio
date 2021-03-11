@@ -4,7 +4,8 @@ import * as PIXI from 'pixi.js';
 import { data } from '../data';
 
 export const onClick = () => {};
-
+let guestbookEmail;
+let guestbook;
 /* scales */
 let scales = {
   hobbes: [0.5, 0.5],
@@ -18,10 +19,11 @@ let scales = {
   table: [1.1, 1.1],
   guestbook: [1.1, 1.1],
   resume: [0.8, 0.8],
+  guestbookEmail: [1.1, 1.1],
 };
 
 let mobileScalesY600 = {
-  hobbes: [0.25, 0.25],
+  hobbes: [0.26, 0.26],
   hobbesX: (PixiApp.app.renderer.view.width / 4) * 1.3,
   hobbesY: (PixiApp.app.renderer.view.height / 2) * 7.5,
   hello: [0.75, 0.75],
@@ -45,6 +47,7 @@ let mobileScalesY600 = {
   guestbook: [0.6, 0.6],
   guestbookX: (PixiApp.app.renderer.view.width / 4) * 3,
   guestbookY: (PixiApp.app.renderer.view.height / 2) * 6.4,
+  guestbookEmail: [0, 0],
   resume: [0.4, 0.4],
   resumeX: (PixiApp.app.renderer.view.width / 5) * 1.94,
   resumeY: (PixiApp.app.renderer.view.height / 2) * 6.97,
@@ -75,6 +78,7 @@ let mobileScalesY700 = {
   guestbook: [0.6, 0.6],
   guestbookX: (PixiApp.app.renderer.view.width / 4) * 3,
   guestbookY: (PixiApp.app.renderer.view.height / 2) * 6.4,
+  guestbookEmail: [0, 0],
   resume: [0.4, 0.4],
   resumeX: (PixiApp.app.renderer.view.width / 5) * 1.84,
   resumeY: (PixiApp.app.renderer.view.height / 2) * 6.97,
@@ -105,9 +109,105 @@ let mobileScalesY800 = {
   guestbook: [0.63, 0.63],
   guestbookX: (PixiApp.app.renderer.view.width / 4) * 3,
   guestbookY: (PixiApp.app.renderer.view.height / 2) * 6.4,
+  guestbookEmail: [0, 0],
   resume: [0.4, 0.4],
   resumeX: (PixiApp.app.renderer.view.width / 5) * 1.74,
   resumeY: (PixiApp.app.renderer.view.height / 2) * 6.85,
+};
+
+let mobileScalesY350 = {
+  hobbes: [0.17, 0.17],
+  hobbesX: (PixiApp.app.renderer.view.width / 4) * 1.3,
+  hobbesY: (PixiApp.app.renderer.view.height / 2) * 7.38,
+  hello: [0.4, 0.4],
+  helloX: (PixiApp.app.renderer.view.width / 4) * 2.1,
+  helloY: (PixiApp.app.renderer.view.height / 2) * 6.78,
+  floor: [1.2, 1.2],
+  floorY: (PixiApp.app.renderer.view.height / 2) * 5.8,
+  window: [0.4, 0.4],
+  spotify: [0.3, 0.3],
+  spotifyX: PixiApp.app.renderer.view.width * 1.05,
+  spotifyY: (PixiApp.app.renderer.view.height / 2) * 7.8,
+  bookcase: [0.35, 0.37],
+  bookcaseY: (PixiApp.app.renderer.view.height / 2) * 6.87,
+  github: [0.35, 0.35],
+  githubX: (PixiApp.app.renderer.view.width / 5) * 1.2,
+  githubY: (PixiApp.app.renderer.view.height / 2) * 6.45,
+  linkedIn: [0.35, 0.35],
+  linkedInX: (PixiApp.app.renderer.view.width / 5) * 0.73,
+  linkedInY: (PixiApp.app.renderer.view.height / 2) * 6.93,
+  table: [0.3, 0.3],
+  guestbook: [0.3, 0.3],
+  guestbookX: (PixiApp.app.renderer.view.width / 4) * 2.7,
+  guestbookY: (PixiApp.app.renderer.view.height / 2) * 7.17,
+  guestbookEmail: [0, 0],
+  resume: [0.31, 0.31],
+  resumeX: (PixiApp.app.renderer.view.width / 5) * 1.3,
+  resumeY: (PixiApp.app.renderer.view.height / 2) * 6.91,
+};
+
+let mobileScalesY400 = {
+  hobbes: [0.19, 0.19],
+  hobbesX: (PixiApp.app.renderer.view.width / 4) * 1.3,
+  hobbesY: (PixiApp.app.renderer.view.height / 2) * 7.38,
+  hello: [0.4, 0.4],
+  helloX: (PixiApp.app.renderer.view.width / 4) * 2,
+  helloY: (PixiApp.app.renderer.view.height / 2) * 6.78,
+  floor: [1.2, 1.2],
+  floorY: (PixiApp.app.renderer.view.height / 2) * 6.1,
+  window: [0.48, 0.48],
+  windowY: (PixiApp.app.renderer.view.height / 2) * 6.85,
+  spotify: [0.33, 0.33],
+  spotifyX: PixiApp.app.renderer.view.width * 1.05,
+  spotifyY: (PixiApp.app.renderer.view.height / 2) * 7.8,
+  bookcase: [0.43, 0.43],
+  bookcaseY: (PixiApp.app.renderer.view.height / 2) * 6.87,
+  github: [0.35, 0.35],
+  githubX: (PixiApp.app.renderer.view.width / 5) * 1.2,
+  githubY: (PixiApp.app.renderer.view.height / 2) * 6.45,
+  linkedIn: [0.35, 0.35],
+  linkedInX: (PixiApp.app.renderer.view.width / 5) * 0.73,
+  linkedInY: (PixiApp.app.renderer.view.height / 2) * 6.93,
+  table: [0.34, 0.34],
+  guestbook: [0.33, 0.33],
+  guestbookX: (PixiApp.app.renderer.view.width / 4) * 2.7,
+  guestbookY: (PixiApp.app.renderer.view.height / 2) * 7.17,
+  guestbookEmail: [0, 0],
+  resume: [0.31, 0.31],
+  resumeX: (PixiApp.app.renderer.view.width / 5) * 1.3,
+  resumeY: (PixiApp.app.renderer.view.height / 2) * 6.91,
+};
+
+let mobileScalesY420 = {
+  hobbes: [0.21, 0.21],
+  hobbesX: (PixiApp.app.renderer.view.width / 4) * 1.3,
+  hobbesY: (PixiApp.app.renderer.view.height / 2) * 7.34,
+  hello: [0.4, 0.4],
+  helloX: (PixiApp.app.renderer.view.width / 4) * 2,
+  helloY: (PixiApp.app.renderer.view.height / 2) * 6.78,
+  floor: [1.2, 1.2],
+  floorY: (PixiApp.app.renderer.view.height / 2) * 6.22,
+  window: [0.5, 0.5],
+  windowY: (PixiApp.app.renderer.view.height / 2) * 6.84,
+  spotify: [0.35, 0.35],
+  spotifyX: PixiApp.app.renderer.view.width * 1.05,
+  spotifyY: (PixiApp.app.renderer.view.height / 2) * 7.78,
+  bookcase: [0.46, 0.46],
+  bookcaseY: (PixiApp.app.renderer.view.height / 2) * 6.85,
+  github: [0.37, 0.37],
+  githubX: (PixiApp.app.renderer.view.width / 5) * 1.2,
+  githubY: (PixiApp.app.renderer.view.height / 2) * 6.45,
+  linkedIn: [0.37, 0.37],
+  linkedInX: (PixiApp.app.renderer.view.width / 5) * 0.73,
+  linkedInY: (PixiApp.app.renderer.view.height / 2) * 6.93,
+  table: [0.35, 0.35],
+  guestbook: [0.36, 0.36],
+  guestbookX: (PixiApp.app.renderer.view.width / 4) * 2.7,
+  guestbookY: (PixiApp.app.renderer.view.height / 2) * 7.18,
+  guestbookEmail: [0, 0],
+  resume: [0.33, 0.33],
+  resumeX: (PixiApp.app.renderer.view.width / 5) * 1.3,
+  resumeY: (PixiApp.app.renderer.view.height / 2) * 6.91,
 };
 
 let width = PixiApp.app.renderer.view.width;
@@ -135,7 +235,21 @@ export default class FinalView extends React.Component {
   }
   createSprite(x, y, texture, type, interactive, anchor) {
     let scaleType = scales;
-    if (
+    if (PixiApp.app.renderer.view.height < 420) {
+      if (PixiApp.app.renderer.view.height <= 360) {
+        scaleType = mobileScalesY350;
+        if (scaleType[`${type}X`]) x = scaleType[`${type}X`];
+        if (scaleType[`${type}Y`]) y = scaleType[`${type}Y`];
+      } else if (PixiApp.app.renderer.view.height < 400) {
+        scaleType = mobileScalesY400;
+        if (scaleType[`${type}X`]) x = scaleType[`${type}X`];
+        if (scaleType[`${type}Y`]) y = scaleType[`${type}Y`];
+      } else {
+        scaleType = mobileScalesY420;
+        if (scaleType[`${type}X`]) x = scaleType[`${type}X`];
+        if (scaleType[`${type}Y`]) y = scaleType[`${type}Y`];
+      }
+    } else if (
       PixiApp.app.renderer.view.width < 380 &&
       PixiApp.app.renderer.view.height < 600
     ) {
@@ -169,10 +283,18 @@ export default class FinalView extends React.Component {
       sprite.interactive = true;
       sprite.buttonMode = true;
       sprite.on('pointerover', function () {
-        sprite.scale.set(scaleType[type][0] * 1.3);
+        sprite.scale.set(scaleType[type][0] * 1.2);
+        if (type === 'guestbook') {
+          guestbook.visible = false;
+          guestbookEmail.visible = true;
+        }
       });
       sprite.on('pointerout', function () {
         sprite.scale.set(scaleType[type][0]);
+        if (type === 'guestbookEmail') {
+          guestbook.visible = true;
+          guestbookEmail.visible = false;
+        }
         sprite.rotation = 0;
       });
     }
@@ -203,6 +325,9 @@ export default class FinalView extends React.Component {
     const resumeTexture = PIXI.Texture.from('siteAssets/finalView/Resume.png');
     const speechTexture = PIXI.Texture.from(
       'siteAssets/finalView/hobbesHello.png'
+    );
+    const emailTexture = PIXI.Texture.from(
+      'siteAssets/finalView/guestBookEmail.png'
     );
 
     const floor = this.createSprite(
@@ -284,19 +409,34 @@ export default class FinalView extends React.Component {
     });
 
     const table = this.createSprite(
-      (PixiApp.app.renderer.view.width / 4) * 2.55,
+      (PixiApp.app.renderer.view.width / 4) * 2.7,
       (PixiApp.app.renderer.view.height / 2) * 7.49,
       tableTexture,
       'table'
     );
 
-    const guestbook = this.createSprite(
-      (PixiApp.app.renderer.view.width / 4) * 2.52,
+    guestbook = this.createSprite(
+      (PixiApp.app.renderer.view.width / 4) * 2.67,
       (PixiApp.app.renderer.view.height / 2) * 7.06,
       guestbookTexture,
       'guestbook',
       true
     );
+
+    guestbookEmail = this.createSprite(
+      (PixiApp.app.renderer.view.width / 4) * 2.67,
+      (PixiApp.app.renderer.view.height / 2) * 7.06,
+      emailTexture,
+      'guestbookEmail',
+      true
+    );
+    guestbookEmail.visible = false;
+
+    guestbookEmail.on('pointertap', () => {
+      window.location.href =
+        'mailto:marie.k.cr@gmail.com?subject=Just visited your website!';
+      PixiApp.app.stage.pivot.y = PixiApp.fourthView;
+    });
 
     guestbook.on('pointertap', () => {
       window.location.href =
@@ -305,8 +445,8 @@ export default class FinalView extends React.Component {
     });
 
     const hobbes = this.createSprite(
-      (PixiApp.app.renderer.view.width / 4) * 1.4,
-      (PixiApp.app.renderer.view.height / 2) * 7.38,
+      (PixiApp.app.renderer.view.width / 4) * 1.68,
+      (PixiApp.app.renderer.view.height / 2) * 7.41,
       hobbesTexture,
       'hobbes',
       true

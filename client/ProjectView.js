@@ -8,7 +8,14 @@ let width = PixiApp.app.renderer.view.width / 2;
 export function createPopUpRect(title, x, y, scrollView, popUpView) {
   popUpProject.removeChildren();
   let height = PixiApp.app.renderer.view.height / 2;
-  if (window.innerWidth < 500) {
+  if (window.innerHeight < 500) {
+    x = 0;
+    popUpView === PixiApp.secondView
+      ? (y = PixiApp.app.renderer.view.height * 1.125)
+      : (y = PixiApp.app.renderer.view.height * 2.125);
+    width = window.innerWidth;
+    height = PixiApp.app.renderer.view.height * 0.75;
+  } else if (window.innerWidth < 500) {
     x = 0;
     popUpView === PixiApp.secondView
       ? (y = PixiApp.app.renderer.view.height * 1.125)
@@ -72,7 +79,12 @@ export function createPopUpRect(title, x, y, scrollView, popUpView) {
     .drawRect(0, 0, (rect.width / 11) * 8.5, rect.height - 210)
     .endFill();
   scrollbox.position.set(x + rect.width / 10, y + 160);
-  if (window.innerWidth < 800) {
+  if (window.innerHeight < 500) {
+    scrollbox.boxWidth = (rect.width / 11) * 9.5;
+    scrollbox.boxHeight = rect.height - 160;
+    scrollbox.position.x = rect.width / 15;
+    scrollbox.position.y = y + 110;
+  } else if (window.innerWidth < 800) {
     scrollbox.boxWidth = (rect.width / 11) * 9.5;
     scrollbox.position.x = rect.width / 15;
   }
@@ -135,7 +147,10 @@ function openLink(projectName, linkType) {
 
 function createText(words, style, x, y, interactive, type) {
   const styleTwo = { ...style };
-  if (window.innerWidth < 500 && window.innerHeight < 700) {
+  if (window.innerHeight < 500) {
+    styleTwo.fontSize -= 10;
+    styleTwo.wordWrapWidth = (window.innerWidth / 4) * 3.4;
+  } else if (window.innerWidth < 500 && window.innerHeight < 700) {
     styleTwo.fontSize -= 10;
     styleTwo.wordWrapWidth = (window.innerWidth / 4) * 3.4;
   } else if (window.innerWidth < 500 && window.innerHeight < 850) {
@@ -240,6 +255,75 @@ let mobileScalesY800 = {
   stackY: (PixiApp.app.renderer.view.height / 2) * 4.53,
 };
 
+let mobileScalesY350 = {
+  gobARk: [0.16, 0.16],
+  gobARkX: (PixiApp.app.renderer.view.width / 2) * 0.8,
+  gobARkY: (PixiApp.app.renderer.view.height / 2) * 5.22,
+  seeTurtleExploration: [0.18, 0.18],
+  seeTurtleExplorationX: (PixiApp.app.renderer.view.width / 2) * 1.22,
+  seeTurtleExplorationY: (PixiApp.app.renderer.view.height / 2) * 5.22,
+  brosApothecary: [0.18, 0.18],
+  brosApothecaryX: (PixiApp.app.renderer.view.width / 2) * 1.22,
+  brosApothecaryY: (PixiApp.app.renderer.view.height / 2) * 4.72,
+  plantsR: [0.3, 0.4],
+  plantsL: [0.32, 0.4],
+  panel: [0.22, 0.2],
+  panelX: (PixiApp.app.renderer.view.width / 2) * 1.02,
+  panelY: (PixiApp.app.renderer.view.height / 2) * 5,
+  novelCase: [0.17, 0.17],
+  novelCaseX: (PixiApp.app.renderer.view.width / 2) * 0.8,
+  novelCaseY: (PixiApp.app.renderer.view.height / 2) * 4.75,
+  stack: [0.2, 0.2],
+  stackX: (PixiApp.app.renderer.view.width / 2) * 1.2,
+  stackY: (PixiApp.app.renderer.view.height / 2) * 4.25,
+};
+
+let mobileScalesY400 = {
+  gobARk: [0.18, 0.18],
+  gobARkX: (PixiApp.app.renderer.view.width / 2) * 0.83,
+  gobARkY: (PixiApp.app.renderer.view.height / 2) * 5.2,
+  seeTurtleExploration: [0.18, 0.18],
+  seeTurtleExplorationX: (PixiApp.app.renderer.view.width / 2) * 1.2,
+  seeTurtleExplorationY: (PixiApp.app.renderer.view.height / 2) * 5.2,
+  brosApothecary: [0.19, 0.19],
+  brosApothecaryX: (PixiApp.app.renderer.view.width / 2) * 1.2,
+  brosApothecaryY: (PixiApp.app.renderer.view.height / 2) * 4.74,
+  plantsR: [0.45, 0.5],
+  plantsL: [0.45, 0.5],
+  panel: [0.24, 0.235],
+  panelX: (PixiApp.app.renderer.view.width / 2) * 1.02,
+  panelY: (PixiApp.app.renderer.view.height / 2) * 4.98,
+  novelCase: [0.17, 0.17],
+  novelCaseX: (PixiApp.app.renderer.view.width / 2) * 0.85,
+  novelCaseY: (PixiApp.app.renderer.view.height / 2) * 4.75,
+  stack: [0.2, 0.2],
+  stackX: (PixiApp.app.renderer.view.width / 2) * 1.2,
+  stackY: (PixiApp.app.renderer.view.height / 2) * 4.26,
+};
+
+let mobileScalesY420 = {
+  gobARk: [0.18, 0.18],
+  gobARkX: (PixiApp.app.renderer.view.width / 2) * 0.83,
+  gobARkY: (PixiApp.app.renderer.view.height / 2) * 5.2,
+  seeTurtleExploration: [0.18, 0.18],
+  seeTurtleExplorationX: (PixiApp.app.renderer.view.width / 2) * 1.2,
+  seeTurtleExplorationY: (PixiApp.app.renderer.view.height / 2) * 5.2,
+  brosApothecary: [0.19, 0.19],
+  brosApothecaryX: (PixiApp.app.renderer.view.width / 2) * 1.2,
+  brosApothecaryY: (PixiApp.app.renderer.view.height / 2) * 4.74,
+  plantsR: [0.45, 0.5],
+  plantsL: [0.45, 0.5],
+  panel: [0.25, 0.25],
+  panelX: (PixiApp.app.renderer.view.width / 2) * 1.02,
+  panelY: (PixiApp.app.renderer.view.height / 2) * 4.98,
+  novelCase: [0.17, 0.17],
+  novelCaseX: (PixiApp.app.renderer.view.width / 2) * 0.8,
+  novelCaseY: (PixiApp.app.renderer.view.height / 2) * 4.75,
+  stack: [0.2, 0.2],
+  stackX: (PixiApp.app.renderer.view.width / 2) * 1.2,
+  stackY: (PixiApp.app.renderer.view.height / 2) * 4.26,
+};
+
 /* Styling */
 let titleStyle = {
   fontFamily: 'Cutive',
@@ -264,7 +348,21 @@ let linkStyle = {
 export default class ProjectView extends React.Component {
   createSprite(x, y, texture, type, interactive, anchor) {
     let scaleType = scales;
-    if (
+    if (PixiApp.app.renderer.view.height < 420) {
+      if (PixiApp.app.renderer.view.height <= 360) {
+        scaleType = mobileScalesY350;
+        if (scaleType[`${type}X`]) x = scaleType[`${type}X`];
+        if (scaleType[`${type}Y`]) y = scaleType[`${type}Y`];
+      } else if (PixiApp.app.renderer.view.height < 400) {
+        scaleType = mobileScalesY400;
+        if (scaleType[`${type}X`]) x = scaleType[`${type}X`];
+        if (scaleType[`${type}Y`]) y = scaleType[`${type}Y`];
+      } else {
+        scaleType = mobileScalesY420;
+        if (scaleType[`${type}X`]) x = scaleType[`${type}X`];
+        if (scaleType[`${type}Y`]) y = scaleType[`${type}Y`];
+      }
+    } else if (
       PixiApp.app.renderer.view.width < 380 &&
       PixiApp.app.renderer.view.height < 600
     ) {

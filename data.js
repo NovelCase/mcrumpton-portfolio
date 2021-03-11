@@ -20,7 +20,7 @@ export let data = {
       'Ecommerce site focused on delivering products, such as facial cleansers and candles, to meet the apothecary needs of everyone.',
     linkOne: 'Github',
     linkOneUrl: 'https://bit.ly/3l4m22J',
-    linkTwo: 'Live Site',
+    linkTwo: 'Site',
     linkTwoUrl: 'https://bros-apothecary.herokuapp.com/',
   },
   seeTurtleExploration: {
@@ -38,8 +38,8 @@ export let data = {
       'Novel Case is the small but driven development team behind this and other websites! Founded by Leslie Meng, Jackie Feit, and me, this team has banked numerous hours dedicated to creating unique solutions for personal experiences.',
     linkOne: 'Github',
     linkOneUrl: 'https://github.com/NovelCase',
-    linkTwo: 'Live Site',
-    linkTwoUrl: 'https://github.com/NovelCase',
+    linkTwo: 'Site',
+    linkTwoUrl: 'https://novelcase.netlify.app/',
   },
   stack: {
     name: 'Stack: ',
