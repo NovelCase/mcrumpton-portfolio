@@ -87,7 +87,7 @@ function keyboard(value) {
     }
   };
 
-  onwheel = (event, direction = 1, type) => {
+  onwheel = (event, direction = 1, mod = 1.2) => {
     if (!noScroll.projectScrolling) {
       app.stage.pivot.y = app.renderer.view.height * 2;
     } else if (!noScroll.lanternScrolling) {
@@ -96,7 +96,7 @@ function keyboard(value) {
       //don't scroll any further (top of page)
       app.stage.pivot.y < 0 ||
       app.stage.pivot.y +
-        (event.deltaY * 1.2 || event.deltaX * 1.2) * direction <
+        (event.deltaY * mod || event.deltaX * mod) * direction <
         0
     ) {
       app.stage.pivot.y = 0;
@@ -104,14 +104,14 @@ function keyboard(value) {
       //don't scroll any further (bottom of page)
       app.stage.pivot.y > app.renderer.view.height * 3 ||
       app.stage.pivot.y +
-        (event.deltaY * 1.2 || event.deltaX * 1.2) * direction >
+        (event.deltaY * mod || event.deltaX * mod) * direction >
         app.renderer.view.height * 3
     ) {
       app.stage.pivot.y = app.renderer.view.height * 3;
     } else {
       //keep scrolling
       app.stage.pivot.y +=
-        (event.deltaY * 0.9 || event.deltaX * 0.9) * direction;
+        (event.deltaY * mod || event.deltaX * mod) * direction;
     }
     menuContainer.position.y = app.stage.pivot.y + 10;
   };
@@ -130,7 +130,7 @@ function keyboard(value) {
   hammertime.add(Pan);
   hammertime.on(
     'pan',
-    _.throttle((evt) => onwheel(evt, -1), 0)
+    _.throttle((evt) => onwheel(evt, -1, 0.25), 0)
   );
 
   // Detach event listeners
