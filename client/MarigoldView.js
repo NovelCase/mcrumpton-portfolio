@@ -24,7 +24,7 @@ let mobileScales350 = {
   stayName: [0.22, 0.28],
   stayNameY: (PixiApp.app.renderer.view.height / 4) * 0.8,
   aboutMe: 0.16,
-  aboutMeY: (PixiApp.app.renderer.view.height / 4) * 1.2,
+  aboutMeY: (PixiApp.app.renderer.view.height / 4) * 1.4,
 };
 
 let mobileScalesY420 = {
@@ -36,21 +36,35 @@ let mobileScalesY420 = {
   aboutMeY: (PixiApp.app.renderer.view.height / 4) * 1.7,
 };
 
+let scalesY800 = {
+  bridge: [0.9, 0.7],
+  stayName: [0.47, 0.49],
+  stayNameY: (PixiApp.app.renderer.view.height / 4) * 0.7,
+  aboutMe: 0.19,
+  aboutMeY: (PixiApp.app.renderer.view.height / 4) * 1.2,
+};
+
 export default class MarigoldView extends React.Component {
   createSprite(x, y, texture, type) {
     let scaleType = scales;
-    if (PixiApp.app.renderer.view.height < 420) {
-      scaleType = mobileScalesY420;
-      x = PixiApp.app.renderer.view.width / 2;
-      y = scaleType[`${type}Y`];
-    } else if (PixiApp.app.renderer.view.width < 380) {
-      scaleType = mobileScales350;
-      x = PixiApp.app.renderer.view.width / 2;
-      y = scaleType[`${type}Y`];
-    } else if (PixiApp.app.renderer.view.width < 500) {
-      scaleType = mobileScales500;
-      x = PixiApp.app.renderer.view.width / 2;
-      scaleType[`${type}Y`] ? (y = scaleType[`${type}Y`]) : (y = y);
+    if (PixiApp.app.renderer.view.height < 830) {
+      if (PixiApp.app.renderer.view.height < 420) {
+        scaleType = mobileScalesY420;
+        x = PixiApp.app.renderer.view.width / 2;
+        y = scaleType[`${type}Y`];
+      } else if (PixiApp.app.renderer.view.width < 380) {
+        scaleType = mobileScales350;
+        x = PixiApp.app.renderer.view.width / 2;
+        y = scaleType[`${type}Y`];
+      } else if (PixiApp.app.renderer.view.width < 500) {
+        scaleType = mobileScales500;
+        x = PixiApp.app.renderer.view.width / 2;
+        scaleType[`${type}Y`] ? (y = scaleType[`${type}Y`]) : (y = y);
+      } else {
+        scaleType = scalesY800;
+        x = PixiApp.app.renderer.view.width / 2;
+        if (scaleType[`${type}Y`]) y = scaleType[`${type}Y`];
+      }
     }
     const sprite = new PIXI.Sprite(texture);
     PixiApp.marigoldView.addChild(sprite);
@@ -63,18 +77,24 @@ export default class MarigoldView extends React.Component {
   }
   createAnimatedSprtie(x, y, textureArr, type, speed, notVisible) {
     let scaleType = scales;
-    if (PixiApp.app.renderer.view.height < 420) {
-      scaleType = mobileScalesY420;
-      x = PixiApp.app.renderer.view.width / 2;
-      y = scaleType[`${type}Y`];
-    } else if (PixiApp.app.renderer.view.width < 380) {
-      scaleType = mobileScales350;
-      x = PixiApp.app.renderer.view.width / 2;
-      y = scaleType[`${type}Y`];
-    } else if (PixiApp.app.renderer.view.width < 500) {
-      scaleType = mobileScales500;
-      x = PixiApp.app.renderer.view.width / 2;
-      y = scaleType[`${type}Y`];
+    if (PixiApp.app.renderer.view.height < 830) {
+      if (PixiApp.app.renderer.view.height < 420) {
+        scaleType = mobileScalesY420;
+        x = PixiApp.app.renderer.view.width / 2;
+        y = scaleType[`${type}Y`];
+      } else if (PixiApp.app.renderer.view.width < 380) {
+        scaleType = mobileScales350;
+        x = PixiApp.app.renderer.view.width / 2;
+        y = scaleType[`${type}Y`];
+      } else if (PixiApp.app.renderer.view.width < 500) {
+        scaleType = mobileScales500;
+        x = PixiApp.app.renderer.view.width / 2;
+        y = scaleType[`${type}Y`];
+      } else {
+        scaleType = scalesY800;
+        x = PixiApp.app.renderer.view.width / 2;
+        if (scaleType[`${type}Y`]) y = scaleType[`${type}Y`];
+      }
     }
     const animSprite = new PIXI.AnimatedSprite(textureArr);
     PixiApp.marigoldView.addChild(animSprite);
@@ -228,7 +248,8 @@ export default class MarigoldView extends React.Component {
       'bridge'
     );
     bridge.width = window.outerWidth * 0.2 + window.outerWidth;
-    setTimeout(() => (drops.visible = true), 500);
+    if (bridge) drops.visible = true;
+    // setTimeout(() => (drops.visible = true), 500);
   }
   render() {
     return <div></div>;

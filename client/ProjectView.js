@@ -324,6 +324,74 @@ let mobileScalesY420 = {
   stackY: (PixiApp.app.renderer.view.height / 2) * 4.26,
 };
 
+let scalesY570 = {
+  gobARk: [0.22, 0.22],
+  gobARkX: (PixiApp.app.renderer.view.width / 2) * 0.86,
+  gobARkY: (PixiApp.app.renderer.view.height / 2) * 5.26,
+  seeTurtleExploration: [0.22, 0.22],
+  seeTurtleExplorationX: (PixiApp.app.renderer.view.width / 2) * 1.16,
+  seeTurtleExplorationY: (PixiApp.app.renderer.view.height / 2) * 5.26,
+  brosApothecary: [0.22, 0.22],
+  brosApothecaryX: (PixiApp.app.renderer.view.width / 2) * 1.16,
+  brosApothecaryY: (PixiApp.app.renderer.view.height / 2) * 4.84,
+  plantsR: [0.8, 0.8],
+  plantsL: [0.9, 0.8],
+  panel: [0.4, 0.28],
+  panelX: (PixiApp.app.renderer.view.width / 2) * 1.02,
+  panelY: (PixiApp.app.renderer.view.height / 2) * 5.08,
+  novelCase: [0.2, 0.2],
+  novelCaseX: (PixiApp.app.renderer.view.width / 2) * 0.85,
+  novelCaseY: (PixiApp.app.renderer.view.height / 2) * 4.85,
+  stack: [0.25, 0.25],
+  stackX: (PixiApp.app.renderer.view.width / 2) * 1.2,
+  stackY: (PixiApp.app.renderer.view.height / 2) * 4.45,
+};
+
+let scalesY680 = {
+  gobARk: [0.24, 0.24],
+  gobARkX: (PixiApp.app.renderer.view.width / 2) * 0.86,
+  gobARkY: (PixiApp.app.renderer.view.height / 2) * 5.27,
+  seeTurtleExploration: [0.24, 0.24],
+  seeTurtleExplorationX: (PixiApp.app.renderer.view.width / 2) * 1.16,
+  seeTurtleExplorationY: (PixiApp.app.renderer.view.height / 2) * 5.27,
+  brosApothecary: [0.24, 0.24],
+  brosApothecaryX: (PixiApp.app.renderer.view.width / 2) * 1.16,
+  brosApothecaryY: (PixiApp.app.renderer.view.height / 2) * 4.86,
+  plantsR: [0.8, 0.8],
+  plantsL: [0.9, 0.8],
+  panel: [0.4, 0.32],
+  panelX: (PixiApp.app.renderer.view.width / 2) * 1.02,
+  panelY: (PixiApp.app.renderer.view.height / 2) * 5.08,
+  novelCase: [0.21, 0.21],
+  novelCaseX: (PixiApp.app.renderer.view.width / 2) * 0.85,
+  novelCaseY: (PixiApp.app.renderer.view.height / 2) * 4.87,
+  stack: [0.25, 0.25],
+  stackX: (PixiApp.app.renderer.view.width / 2) * 1.18,
+  stackY: (PixiApp.app.renderer.view.height / 2) * 4.46,
+};
+let scalesY800 = {
+  gobARk: [0.26, 0.25],
+  gobARkX: (PixiApp.app.renderer.view.width / 2) * 0.84,
+  gobARkY: (PixiApp.app.renderer.view.height / 2) * 5.27,
+  seeTurtleExploration: [0.25, 0.24],
+  seeTurtleExplorationX: (PixiApp.app.renderer.view.width / 2) * 1.18,
+  seeTurtleExplorationY: (PixiApp.app.renderer.view.height / 2) * 5.27,
+  brosApothecary: [0.25, 0.25],
+  brosApothecaryX: (PixiApp.app.renderer.view.width / 2) * 1.18,
+  brosApothecaryY: (PixiApp.app.renderer.view.height / 2) * 4.86,
+  plantsR: [0.8, 0.8],
+  plantsL: [0.9, 0.8],
+  panel: [0.41, 0.39],
+  panelX: (PixiApp.app.renderer.view.width / 2) * 1.02,
+  panelY: (PixiApp.app.renderer.view.height / 2) * 5.08,
+  novelCase: [0.21, 0.21],
+  novelCaseX: (PixiApp.app.renderer.view.width / 2) * 0.83,
+  novelCaseY: (PixiApp.app.renderer.view.height / 2) * 4.87,
+  stack: [0.25, 0.25],
+  stackX: (PixiApp.app.renderer.view.width / 2) * 1.18,
+  stackY: (PixiApp.app.renderer.view.height / 2) * 4.46,
+};
+
 /* Styling */
 let titleStyle = {
   fontFamily: 'Cutive',
@@ -348,7 +416,7 @@ let linkStyle = {
 export default class ProjectView extends React.Component {
   createSprite(x, y, texture, type, interactive, anchor) {
     let scaleType = scales;
-    if (PixiApp.app.renderer.view.height < 420) {
+    if (PixiApp.app.renderer.view.height < 840) {
       if (PixiApp.app.renderer.view.height <= 360) {
         scaleType = mobileScalesY350;
         if (scaleType[`${type}X`]) x = scaleType[`${type}X`];
@@ -357,32 +425,41 @@ export default class ProjectView extends React.Component {
         scaleType = mobileScalesY400;
         if (scaleType[`${type}X`]) x = scaleType[`${type}X`];
         if (scaleType[`${type}Y`]) y = scaleType[`${type}Y`];
-      } else {
+      } else if (PixiApp.app.renderer.view.height < 420) {
         scaleType = mobileScalesY420;
         if (scaleType[`${type}X`]) x = scaleType[`${type}X`];
         if (scaleType[`${type}Y`]) y = scaleType[`${type}Y`];
+      } else if (
+        PixiApp.app.renderer.view.width < 380 &&
+        PixiApp.app.renderer.view.height < 600
+      ) {
+        scaleType = mobileScalesY600;
+        if (scaleType[`${type}X`]) x = scaleType[`${type}X`];
+        if (scaleType[`${type}Y`]) y = scaleType[`${type}Y`];
+      } else if (PixiApp.app.renderer.view.height < 570) {
+        scaleType = scalesY570;
+        if (scaleType[`${type}X`]) x = scaleType[`${type}X`];
+        if (scaleType[`${type}Y`]) y = scaleType[`${type}Y`];
+      } else if (
+        PixiApp.app.renderer.view.width < 380 &&
+        PixiApp.app.renderer.view.height < 700
+      ) {
+        scaleType = mobileScalesY700;
+        if (scaleType[`${type}X`]) x = scaleType[`${type}X`];
+        if (scaleType[`${type}Y`]) y = scaleType[`${type}Y`];
+      } else if (PixiApp.app.renderer.view.height < 680) {
+        scaleType = scalesY680;
+        if (scaleType[`${type}X`]) x = scaleType[`${type}X`];
+        if (scaleType[`${type}Y`]) y = scaleType[`${type}Y`];
+      } else if (PixiApp.app.renderer.view.width < 450) {
+        scaleType = mobileScalesY800;
+        if (scaleType[`${type}X`]) x = scaleType[`${type}X`];
+        if (scaleType[`${type}Y`]) y = scaleType[`${type}Y`];
+      } else {
+        scaleType = scalesY800;
+        if (scaleType[`${type}X`]) x = scaleType[`${type}X`];
+        if (scaleType[`${type}Y`]) y = scaleType[`${type}Y`];
       }
-    } else if (
-      PixiApp.app.renderer.view.width < 380 &&
-      PixiApp.app.renderer.view.height < 600
-    ) {
-      scaleType = mobileScalesY600;
-      if (scaleType[`${type}X`]) x = scaleType[`${type}X`];
-      if (scaleType[`${type}Y`]) y = scaleType[`${type}Y`];
-    } else if (
-      PixiApp.app.renderer.view.width < 380 &&
-      PixiApp.app.renderer.view.height < 700
-    ) {
-      scaleType = mobileScalesY700;
-      if (scaleType[`${type}X`]) x = scaleType[`${type}X`];
-      if (scaleType[`${type}Y`]) y = scaleType[`${type}Y`];
-    } else if (
-      PixiApp.app.renderer.view.width < 450 &&
-      PixiApp.app.renderer.view.height < 850
-    ) {
-      scaleType = mobileScalesY800;
-      if (scaleType[`${type}X`]) x = scaleType[`${type}X`];
-      if (scaleType[`${type}Y`]) y = scaleType[`${type}Y`];
     }
     const sprite = new PIXI.Sprite(texture);
     PixiApp.projectView.addChild(sprite);
