@@ -16,7 +16,7 @@ ReactDOM.render(
     <MarigoldView />
     <LanternView />
     <ProjectView />
-    <FinalView />
+    {<FinalView />}
   </div>,
   document.getElementById('app')
 );

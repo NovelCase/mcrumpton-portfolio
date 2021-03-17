@@ -41,19 +41,6 @@ export default class Menu extends React.Component {
         this.texture = closedIcon;
       }
     });
-
-    // shadow = new PIXI.Graphics();
-    // shadow
-    //   .beginFill(0x000000, 0.2)
-    //   .drawRect(
-    //     0,
-    //     0,
-    //     PixiApp.app.renderer.view.width,
-    //     PixiApp.app.renderer.view.height
-    //   )
-    //   .endFill();
-    // shadow.visible = false;
-    // PixiApp.menuContainer.addChild(shadow);
   }
 
   onClickTap() {

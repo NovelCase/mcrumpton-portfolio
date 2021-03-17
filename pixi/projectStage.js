@@ -205,7 +205,11 @@ window.addEventListener('resize', resize);
 
 /* for scaling adjustment not on refresh */
 function resize() {
-  if (window.outerHeight < 600 || window.outerWidth < 600) {
+  if (window.innerHeight < 800 || window.outerWidth < 600) {
+    localStorage.setItem(
+      'position',
+      Math.round(app.stage.pivot.y / window.innerHeight)
+    );
     window.location.reload();
   } else {
     let widthDiff = window.innerWidth - app.renderer.view.width;
@@ -227,4 +231,10 @@ function resize() {
       }
     });
   }
+}
+
+if (localStorage.getItem('position')) {
+  app.stage.pivot.y = localStorage.getItem('position') * window.innerHeight;
+  menuContainer.position.y = app.stage.pivot.y + 10;
+  localStorage.removeItem('position');
 }

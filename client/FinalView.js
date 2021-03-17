@@ -210,6 +210,111 @@ let mobileScalesY420 = {
   resumeY: (PixiApp.app.renderer.view.height / 2) * 6.91,
 };
 
+let scalesY570 = {
+  hobbes: [0.26, 0.26],
+  hobbesX: (PixiApp.app.renderer.view.width / 4) * 1.5,
+  hobbesY: (PixiApp.app.renderer.view.height / 2) * 7.34,
+  hello: [0.4, 0.4],
+  helloX: (PixiApp.app.renderer.view.width / 4) * 2,
+  helloY: (PixiApp.app.renderer.view.height / 2) * 6.78,
+  floor: [1.2, 1],
+  floorY: (PixiApp.app.renderer.view.height / 2) * 6.7,
+  window: [0.6, 0.6],
+  windowY: (PixiApp.app.renderer.view.height / 2) * 6.84,
+  spotify: [0.4, 0.4],
+  spotifyX: PixiApp.app.renderer.view.width * 1.01,
+  spotifyY: (PixiApp.app.renderer.view.height / 2) * 7.73,
+  bookcase: [0.55, 0.55],
+  bookcaseY: (PixiApp.app.renderer.view.height / 2) * 6.85,
+  github: [0.4, 0.4],
+  githubX: (PixiApp.app.renderer.view.width / 5) * 1.1,
+  githubY: (PixiApp.app.renderer.view.height / 2) * 6.49,
+  linkedIn: [0.4, 0.4],
+  linkedInX: (PixiApp.app.renderer.view.width / 5) * 0.8,
+  linkedInY: (PixiApp.app.renderer.view.height / 2) * 6.93,
+  table: [0.4, 0.4],
+  guestbook: [0.39, 0.39],
+  guestbookX: (PixiApp.app.renderer.view.width / 4) * 2.7,
+  guestbookY: (PixiApp.app.renderer.view.height / 2) * 7.25,
+  guestbookEmail: [0.39, 0.39],
+  guestbookEmailX: (PixiApp.app.renderer.view.width / 4) * 2.7,
+  guestbookEmailY: (PixiApp.app.renderer.view.height / 2) * 7.25,
+  resume: [0.37, 0.37],
+  resumeX: (PixiApp.app.renderer.view.width / 5) * 1.15,
+  resumeY: (PixiApp.app.renderer.view.height / 2) * 6.91,
+};
+let scalesY680 = {
+  hobbes: [0.29, 0.29],
+  hobbesX: (PixiApp.app.renderer.view.width / 4) * 1.5,
+  hobbesY: (PixiApp.app.renderer.view.height / 2) * 7.36,
+  hello: [0.42, 0.42],
+  helloX: (PixiApp.app.renderer.view.width / 4) * 2,
+  helloY: (PixiApp.app.renderer.view.height / 2) * 6.78,
+  floor: [1.2, 0.6],
+  floorAnchor: 1,
+  floorX: PixiApp.app.renderer.view.width,
+  floorY: PixiApp.app.renderer.view.height * 4,
+  window: [0.7, 0.7],
+  windowY: (PixiApp.app.renderer.view.height / 2) * 6.84,
+  spotify: [0.5, 0.5],
+  spotifyX: PixiApp.app.renderer.view.width * 1.01,
+  spotifyY: (PixiApp.app.renderer.view.height / 2) * 7.73,
+  bookcase: [0.63, 0.63],
+  bookcaseY: (PixiApp.app.renderer.view.height / 2) * 6.85,
+  github: [0.5, 0.5],
+  githubX: (PixiApp.app.renderer.view.width / 5) * 1.1,
+  githubY: (PixiApp.app.renderer.view.height / 2) * 6.49,
+  linkedIn: [0.5, 0.5],
+  linkedInX: (PixiApp.app.renderer.view.width / 5) * 0.8,
+  linkedInY: (PixiApp.app.renderer.view.height / 2) * 6.93,
+  table: [0.5, 0.5],
+  guestbook: [0.47, 0.47],
+  guestbookX: (PixiApp.app.renderer.view.width / 4) * 2.7,
+  guestbookY: (PixiApp.app.renderer.view.height / 2) * 7.23,
+  guestbookEmail: [0.47, 0.47],
+  guestbookEmailX: (PixiApp.app.renderer.view.width / 4) * 2.7,
+  guestbookEmailY: (PixiApp.app.renderer.view.height / 2) * 7.23,
+  resume: [0.43, 0.43],
+  resumeX: (PixiApp.app.renderer.view.width / 5) * 1.17,
+  resumeY: (PixiApp.app.renderer.view.height / 2) * 6.91,
+};
+let scalesY800 = {
+  hobbes: [0.34, 0.34],
+  hobbesX: (PixiApp.app.renderer.view.width / 4) * 1.5,
+  hobbesY: (PixiApp.app.renderer.view.height / 2) * 7.38,
+  hello: [0.46, 0.46],
+  helloX: (PixiApp.app.renderer.view.width / 4) * 2,
+  helloY: (PixiApp.app.renderer.view.height / 2) * 6.78,
+  floor: [2, 0.85],
+  floorAnchor: 1,
+  floorX: PixiApp.app.renderer.view.width,
+  floorY: PixiApp.app.renderer.view.height * 3.55,
+  window: [0.8, 0.8],
+  windowY: (PixiApp.app.renderer.view.height / 2) * 6.84,
+  spotify: [0.57, 0.57],
+  spotifyX: PixiApp.app.renderer.view.width * 1.01,
+  spotifyY: (PixiApp.app.renderer.view.height / 2) * 7.78,
+  bookcase: [0.7, 0.7],
+  bookcaseY: (PixiApp.app.renderer.view.height / 2) * 6.85,
+  github: [0.53, 0.53],
+  githubX: (PixiApp.app.renderer.view.width / 5) * 1.1,
+  githubY: (PixiApp.app.renderer.view.height / 2) * 6.53,
+  linkedIn: [0.5, 0.5],
+  linkedInX: (PixiApp.app.renderer.view.width / 5) * 0.8,
+  linkedInY: (PixiApp.app.renderer.view.height / 2) * 6.93,
+  table: [0.58, 0.58],
+  tableY: (PixiApp.app.renderer.view.height / 2) * 7.52,
+  guestbook: [0.51, 0.51],
+  guestbookX: (PixiApp.app.renderer.view.width / 4) * 2.7,
+  guestbookY: (PixiApp.app.renderer.view.height / 2) * 7.25,
+  guestbookEmail: [0.51, 0.51],
+  guestbookEmailX: (PixiApp.app.renderer.view.width / 4) * 2.7,
+  guestbookEmailY: (PixiApp.app.renderer.view.height / 2) * 7.23,
+  resume: [0.43, 0.43],
+  resumeX: (PixiApp.app.renderer.view.width / 5) * 1.17,
+  resumeY: (PixiApp.app.renderer.view.height / 2) * 6.91,
+};
+
 let width = PixiApp.app.renderer.view.width;
 let height = PixiApp.app.renderer.view.height;
 
@@ -235,7 +340,7 @@ export default class FinalView extends React.Component {
   }
   createSprite(x, y, texture, type, interactive, anchor) {
     let scaleType = scales;
-    if (PixiApp.app.renderer.view.height < 420) {
+    if (PixiApp.app.renderer.view.height < 830) {
       if (PixiApp.app.renderer.view.height <= 360) {
         scaleType = mobileScalesY350;
         if (scaleType[`${type}X`]) x = scaleType[`${type}X`];
@@ -244,34 +349,43 @@ export default class FinalView extends React.Component {
         scaleType = mobileScalesY400;
         if (scaleType[`${type}X`]) x = scaleType[`${type}X`];
         if (scaleType[`${type}Y`]) y = scaleType[`${type}Y`];
-      } else {
+      } else if (PixiApp.app.renderer.view.height < 420) {
         scaleType = mobileScalesY420;
         if (scaleType[`${type}X`]) x = scaleType[`${type}X`];
         if (scaleType[`${type}Y`]) y = scaleType[`${type}Y`];
+      } else if (
+        PixiApp.app.renderer.view.width < 380 &&
+        PixiApp.app.renderer.view.height < 600
+      ) {
+        scaleType = mobileScalesY600;
+        if (scaleType[`${type}X`]) x = scaleType[`${type}X`];
+        if (scaleType[`${type}Y`]) y = scaleType[`${type}Y`];
+      } else if (
+        PixiApp.app.renderer.view.width < 380 &&
+        PixiApp.app.renderer.view.height < 700
+      ) {
+        scaleType = mobileScalesY700;
+        if (scaleType[`${type}X`]) x = scaleType[`${type}X`];
+        if (scaleType[`${type}Y`]) y = scaleType[`${type}Y`];
+      } else if (PixiApp.app.renderer.view.width < 450) {
+        scaleType = mobileScalesY800;
+        if (scaleType[`${type}X`]) x = scaleType[`${type}X`];
+        if (scaleType[`${type}Y`]) y = scaleType[`${type}Y`];
+      } else if (PixiApp.app.renderer.view.height < 570) {
+        scaleType = scalesY570;
+        if (scaleType[`${type}X`]) x = scaleType[`${type}X`];
+        if (scaleType[`${type}Y`]) y = scaleType[`${type}Y`];
+      } else if (PixiApp.app.renderer.view.height < 680) {
+        scaleType = scalesY680;
+        if (scaleType[`${type}X`]) x = scaleType[`${type}X`];
+        if (scaleType[`${type}Y`]) y = scaleType[`${type}Y`];
+        if (scaleType[`${type}Anchor`]) anchor = scaleType[`${type}Anchor`];
+      } else {
+        scaleType = scalesY800;
+        if (scaleType[`${type}X`]) x = scaleType[`${type}X`];
+        if (scaleType[`${type}Y`]) y = scaleType[`${type}Y`];
       }
-    } else if (
-      PixiApp.app.renderer.view.width < 380 &&
-      PixiApp.app.renderer.view.height < 600
-    ) {
-      scaleType = mobileScalesY600;
-      if (scaleType[`${type}X`]) x = scaleType[`${type}X`];
-      if (scaleType[`${type}Y`]) y = scaleType[`${type}Y`];
-    } else if (
-      PixiApp.app.renderer.view.width < 380 &&
-      PixiApp.app.renderer.view.height < 700
-    ) {
-      scaleType = mobileScalesY700;
-      if (scaleType[`${type}X`]) x = scaleType[`${type}X`];
-      if (scaleType[`${type}Y`]) y = scaleType[`${type}Y`];
-    } else if (
-      PixiApp.app.renderer.view.width < 450 &&
-      PixiApp.app.renderer.view.height < 850
-    ) {
-      scaleType = mobileScalesY800;
-      if (scaleType[`${type}X`]) x = scaleType[`${type}X`];
-      if (scaleType[`${type}Y`]) y = scaleType[`${type}Y`];
     }
-
     const sprite = new PIXI.Sprite(texture);
     PixiApp.finalView.addChild(sprite);
     anchor ? sprite.anchor.set(anchor) : sprite.anchor.set(0.5);
@@ -481,8 +595,9 @@ export default class FinalView extends React.Component {
               src={data.spotify}
               width={width / 4}
               height={height}
-              allow="encrypted-media"
+              frameBorder="0"
               allowtransparency="true"
+              allow="encrypted-media"
             ></iframe>
             <div id="loading">
               <div id="atul">
